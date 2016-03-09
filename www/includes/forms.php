@@ -1,6 +1,6 @@
 <?php
 
-function DisplayLoginForm(){
+function displayLoginForm(){
     ?>
 
     <h3>Login</h3>
@@ -16,9 +16,9 @@ function DisplayLoginForm(){
     <?php
 }
 
-function DisplayContactForm(){
+function displayContactForm(){
 
-    $contacts = GetContacts();
+    $contacts = getContacts();
     ?>
 
     <h3>MANAGEMENT MAIN PAGE</h3>
@@ -54,7 +54,7 @@ function DisplayContactForm(){
 
 }
 
-function DisplayAddForm(){
+function displayAddForm(){
     ?>
 
     <h3>Contact Details</h3>

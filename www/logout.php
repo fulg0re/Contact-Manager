@@ -4,6 +4,7 @@ session_start();
 
 session_destroy();
 
-header("location: index.php");
+include_once("includes/functions.php");
+include_once("includes/forms.php");
 
-?>
+redirect("index.php");

@@ -10,21 +10,19 @@
         include_once("includes/functions.php");
 
         if ($_POST['submitted']) {
-            if (ProcessLogin($_POST) == true) {
-                header("location: lists.php");
+            if (processLogin($_POST) == true) {
+				redirect("lists.php");
             } else {
-                include_once("./includes/header.php");
-                DisplayErrorMassage("Login credentials incorrect!");
+                displayErrorMassage("Login credentials incorrect!");
                 echo "<div class='formDiv'>";
-                    DisplayLoginForm();
+                    displayLoginForm();
                 echo "</div>";
             }
         }else{
-            include_once("./includes/header.php");
             echo "<div class='formDiv'>";
-                DisplayLoginForm();
+                displayLoginForm();
             echo "</div>";
         }
     }else{
-        header("location: lists.php");
+		redirect("lists.php");
     }

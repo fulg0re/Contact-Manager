@@ -1,17 +1,12 @@
 <?php
 
-function GetConnection(){
-    $conn = new mysqli("localhost", "root", "", "data");
-
-    return $conn;
-}
-
-function DisplayErrorMassage($msg){
+function displayErrorMassage($msg){
     echo "<div class='err'>$msg</div>";
 }
 
-function ProcessLogin($post){
-    $conn = GetConnection();
+function processLogin($post){
+    //$conn = getConnection();
+	include_once ('config.php');
 
     $query = "SELECT * FROM users WHERE username = '".$post['uname']."' and password = '".sha1($post['pass'])."' Limit 1";
     $results = $conn->query($query);
@@ -27,11 +22,17 @@ function ProcessLogin($post){
     }
 }
 
-function GetContacts(){
-    $conn = GetConnection();
+function getContacts(){
+    //$conn = getConnection();
+	include_once ('config.php');
     $query = "SELECT * FROM contacts";
 
     $result = $conn->query($query);
 
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+function redirect($roadTo){
+	header("location: ".$roadTo);
+	exit;
 }
