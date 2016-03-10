@@ -1,5 +1,22 @@
 <?php
 
+function getOneContact($id){
+	include_once ('config.php');
+    $query = "SELECT * FROM contacts WHERE id = ".$id;
+    $results = $conn->query($query);
+    if ($results->num_rows > 0){
+        return $results->fetch_array(MYSQLI_ASSOC);
+	}else{
+		return false;
+	}
+};
+
+function deleteRow($id){
+	include_once ('config.php');
+	$query = "DELETE FROM contacts WHERE id=".$id;
+    $result = $conn->query($query);
+};
+
 function displayMassage($msg){
     echo "<div class='err'>$msg</div>";
 }

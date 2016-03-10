@@ -42,8 +42,9 @@ function displayContactForm(){
                     echo "<td>".$v['firstName']."</td>";
                     echo "<td>".$v['email']."</td>";
                     echo "<td>".$v['cellPhone']."</td>";
-                    echo "<td><a href='#'>edit/view</a></td>";
-                    echo "<td><a href='#'>delete</a></td>";
+					$contactId = $v['id'];
+                    echo "<td><a href='edit.php?editId=".$contactId."'>edit/view</a></td>";
+                    echo "<td><a href='lists.php?deleteId=".$contactId."'>delete</a></td>";
                 echo "</tr>";
             }
             ?>

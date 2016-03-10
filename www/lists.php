@@ -14,4 +14,10 @@ if(isset($_POST['buttonAdd']))
 	redirect("edit.php");
 }
 
+if(isset($_GET['deleteId']))
+{
+	deleteRow($_GET['deleteId']);
+	redirect("lists.php");
+}
+
 displayContactForm();
