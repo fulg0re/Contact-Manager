@@ -5,7 +5,9 @@
 //    var_dump("214234");
 //    die();   // end of script...
 
-    if (!$_SESSION['LoggedIn']) {
+    if ($_SESSION['LoggedIn']) {
+		redirect("lists.php");
+	}else{		
         include_once("includes/forms.php");
         include_once("includes/functions.php");
 
@@ -13,7 +15,7 @@
             if (processLogin($_POST) == true) {
 				redirect("lists.php");
             } else {
-                displayErrorMassage("Login credentials incorrect!");
+                displayMassage("Login credentials incorrect!");
                 echo "<div class='formDiv'>";
                     displayLoginForm();
                 echo "</div>";
@@ -23,6 +25,4 @@
                 displayLoginForm();
             echo "</div>";
         }
-    }else{
-		redirect("lists.php");
-    }
+    };

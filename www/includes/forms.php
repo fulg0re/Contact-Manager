@@ -20,6 +20,8 @@ function displayContactForm(){
 
     $contacts = getContacts();
     ?>
+	
+	<a href='logout.php'>logout</a>
 
     <h3>MANAGEMENT MAIN PAGE</h3>
     <form action="" method="post">
@@ -36,10 +38,10 @@ function displayContactForm(){
             <?php
             foreach ($contacts as $v) {
                 echo "<tr>";
-                    echo "<td>".$v['LastName']."</td>";
-                    echo "<td>".$v['FirstName']."</td>";
-                    echo "<td>".$v['Email']."</td>";
-                    echo "<td>".$v['BestPhone']."</td>";
+                    echo "<td>".$v['lastName']."</td>";
+                    echo "<td>".$v['firstName']."</td>";
+                    echo "<td>".$v['email']."</td>";
+                    echo "<td>".$v['cellPhone']."</td>";
                     echo "<td><a href='#'>edit/view</a></td>";
                     echo "<td><a href='#'>delete</a></td>";
                 echo "</tr>";
@@ -57,6 +59,8 @@ function displayContactForm(){
 function displayAddForm(){
     ?>
 
+	<a href='logout.php'>logout</a>
+	
     <h3>Contact Details</h3>
     <form action="" method="post">
         <label for="first">First</label>
