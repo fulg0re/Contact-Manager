@@ -82,3 +82,44 @@ function redirect($roadTo){
 	header("location: ".$roadTo);
 	exit;
 }
+
+function processEditing($post){
+	include_once ('config.php');
+	$tempFirstName = $post['first'];
+	$tempLastName = $post['last'];
+	$tempEmail = $post['email'];
+	$tempHome = $post['home'];
+	$tempWork = $post['work'];
+	$tempCell = $post['cell'];
+	$tempAdress1 = $post['adress1'];
+	$tempAdress2 = $post['adress2'];
+	$tempCity = $post['city'];
+	$tempState = $post['state'];
+	$tempZip = $post['zip'];
+	$tempCountry = $post['country'];
+	$tempBirthday = $post['birthday'];
+	$tempId = $post['id'];
+	
+    $query = "UPDATE contacts SET 
+					firstName = '".$tempFirstName."',
+					lastName = '".$tempLastName."',
+					email = '".$tempEmail."',
+					homePhone = '".$tempHome."',
+					workPhone = '".$tempWork."',
+					cellPhone = '".$tempCell."',
+					adress1 = '".$tempAdress1."',
+					adress2 = '".$tempAdress2."',
+					city = '".$tempCity."',
+					state = '".$tempState."',
+					zip = '".$tempZip."',
+					country = '".$tempCountry."',
+					birthday = '".$tempBirthday."'
+				WHERE id = ".$tempId;
+				
+    $results = $conn->query($query);
+    if (!$results->error){
+        return true;
+    }else {
+        return false;
+    }
+};
