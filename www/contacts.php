@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>ContactManager/Contacts</title>
+		<link rel="stylesheet" href="css/main.css">
 	</head>
 	<body>
 		<?php
@@ -25,20 +26,24 @@
 					<th>Best Phone</th>
 				</tr>
 
-				<?php
-				foreach ($contacts as $v) {
-					echo "<tr>";
-						echo "<td>".$v['lastName']."</td>";
-						echo "<td>".$v['firstName']."</td>";
-						echo "<td>".$v['email']."</td>";
-						echo "<td>".$v['cellPhone']."</td>";
-						$contactId = $v['id'];
-						echo "<td><a href='controller.php?editId=".$contactId."'>edit/view</a></td>";
-						echo "<td><a href='controller.php?deleteId=".$contactId."'>delete</a></td>";
-					echo "</tr>";
-				}
-				?>
-
+				<?foreach ($contacts as $v) {?>
+					<tr>
+						<td><?echo $v['lastName']?></td>
+						<td><?echo $v['firstName']?></td>
+						<td><?echo $v['email']?></td>
+						<td><?	if ($v['homePhoneChecked'] == "YES") {
+									echo $v['homePhone'];
+								}else if ($v['workPhoneChecked'] != "YES"){
+									echo $v['workPhone'];
+								}else{
+									echo $v['cellPhone'];
+								}?></td>
+						<?$contactId = $v['id'];?>
+						<td><a href='controller.php?editId=<?echo $contactId?>'>edit/view</a></td>
+						<td><a href='controller.php?deleteId=<?echo $contactId?>'>delete</a></td>
+					</tr>
+				<?}?>
+				
 			</table>
 			<input type="submit" name="addNewContact" value="ADD"></br>
 		</form>

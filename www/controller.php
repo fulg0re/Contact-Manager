@@ -13,21 +13,24 @@ if(isset($_GET['editId']))
 	$foundedContact = getOneContact($_GET['editId']);
 	if ($foundedContact != false){
 		redirect("edit.php?
-				firstName=".$foundedContact['firstName']."
-				&lastName=".$foundedContact['lastName']."
-				&email=".$foundedContact['email']."
-				&homePhone=".$foundedContact['homePhone']."
-				&workPhone=".$foundedContact['workPhone']."
-				&cellPhone=".$foundedContact['cellPhone']."
-				&adress1=".$foundedContact['adress1']."
-				&adress2=".$foundedContact['adress2']."
-				&city=".$foundedContact['city']."
-				&state=".$foundedContact['state']."
-				&zip=".$foundedContact['zip']."
-				&country=".$foundedContact['country']."
-				&birthday=".$foundedContact['birthday']."
-				&id=".$foundedContact['id']."
-				&button=Edit"
+				firstName=".$foundedContact['firstName']."&
+				lastName=".$foundedContact['lastName']."&
+				email=".$foundedContact['email']."&
+				homePhone=".$foundedContact['homePhone']."&
+				homePhoneChecked=".$foundedContact['homePhoneChecked']."&
+				workPhone=".$foundedContact['workPhone']."&
+				workPhoneChecked=".$foundedContact['workPhoneChecked']."&
+				cellPhone=".$foundedContact['cellPhone']."&
+				cellPhoneChecked=".$foundedContact['cellPhoneChecked']."&
+				adress1=".$foundedContact['adress1']."&
+				adress2=".$foundedContact['adress2']."&
+				city=".$foundedContact['city']."&
+				state=".$foundedContact['state']."&
+				zip=".$foundedContact['zip']."&
+				country=".$foundedContact['country']."&
+				birthday=".$foundedContact['birthday']."&
+				id=".$foundedContact['id']."&
+				button=Edit"
 				);
 
 	};
