@@ -33,7 +33,7 @@
 						<td><?echo $v['email']?></td>
 						<td><?	if ($v['homePhoneChecked'] == "YES") {
 									echo $v['homePhone'];
-								}else if ($v['workPhoneChecked'] != "YES"){
+								}else if ($v['workPhoneChecked'] == "YES"){
 									echo $v['workPhone'];
 								}else{
 									echo $v['cellPhone'];

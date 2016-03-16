@@ -85,6 +85,25 @@ function redirect($roadTo){
 
 function processEditing($post){
 	include_once ('config.php');
+	
+	
+	switch ($post['gender']) {
+		case 1:
+			$tempHomeChecked = "YES";
+			$tempWorkChecked = "NO";
+			$tempCellChecked = "NO";
+			break;
+		case 2:
+			$tempHomeChecked = "NO";
+			$tempWorkChecked = "YES";
+			$tempCellChecked = "NO";
+			break;
+		case 3:
+			$tempHomeChecked = "NO";
+			$tempWorkChecked = "NO";
+			$tempCellChecked = "YES";
+			break;
+	}
 	$tempFirstName = $post['first'];
 	$tempLastName = $post['last'];
 	$tempEmail = $post['email'];
@@ -105,8 +124,11 @@ function processEditing($post){
 					lastName = '".$tempLastName."',
 					email = '".$tempEmail."',
 					homePhone = '".$tempHome."',
+					homePhoneChecked = '".$tempHomeChecked."',
 					workPhone = '".$tempWork."',
+					workPhoneChecked = '".$tempWorkChecked."',
 					cellPhone = '".$tempCell."',
+					cellPhoneChecked = '".$tempCellChecked."',
 					adress1 = '".$tempAdress1."',
 					adress2 = '".$tempAdress2."',
 					city = '".$tempCity."',

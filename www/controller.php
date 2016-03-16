@@ -58,6 +58,7 @@ if(isset($_POST['addNewContact']))
 
 if(isset($_POST['EditButton']))
 {
+	//echo $_POST['gender'];
 	if (processEditing($_POST) == true) {
 		redirect("contacts.php?msg=Edit was successful");
 	} else {
