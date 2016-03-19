@@ -1,7 +1,7 @@
 <?php
 
 function getOneContact($id){
-	include_once ('config.php');
+	include_once ('dbConnection.php');
     $query = "SELECT * FROM contacts WHERE id = ".$id;
     $results = $conn->query($query);
     if ($results->num_rows > 0){
@@ -12,7 +12,7 @@ function getOneContact($id){
 };
 
 function deleteRow($id){
-	include_once ('config.php');
+	include_once ('dbConnection.php');
 	$query = "DELETE FROM contacts WHERE id=".$id;
     $result = $conn->query($query);
 };
@@ -22,8 +22,7 @@ function displayMassage($msg){
 }
 
 function processLogin($post){
-    //$conn = getConnection();
-	include_once ('config.php');
+	include_once ('dbConnection.php');
 
     $query = "SELECT * FROM users WHERE username = '".$post['uname']."' and password = '".sha1($post['pass'])."' Limit 1";
     $results = $conn->query($query);
@@ -39,8 +38,8 @@ function processLogin($post){
     }
 }
 
-function processAddContact($post){		// (firstname, lastname, email)
-	include_once ('config.php');
+function processAddContact($post){
+	include_once ('dbConnection.php');
 	$tempFirstName = $post['first'];
 	$tempLastName = $post['last'];
 	$tempEmail = $post['email'];
@@ -69,8 +68,7 @@ function processAddContact($post){		// (firstname, lastname, email)
 };
 
 function getContacts(){
-    //$conn = getConnection();
-	include_once ('config.php');
+	include_once ('dbConnection.php');
     $query = "SELECT * FROM contacts";
 
     $result = $conn->query($query);
@@ -84,8 +82,7 @@ function redirect($roadTo){
 }
 
 function processEditing($post){
-	include_once ('config.php');
-	
+	include_once ('dbConnection.php');
 	
 	switch ($post['gender']) {
 		case 1:

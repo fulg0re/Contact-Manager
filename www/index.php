@@ -5,7 +5,7 @@
 		<link rel="stylesheet" href="css/main.css">
 	</head>
 	<body>
-		<div class='err'><h3><?echo $_GET['msg'];?></h3></div>
+		<div class='err'><h3><?php echo $_GET['msg'];?></h3></div>
 		<h3>Login</h3>
 		<form action="controller.php" method="post">
 			<div class="field">

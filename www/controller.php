@@ -75,7 +75,3 @@ if(isset($_POST['ADDButton']))
 	}
 	
 };
-
-if (!$_SESSION['LoggedIn']) {
-		redirect("index.html");
-	}

@@ -1,8 +1,6 @@
 <?php
 
-$dbHost = 'localhost';
-$dbUser = 'root';
-$dbPassword = '';
-$dbName = 'data';
-
-$conn = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
+define("DB_HOST","localhost");
+define("DB_USER","root");
+define("DB_PASSWORD","");
+define("DB_NAME","data");

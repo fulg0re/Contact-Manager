@@ -10,7 +10,7 @@
 			$contacts = getContacts();
 		?>
 		
-		<div class='err'><h3><?echo $_GET['msg'];?></h3></div>
+		<div class='err'><h3><?php echo $_GET['msg'];?></h3></div>
 		
 		<a href='logout.php'>logout</a>
 		
@@ -26,23 +26,23 @@
 					<th>Best Phone</th>
 				</tr>
 
-				<?foreach ($contacts as $v) {?>
+				<?php foreach ($contacts as $v) {?>
 					<tr>
-						<td><?echo $v['lastName']?></td>
-						<td><?echo $v['firstName']?></td>
-						<td><?echo $v['email']?></td>
-						<td><?	if ($v['homePhoneChecked'] == "YES") {
+						<td><?php echo $v['lastName']?></td>
+						<td><?php echo $v['firstName']?></td>
+						<td><?php echo $v['email']?></td>
+						<td><?php if ($v['homePhoneChecked'] == "YES") {
 									echo $v['homePhone'];
 								}else if ($v['workPhoneChecked'] == "YES"){
 									echo $v['workPhone'];
 								}else{
 									echo $v['cellPhone'];
 								}?></td>
-						<?$contactId = $v['id'];?>
-						<td><a href='controller.php?editId=<?echo $contactId?>'>edit/view</a></td>
-						<td><a href='controller.php?deleteId=<?echo $contactId?>'>delete</a></td>
+						<?php $contactId = $v['id'];?>
+						<td><a href='controller.php?editId=<?php echo $contactId?>'>edit/view</a></td>
+						<td><a href='controller.php?deleteId=<?php echo $contactId?>'>delete</a></td>
 					</tr>
-				<?}?>
+				<?php }?>
 				
 			</table>
 			<input type="submit" name="addNewContact" value="ADD"></br>
