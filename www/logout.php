@@ -1,9 +1,8 @@
 <?php
 
-session_start();
+include_once("controller.php");
+include_once("includes/functions.php");
 
 session_destroy();
-
-include_once("includes/functions.php");
 
 redirect("index.php");
