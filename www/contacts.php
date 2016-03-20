@@ -31,9 +31,9 @@
 						<td><?php echo $v['lastName']?></td>
 						<td><?php echo $v['firstName']?></td>
 						<td><?php echo $v['email']?></td>
-						<td><?php if ($v['homePhoneChecked'] == "YES") {
+						<td><?php if ($v['homePhoneChecked'] == "true") {
 									echo $v['homePhone'];
-								}else if ($v['workPhoneChecked'] == "YES"){
+								}else if ($v['workPhoneChecked'] == "true"){
 									echo $v['workPhone'];
 								}else{
 									echo $v['cellPhone'];

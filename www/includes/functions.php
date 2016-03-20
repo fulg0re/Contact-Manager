@@ -86,19 +86,19 @@ function processEditing($post){
 	
 	switch ($post['gender']) {
 		case 1:
-			$tempHomeChecked = "YES";
-			$tempWorkChecked = "NO";
-			$tempCellChecked = "NO";
+			$tempHomeChecked = "true";
+			$tempWorkChecked = "false";
+			$tempCellChecked = "false";
 			break;
 		case 2:
-			$tempHomeChecked = "NO";
-			$tempWorkChecked = "YES";
-			$tempCellChecked = "NO";
+			$tempHomeChecked = "false";
+			$tempWorkChecked = "true";
+			$tempCellChecked = "false";
 			break;
 		case 3:
-			$tempHomeChecked = "NO";
-			$tempWorkChecked = "NO";
-			$tempCellChecked = "YES";
+			$tempHomeChecked = "false";
+			$tempWorkChecked = "false";
+			$tempCellChecked = "true";
 			break;
 	}
 	$tempFirstName = $post['first'];
