@@ -19,19 +19,17 @@
 				<label for="email">Email</label>
 					<input type="text" name="email" id="email" value="<?php echo $_GET['email'];?>" /></br>
 				<label for="home">Home</label>
-					<input type="radio" name="gender" value="1"
-								<?php if ($_GET['homePhoneChecked'] == "true"){
-									echo checked;
-								}?>>
+					<input type="radio" name="phoneChecker" value="1" checked>
+					
 					<input type="text" name="home" id="home" value="<?php echo $_GET['homePhone'];?>" /></br>
 				<label for="work">Work</label>
-					<input type="radio" name="gender" value="2"
+					<input type="radio" name="phoneChecker" value="2"
 								<?php if ($_GET['workPhoneChecked'] == "true"){
 									echo checked;
 								}?>>
 					<input type="text" name="work" id="work" value="<?php echo $_GET['workPhone'];?>" /></br>
 				<label for="cell">Cell</label>
-					<input type="radio" name="gender" value="3"
+					<input type="radio" name="phoneChecker" value="3"
 								<?php if ($_GET['cellPhoneChecked'] == "true"){
 									echo checked;
 								}?>>

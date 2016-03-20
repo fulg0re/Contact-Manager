@@ -4,11 +4,9 @@ function getOneContact($id){
 	include_once ('dbConnection.php');
     $query = "SELECT * FROM contacts WHERE id = ".$id;
     $results = $conn->query($query);
-    if ($results->num_rows > 0){
+    if ($results->num_rows > 0)
         return $results->fetch_array(MYSQLI_ASSOC);
-	}else{
-		return false;
-	}
+	return false;
 };
 
 function deleteRow($id){
@@ -19,72 +17,28 @@ function deleteRow($id){
 
 function displayMassage($msg){
     echo "<div class='err'>$msg</div>";
-}
+};
+
+function passwordGeneretor($pass){
+	return sha1($pass);
+};
 
 function processLogin($post){
 	include_once ('dbConnection.php');
-
-    $query = "SELECT * FROM users WHERE username = '".$post['uname']."' and password = '".sha1($post['pass'])."' Limit 1";
+    $query = "SELECT * FROM users WHERE username = '".$post['uname']."' and password = '".passwordGeneretor($post['pass'])."' Limit 1";
     $results = $conn->query($query);
-    if ($results->num_rows > 0){
-        $row = $results->fetch_array(MYSQLI_ASSOC);
-        $_SESSION['LoggedIn'] = true;
-        $_SESSION['id'] = $row['id'];
-        $_SESSION['username'] = $row['username'];
-
-        return true;
-    }else {
-        return false;
-    }
-}
+    if ($results->num_rows <= 0)
+		return false;
+	$row = $results->fetch_array(MYSQLI_ASSOC);
+	$_SESSION['LoggedIn'] = true;
+	$_SESSION['id'] = $row['id'];
+	$_SESSION['username'] = $row['username'];
+	return true;
+};
 
 function processAddContact($post){
 	include_once ('dbConnection.php');
-	$tempFirstName = $post['first'];
-	$tempLastName = $post['last'];
-	$tempEmail = $post['email'];
-	$tempHome = $post['home'];
-	$tempWork = $post['work'];
-	$tempCell = $post['cell'];
-	$tempAdress1 = $post['adress1'];
-	$tempAdress2 = $post['adress2'];
-	$tempCity = $post['city'];
-	$tempState = $post['state'];
-	$tempZip = $post['zip'];
-	$tempCountry = $post['country'];
-	$tempBirthday = $post['birthday'];
-    $query = "INSERT INTO contacts 
-					(firstName, lastName, email, homePhone, workPhone, cellPhone, adress1, 
-					adress2, city, state, zip, country, birthday)
-			VALUES ('$tempFirstName', '$tempLastName', '$tempEmail', '$tempHome', '$tempWork',
-					'$tempCell', '$tempAdress1', '$tempAdress2', '$tempCity', '$tempState',
-					'$tempZip', '$tempCountry', '$tempBirthday')";
-    $results = $conn->query($query);
-    if (!$results->error){
-        return true;
-    }else {
-        return false;
-    }
-};
-
-function getContacts(){
-	include_once ('dbConnection.php');
-    $query = "SELECT * FROM contacts";
-
-    $result = $conn->query($query);
-
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
-
-function redirect($roadTo){
-	header("location: ".$roadTo);
-	exit;
-}
-
-function processEditing($post){
-	include_once ('dbConnection.php');
-	
-	switch ($post['gender']) {
+	switch ($post['phoneChecker']) {
 		case 1:
 			$tempHomeChecked = "true";
 			$tempWorkChecked = "false";
@@ -100,45 +54,73 @@ function processEditing($post){
 			$tempWorkChecked = "false";
 			$tempCellChecked = "true";
 			break;
-	}
-	$tempFirstName = $post['first'];
-	$tempLastName = $post['last'];
-	$tempEmail = $post['email'];
-	$tempHome = $post['home'];
-	$tempWork = $post['work'];
-	$tempCell = $post['cell'];
-	$tempAdress1 = $post['adress1'];
-	$tempAdress2 = $post['adress2'];
-	$tempCity = $post['city'];
-	$tempState = $post['state'];
-	$tempZip = $post['zip'];
-	$tempCountry = $post['country'];
-	$tempBirthday = $post['birthday'];
-	$tempId = $post['id'];
-	
-    $query = "UPDATE contacts SET 
-					firstName = '".$tempFirstName."',
-					lastName = '".$tempLastName."',
-					email = '".$tempEmail."',
-					homePhone = '".$tempHome."',
-					homePhoneChecked = '".$tempHomeChecked."',
-					workPhone = '".$tempWork."',
-					workPhoneChecked = '".$tempWorkChecked."',
-					cellPhone = '".$tempCell."',
-					cellPhoneChecked = '".$tempCellChecked."',
-					adress1 = '".$tempAdress1."',
-					adress2 = '".$tempAdress2."',
-					city = '".$tempCity."',
-					state = '".$tempState."',
-					zip = '".$tempZip."',
-					country = '".$tempCountry."',
-					birthday = '".$tempBirthday."'
-				WHERE id = ".$tempId;
-				
+	};
+    $query = "INSERT INTO contacts 
+					(firstName, lastName, email, homePhone, homePhoneChecked, workPhone, workPhoneChecked, 
+					cellPhone, cellPhoneChecked, adress1, adress2, city, state, zip, country, birthday)
+			VALUES ('".$post['first']."', '".$post['last']."', '".$post['email']."',
+					'".$post['home']."', '".$tempHomeChecked."', '".$post['work']."',
+					'".$tempWorkChecked."', '".$post['cell']."', '".$tempCellChecked."',
+					'".$post['adress1']."', '".$post['adress2']."','".$post['city']."',
+					'".$post['state']."', '".$post['zip']."', '".$post['country']."',
+					'".$post['birthday']."')";
     $results = $conn->query($query);
-    if (!$results->error){
+    if (!$results->error)
         return true;
-    }else {
-        return false;
-    }
+    return false;
+};
+
+function getContacts(){
+	include_once ('dbConnection.php');
+    $query = "SELECT * FROM contacts";
+    $result = $conn->query($query);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+};
+
+function redirect($roadTo){
+	header("location: ".$roadTo);
+	exit;
+};
+
+function processEditing($post){
+	include_once ('dbConnection.php');	
+	switch ($post['phoneChecker']) {
+		case 1:
+			$tempHomeChecked = "true";
+			$tempWorkChecked = "false";
+			$tempCellChecked = "false";
+			break;
+		case 2:
+			$tempHomeChecked = "false";
+			$tempWorkChecked = "true";
+			$tempCellChecked = "false";
+			break;
+		case 3:
+			$tempHomeChecked = "false";
+			$tempWorkChecked = "false";
+			$tempCellChecked = "true";
+			break;
+	};	
+    $query = "UPDATE contacts SET 
+					firstName = '".$post['first']."',
+					lastName = '".$post['last']."',
+					email = '".$post['email']."',
+					homePhone = '".$post['home']."',
+					homePhoneChecked = '".$tempHomeChecked."',
+					workPhone = '".$post['work']."',
+					workPhoneChecked = '".$tempWorkChecked."',
+					cellPhone = '".$post['cell']."',
+					cellPhoneChecked = '".$tempCellChecked."',
+					adress1 = '".$post['adress1']."',
+					adress2 = '".$post['adress2']."',
+					city = '".$post['city']."',
+					state = '".$post['state']."',
+					zip = '".$post['zip']."',
+					country = '".$post['country']."',
+					birthday = '".$post['birthday']."'
+				WHERE id = ".$post['id'];				
+    $results = $conn->query($query);
+    if (!$results->error)
+        return true;
+    return false;
 };
