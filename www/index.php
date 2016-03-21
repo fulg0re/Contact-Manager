@@ -10,9 +10,11 @@
 		<form action="controller.php" method="post">
 			<div class="field">
 				<label for="uname">UserName</label>
-					<input type="text" name="uname" id="uname" class="rightInput" value="" /></br>
+					<input type="text" name="uname" id="uname" 
+									class="rightInput" value="<?php echo $_GET['wrongLogin'];?>" /></br>
 				<label for="pass">Password</label>
-					<input type="password" name="pass" id="pass" class="rightInput" value="" /></br>
+					<input type="password" name="pass" id="pass" 
+									class="rightInput" value="<?php echo $_GET['wrongPassword'];?>" /></br>
 			</div>
 				
 			<input type="submit" name="tryToLogin" value="Login" /></br>

@@ -11,7 +11,7 @@
 		
 		<h3>Contact Details</h3>
 		<form action="controller.php" method="post">
-			<div class="field">				
+			<div class="field">
 				<label for="first">First</label>
 					<input type="text" name="first" id="first" value="<?php echo $_GET['firstName'];?>" /></br>
 				<label for="last">Last</label>

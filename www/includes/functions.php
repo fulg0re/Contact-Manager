@@ -1,5 +1,55 @@
 <?php
 
+function validationProcess($post){
+	if ($post['first'] == "" || $post['last'] == "" || $post['email'] == "" || $post['home'] == "" ||
+	$post['work'] == "" || $post['cell'] == "" || $post['adress1'] == "" || $post['adress2'] == "" ||
+	$post['city'] == "" || $post['state'] == "" || $post['zip'] == "" || $post['country'] == "" ||
+	$post['birthday'] == "")
+		return false;
+	return true;
+};
+
+function wrongAddEditContact($post){
+	if ($post['ADDButton']){
+		$button = "ADD";
+	}else $button = "Edit";
+	switch ($post['phoneChecker']) {
+		case 1:
+			$tempHomePhone = "true";
+			$tempWorkPhone = "false";
+			$tempCellPhone = "false";
+			break;
+		case 2:
+			$tempHomePhone = "false";
+			$tempWorkPhone = "true";
+			$tempCellPhone = "false";
+			break;
+		case 3:
+			$tempHomePhone = "false";
+			$tempWorkPhone = "false";
+			$tempCellPhone = "true";
+			break;
+	};
+	return $temp = "firstName=".$post['first']."&
+		lastName=".$post['last']."&
+		email=".$post['email']."&
+		homePhone=".$post['home']."&
+		homePhoneChecked=".$tempHomePhone."&
+		workPhone=".$post['work']."&
+		workPhoneChecked=".$tempWorkPhone."&
+		cellPhone=".$post['cell']."&
+		cellPhoneChecked=".$tempCellPhone."&
+		adress1=".$post['adress1']."&
+		adress2=".$post['adress2']."&
+		city=".$post['city']."&
+		state=".$post['state']."&
+		zip=".$post['zip']."&
+		country=".$post['country']."&
+		birthday=".$post['birthday']."&
+		id=".$post['id']."&
+		button=".$button; 
+};
+
 function getOneContact($id){
 	include_once ('dbConnection.php');
     $query = "SELECT * FROM contacts WHERE id = ".$id;
