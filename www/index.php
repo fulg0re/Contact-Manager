@@ -16,7 +16,7 @@
 					<input type="password" name="pass" id="pass" 
 									class="rightInput" value="<?php echo $_GET['wrongPassword'];?>" /></br>
 			</div>
-				
+			
 			<input type="submit" name="tryToLogin" value="Login" /></br>
 		</form>
 	</body>

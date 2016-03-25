@@ -13,15 +13,13 @@ if(isset($_GET['editId']))
 	$foundedContact = getOneContact($_GET['editId']);
 	if ($foundedContact != false){
 		redirect("edit.php?
-			firstName=".$foundedContact['firstName']."&
-			lastName=".$foundedContact['lastName']."&
+			firstname=".$foundedContact['firstname']."&
+			lastname=".$foundedContact['lastname']."&
 			email=".$foundedContact['email']."&
-			homePhone=".$foundedContact['homePhone']."&
-			homePhoneChecked=".$foundedContact['homePhoneChecked']."&
-			workPhone=".$foundedContact['workPhone']."&
-			workPhoneChecked=".$foundedContact['workPhoneChecked']."&
-			cellPhone=".$foundedContact['cellPhone']."&
-			cellPhoneChecked=".$foundedContact['cellPhoneChecked']."&
+			home_phone=".$foundedContact['home_phone']."&
+			work_phone=".$foundedContact['work_phone']."&
+			cell_phone=".$foundedContact['cell_phone']."&
+			best_phone=".$foundedContact['best_phone']."&
 			adress1=".$foundedContact['adress1']."&
 			adress2=".$foundedContact['adress2']."&
 			city=".$foundedContact['city']."&

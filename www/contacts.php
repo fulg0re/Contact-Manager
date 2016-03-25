@@ -23,16 +23,20 @@
 				</tr>
 				<?php foreach ($contacts as $v) {?>
 					<tr>
-						<td><?php echo $v['lastName']?></td>
-						<td><?php echo $v['firstName']?></td>
+						<td><?php echo $v['lastname']?></td>
+						<td><?php echo $v['firstname']?></td>
 						<td><?php echo $v['email']?></td>
-						<td><?php if ($v['homePhoneChecked'] == "true") {
-									echo $v['homePhone'];
-								}else if ($v['workPhoneChecked'] == "true"){
-									echo $v['workPhone'];
-								}else{
-									echo $v['cellPhone'];
-								}?></td>
+						<td><?php switch ($v['best_phone']) {
+									case "home_phone":
+										echo $v['home_phone'];
+										break;
+									case "work_phone":
+										echo $v['work_phone'];
+										break;
+									case "cell_phone":
+										echo $v['cell_phone'];
+										break;
+								};?></td>
 						<?php $contactId = $v['id'];?>
 						<td><a href='controller.php?editId=<?php echo $contactId?>'>edit/view</a></td>
 						<td><a href='controller.php?deleteId=<?php echo $contactId?>'>delete</a></td>

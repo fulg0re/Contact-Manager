@@ -5,35 +5,35 @@
 		<link rel="stylesheet" href="css/main.css">
 	</head>
 	<body>
-		<div class='err'><h3><?php echo $_GET['msg'];?></h3></div>
+		<div class='err'><h3><?php echo $_GET['msg'];?></h3></div>	
 		
-		<a href='logout.php'>logout</a>
+		<a href='logout.php'>logout</a>		
 		
 		<h3>Contact Details</h3>
 		<form action="controller.php" method="post">
 			<div class="field">
 				<label for="first">First</label>
-					<input type="text" name="first" id="first" value="<?php echo $_GET['firstName'];?>" /></br>
+					<input type="text" name="first" id="first" value="<?php echo $_GET['firstname'];?>" /></br>
 				<label for="last">Last</label>
-					<input type="text" name="last" id="last" value="<?php echo $_GET['lastName'];?>" /></br>
+					<input type="text" name="last" id="last" value="<?php echo $_GET['lastname'];?>" /></br>
 				<label for="email">Email</label>
 					<input type="text" name="email" id="email" value="<?php echo $_GET['email'];?>" /></br>
 				<label for="home">Home</label>
-					<input type="radio" name="phoneChecker" value="1" checked>
+					<input type="radio" name="bestPhone" value="home_phone" checked>
 					
-					<input type="text" name="home" id="home" value="<?php echo $_GET['homePhone'];?>" /></br>
+					<input type="text" name="home" id="home" value="<?php echo $_GET['home_phone'];?>" /></br>
 				<label for="work">Work</label>
-					<input type="radio" name="phoneChecker" value="2"
-								<?php if ($_GET['workPhoneChecked'] == "true"){
+					<input type="radio" name="bestPhone" value="work_phone"
+								<?php if ($_GET['best_phone'] == "work_phone"){
 									echo checked;
 								}?>>
-					<input type="text" name="work" id="work" value="<?php echo $_GET['workPhone'];?>" /></br>
+					<input type="text" name="work" id="work" value="<?php echo $_GET['work_phone'];?>" /></br>
 				<label for="cell">Cell</label>
-					<input type="radio" name="phoneChecker" value="3"
-								<?php if ($_GET['cellPhoneChecked'] == "true"){
+					<input type="radio" name="bestPhone" value="cell_phone"
+								<?php if ($_GET['best_phone'] == "cell_phone"){
 									echo checked;
 								}?>>
-					<input type="text" name="cell" id="cell" value="<?php echo $_GET['cellPhone'];?>" /></br>
+					<input type="text" name="cell" id="cell" value="<?php echo $_GET['cell_phone'];?>" /></br>
 				<label for="adress1">Adress 1</label>
 					<input type="text" name="adress1" id="adress1" value="<?php echo $_GET['adress1'];?>" /></br>
 				<label for="adress2">Adress 2</label>
