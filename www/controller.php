@@ -12,6 +12,9 @@ if(isset($_GET['editId']))
 {
 	$foundedContact = getOneContact($_GET['editId']);
 	if ($foundedContact != false){
+		//writeToCookie($foundedContact);
+		redirect("edit.php");
+		/*
 		redirect("edit.php?
 			firstname=".$foundedContact['firstname']."&
 			lastname=".$foundedContact['lastname']."&
@@ -29,7 +32,7 @@ if(isset($_GET['editId']))
 			birthday=".$foundedContact['birthday']."&
 			id=".$foundedContact['id']."&
 			button=Edit"
-		);
+		);*/
 	};
 };
 

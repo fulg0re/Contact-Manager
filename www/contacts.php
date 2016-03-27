@@ -38,7 +38,7 @@
 										break;
 								};?></td>
 						<?php $contactId = $v['id'];?>
-						<td><a href='controller.php?editId=<?php echo $contactId?>'>edit/view</a></td>
+						<td><a href='edit.php?editId=<?php echo $contactId?>'>edit/view</a></td>
 						<td><a href='controller.php?deleteId=<?php echo $contactId?>'>delete</a></td>
 					</tr>
 				<?php }?>				

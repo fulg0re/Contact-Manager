@@ -1,5 +1,24 @@
 <?php
-
+/*
+function writeToCookie($cookieData){
+	setcookie("firstname", $cookieData['firstname']);
+	setcookie("lastname", $cookieData['lastname']);
+	setcookie("email", $cookieData['email']);
+	setcookie("home_phone", $cookieData['home_phone']);
+	setcookie("work_phone", $cookieData['work_phone']);
+	setcookie("cell_phone", $cookieData['cell_phone']);
+	setcookie("best_phone", $cookieData['best_phone']);
+	setcookie("adress1", $cookieData['adress1']);
+	setcookie("adress2", $cookieData['adress2']);
+	setcookie("city", $cookieData['city']);
+	setcookie("state", $cookieData['state']);
+	setcookie("zip", $cookieData['zip']);
+	setcookie("country", $cookieData['country']);
+	setcookie("birthday", $cookieData['birthday']);
+	setcookie("id", $cookieData['id']);
+	setcookie("Button", "Edit");
+};
+*/
 function validationProcess($post){
 	if ($post['first'] == "" || $post['last'] == "" || $post['email'] == "" || $post['home'] == "" ||
 	$post['work'] == "" || $post['cell'] == "" || $post['adress1'] == "" || $post['adress2'] == "" ||
@@ -69,7 +88,7 @@ function processLogin($post){
 };
 
 function processAddContact($post){
-	include_once ('dbConnection.php');	
+	include_once ('dbConnection.php');
 	$tempBestPhone = $post['bestPhone'];
     $query = "INSERT INTO contacts 
 					(firstname, lastname, email, home_phone, work_phone, cell_phone, best_phone,
