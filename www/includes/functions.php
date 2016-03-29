@@ -1,37 +1,35 @@
 <?php
-/*
-function writeToCookie($cookieData){
-	setcookie("firstname", $cookieData['firstname']);
-	setcookie("lastname", $cookieData['lastname']);
-	setcookie("email", $cookieData['email']);
-	setcookie("home_phone", $cookieData['home_phone']);
-	setcookie("work_phone", $cookieData['work_phone']);
-	setcookie("cell_phone", $cookieData['cell_phone']);
-	setcookie("best_phone", $cookieData['best_phone']);
-	setcookie("adress1", $cookieData['adress1']);
-	setcookie("adress2", $cookieData['adress2']);
-	setcookie("city", $cookieData['city']);
-	setcookie("state", $cookieData['state']);
-	setcookie("zip", $cookieData['zip']);
-	setcookie("country", $cookieData['country']);
-	setcookie("birthday", $cookieData['birthday']);
-	setcookie("id", $cookieData['id']);
-	setcookie("Button", "Edit");
+
+function makePostVariables($data){		//used at edit.php...
+	$_POST['firstname'] = $data['firstname'];
+	$_POST['lastname'] = $data['lastname'];
+	$_POST['email'] = $data['email'];
+	$_POST['home_phone'] = $data['home_phone'];
+	$_POST['work_phone'] = $data['work_phone'];
+	$_POST['cell_phone'] = $data['cell_phone'];
+	$_POST['best_phone'] = $data['best_phone'];
+	$_POST['adress1'] = $data['adress1'];
+	$_POST['adress2'] = $data['adress2'];
+	$_POST['city'] = $data['city'];
+	$_POST['state'] = $data['state'];
+	$_POST['zip'] = $data['zip'];
+	$_POST['country'] = $data['country'];
+	$_POST['birthday'] = $data['birthday'];
+	$_POST['id'] = $data['id'];
 };
-*/
-function validationProcess($post){
-	if ($post['first'] == "" || $post['last'] == "" || $post['email'] == "" || $post['home'] == "" ||
-	$post['work'] == "" || $post['cell'] == "" || $post['adress1'] == "" || $post['adress2'] == "" ||
-	$post['city'] == "" || $post['state'] == "" || $post['zip'] == "" || $post['country'] == "" ||
-	$post['birthday'] == "")
+
+function validationProcess($post){		//used at controller.php
+	if ($post['first'] == "" || $post['last'] == "" || $post['email'] == "" || $post['birthday'] == "" ||
+		$post['home'] == "" || $post['work'] == "" || $post['cell'] == ""){
 		return false;
+	}
 	return true;
 };
 
-function wrongAddEditContact($post){
+function wrongAddContact($post){		//used at controller.php...
 	if ($post['ADDButton']){
 		$button = "ADD";
-	}else $button = "Edit";	
+	}else $button = "Edit";
 	$tempBestPhone = $post['bestPhone'];
 	return $temp = "firstname=".$post['first']."&
 		lastname=".$post['last']."&
@@ -48,38 +46,36 @@ function wrongAddEditContact($post){
 		country=".$post['country']."&
 		birthday=".$post['birthday']."&
 		id=".$post['id']."&
-		button=".$button; 
+		button=".$button;
 };
 
-function getOneContact($id){
+function getOneContact($id){		//used at edit.php...
 	include_once ('dbConnection.php');
     $query = "SELECT * FROM contacts WHERE id = ".$id;
     $results = $conn->query($query);
-    if ($results->num_rows > 0)
-        return $results->fetch_array(MYSQLI_ASSOC);
+    if ($results->num_rows > 0){
+		return $results->fetch_array(MYSQLI_ASSOC);
+	}
 	return false;
 };
 
-function deleteRow($id){
+function deleteRow($id){		//used at controller.php...
 	include_once ('dbConnection.php');
 	$query = "DELETE FROM contacts WHERE id=".$id;
     $result = $conn->query($query);
 };
 
-function displayMassage($msg){
-    echo "<div class='err'>$msg</div>";
-};
-
-function generatePassword($pass){
+function generatePassword($pass){		//userd at functions.php >> processLogin()...
 	return sha1($pass);
 };
 
-function processLogin($post){
+function processLogin($post){		//used at controller.php...
 	include_once ('dbConnection.php');
     $query = "SELECT * FROM users WHERE username = '".$post['uname']."' and password = '".generatePassword($post['pass'])."' Limit 1";
     $results = $conn->query($query);
-    if ($results->num_rows <= 0)
+    if ($results->num_rows <= 0){
 		return false;
+	}
 	$row = $results->fetch_array(MYSQLI_ASSOC);
 	$_SESSION['LoggedIn'] = true;
 	$_SESSION['id'] = $row['id'];
@@ -87,7 +83,7 @@ function processLogin($post){
 	return true;
 };
 
-function processAddContact($post){
+function processAddContact($post){		//used at controller.php...
 	include_once ('dbConnection.php');
 	$tempBestPhone = $post['bestPhone'];
     $query = "INSERT INTO contacts 
@@ -99,14 +95,24 @@ function processAddContact($post){
 					'".$post['city']."', '".$post['state']."', '".$post['zip']."',
 					'".$post['country']."',	'".$post['birthday']."')";
     $results = $conn->query($query);
-    if (!$results->error)
-        return true;
+    if (!$results->error){
+		return true;
+	}
     return false;
 };
 
-function getContacts(){
+function getContacts($activePage){		//used at contacts.php...
 	include_once ('dbConnection.php');
-    $query = "SELECT * FROM contacts";
+	include_once ('config.php');
+	$_POST['numberOfContacts'] = count(mysqli_fetch_all($conn->query("SELECT * FROM contacts"), MYSQLI_ASSOC));
+
+	$limitFrom = ($activePage*MAX_ON_PAGE)-MAX_ON_PAGE;
+	$limitTo = MAX_ON_PAGE;
+	if ($activePage < 1){
+		$query = "SELECT * FROM contacts LIMIT 0, ". $limitTo;
+	}else{
+		$query = "SELECT * FROM contacts LIMIT ".$limitFrom.", ".$limitTo;
+	};
     $result = $conn->query($query);
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 };
@@ -116,7 +122,7 @@ function redirect($roadTo){
 	exit;
 };
 
-function processEditing($post){
+function processEditing($post){		//used at controller.php...
 	include_once ('dbConnection.php');
 	$tempBestPhone = $post['bestPhone'];
     $query = "UPDATE contacts SET 
@@ -136,7 +142,8 @@ function processEditing($post){
 					birthday = '".$post['birthday']."'
 				WHERE id = ".$post['id'];				
     $results = $conn->query($query);
-    if (!$results->error)
-        return true;
+    if (!$results->error){
+		return true;
+	}
     return false;
 };

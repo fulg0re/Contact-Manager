@@ -7,7 +7,11 @@
 	<body>
 		<?php
 			include_once("includes/functions.php");
-			$contacts = getContacts();
+			include_once("includes/config.php");
+			if (!$_GET['activePage']){
+				$activePage = 1;
+			};
+			$contacts = getContacts($_GET['activePage']);
 		?>		
 		<div class='err'><h3><?php echo $_GET['msg'];?></h3></div>		
 		<a href='logout.php'>logout</a>		
@@ -43,7 +47,43 @@
 					</tr>
 				<?php }?>				
 			</table>
-			<input type="submit" name="addNewContact" value="ADD"></br>
+			<input type="submit" name="addNewContact" value="ADD"></br></br>
+
+
+			<!--
+			function buildPagination() {
+			var selPage = app.data.selectedTab;
+			var start = selPage - 5;
+			var stop = selPage + 5;
+			var maxPage = app.data.maxTab;
+			var html = '<ul class="pagination" id="paginationlink">';
+				if (start > 1) {html += '<li><a href="#1">1...</a></li>';}
+				for (var i = start; i <= stop; i++) {
+				if (i >= 1 && i <= maxPage) {
+				i == selPage ? html += '<li class="active"><a href="#' + i +'">' + i +'</a></li>' : html += '<li><a href="#' + i +'">' + i +'</a></li>';
+				}
+				}
+				if (stop < maxPage) {html += '<li><a href="#' + maxPage +'">...' + maxPage + '</a></li>';}
+				html += '</ul>';
+			return html;
+			}
+			-->
+			<?php
+
+			$maxPages = ceil($_POST['numberOfContacts']/MAX_ON_PAGE);
+			$temp = 1;
+			while ($temp <= $maxPages) {
+				$tempUrl = "controller.php?activePage=".$temp;
+				?>
+
+				<a href='controller.php?activePage=<?php echo $temp?>'><?php echo $temp?></a>
+
+				<?php
+				$temp++;
+			};
+
+			?>
+
 		</form>
 	</body>
 </html>

@@ -9,25 +9,12 @@
 
 			include_once("includes/functions.php");
 			if ($_GET['button']) {
+				makePostVariables($_GET);	// look at functions...
 				$_POST['button'] = "ADD";
 			}else{
 				$foundedContact = getOneContact($_GET['editId']);
 				if ($foundedContact != false){
-					$_POST['firstname'] = $foundedContact['firstname'];
-					$_POST['lastname'] = $foundedContact['lastname'];
-					$_POST['email'] = $foundedContact['email'];
-					$_POST['home_phone'] = $foundedContact['home_phone'];
-					$_POST['work_phone'] = $foundedContact['work_phone'];
-					$_POST['cell_phone'] = $foundedContact['cell_phone'];
-					$_POST['best_phone'] = $foundedContact['best_phone'];
-					$_POST['adress1'] = $foundedContact['adress1'];
-					$_POST['adress2'] = $foundedContact['adress2'];
-					$_POST['city'] = $foundedContact['city'];
-					$_POST['state'] = $foundedContact['state'];
-					$_POST['zip'] = $foundedContact['zip'];
-					$_POST['country'] = $foundedContact['country'];
-					$_POST['birthday'] = $foundedContact['birthday'];
-					$_POST['id'] = $foundedContact['id'];
+					makePostVariables($foundedContact);
 					$_POST['button'] = "Edit";
 				};
 			};
