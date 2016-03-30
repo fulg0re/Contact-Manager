@@ -101,17 +101,48 @@ function processAddContact($post){		//used at controller.php...
     return false;
 };
 
-function getContacts($activePage){		//used at contacts.php...
+function getContacts($activePage, $sortBy, $sortTurn, $noSort){		//used at contacts.php...
 	include_once ('dbConnection.php');
 	include_once ('config.php');
+
+	if (!$noSort){
+		switch ($sortBy){
+			case "lastname":
+				if ($sortTurn == "ASC"){
+					$_POST['sortBy'] = "lastname";
+					$_POST['sortTurn'] = "DESC";
+				}else{
+					$_POST['sortBy'] = "lastname";
+					$_POST['sortTurn'] = "ASC";
+				};
+				break;
+			case "firstname":
+				if ($sortTurn == "ASC"){
+					$_POST['sortBy'] = "firstname";
+					$_POST['sortTurn'] = "DESC";
+				}else{
+					$_POST['sortBy'] = "firstname";
+					$_POST['sortTurn'] = "ASC";
+				};
+				break;
+			default:
+				$_POST['sortBy'] = "lastname";
+				$_POST['sortTurn'] = "ASC";
+				break;
+		};
+	}else{
+		$_POST['sortBy'] = $sortBy;
+		$_POST['sortTurn'] = $sortTurn;
+	};
+
 	$_POST['numberOfContacts'] = count(mysqli_fetch_all($conn->query("SELECT * FROM contacts"), MYSQLI_ASSOC));
 
 	$limitFrom = ($activePage*MAX_ON_PAGE)-MAX_ON_PAGE;
 	$limitTo = MAX_ON_PAGE;
 	if ($activePage < 1){
-		$query = "SELECT * FROM contacts LIMIT 0, ". $limitTo;
+		$query = "SELECT * FROM contacts ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']." LIMIT 0, ". $limitTo;
 	}else{
-		$query = "SELECT * FROM contacts LIMIT ".$limitFrom.", ".$limitTo;
+		$query = "SELECT * FROM contacts ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']." LIMIT ".$limitFrom.", ".$limitTo;
 	};
     $result = $conn->query($query);
     return mysqli_fetch_all($result, MYSQLI_ASSOC);

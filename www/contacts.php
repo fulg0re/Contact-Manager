@@ -11,7 +11,7 @@
 			if (!$_GET['activePage']){
 				$activePage = 1;
 			};
-			$contacts = getContacts($_GET['activePage']);
+			$contacts = getContacts($_GET['activePage'], $_GET['sortBy'], $_GET['sortTurn'], $_GET['noSort']);
 		?>		
 		<div class='err'><h3><?php echo $_GET['msg'];?></h3></div>		
 		<a href='logout.php'>logout</a>		
@@ -20,8 +20,32 @@
 			<input type="submit" name="addNewContact" value="ADD"></br>
 			<table style="border: 1px solid">
 				<tr>
-					<th><a href="#">Last</a></th>
-					<th><a href="#">First</a></th>
+					<th><a href="contacts.php?
+							activePage=<?php echo $_GET['activePage']?>&
+							sortBy=lastname&
+							sortTurn=<?php echo $_POST['sortTurn']?>">Last
+								<?php
+									if ($_POST['sortBy'] == "lastname" && $_POST['sortTurn'] == "DESC"){
+										echo "<img src='img/DESC.png' />";
+									}else
+									if ($_POST['sortBy'] == "lastname" && $_POST['sortTurn'] == "ASC"){
+										echo "<img src='img/ASC.png' />";
+									};
+								?>
+						</a></th>
+					<th><a href="contacts.php?
+							activePage=<?php echo $_GET['activePage']?>&
+							sortBy=firstname&
+							sortTurn=<?php echo $_POST['sortTurn']?>">First
+								<?php
+								if ($_POST['sortBy'] == "firstname" && $_POST['sortTurn'] == "DESC"){
+									echo "<img src='img/DESC.png' />";
+								}else
+									if ($_POST['sortBy'] == "firstname" && $_POST['sortTurn'] == "ASC"){
+										echo "<img src='img/ASC.png' />";
+									};
+								?>
+						</a></th>
 					<th>Email</th>
 					<th>Best Phone</th>
 				</tr>
@@ -49,25 +73,6 @@
 			</table>
 			<input type="submit" name="addNewContact" value="ADD"></br></br>
 
-
-			<!--
-			function buildPagination() {
-			var selPage = app.data.selectedTab;
-			var start = selPage - 5;
-			var stop = selPage + 5;
-			var maxPage = app.data.maxTab;
-			var html = '<ul class="pagination" id="paginationlink">';
-				if (start > 1) {html += '<li><a href="#1">1...</a></li>';}
-				for (var i = start; i <= stop; i++) {
-				if (i >= 1 && i <= maxPage) {
-				i == selPage ? html += '<li class="active"><a href="#' + i +'">' + i +'</a></li>' : html += '<li><a href="#' + i +'">' + i +'</a></li>';
-				}
-				}
-				if (stop < maxPage) {html += '<li><a href="#' + maxPage +'">...' + maxPage + '</a></li>';}
-				html += '</ul>';
-			return html;
-			}
-			-->
 			<?php
 
 			$maxPages = ceil($_POST['numberOfContacts']/MAX_ON_PAGE);
@@ -76,7 +81,11 @@
 				$tempUrl = "controller.php?activePage=".$temp;
 				?>
 
-				<a href='controller.php?activePage=<?php echo $temp?>'><?php echo $temp?></a>
+				<a href='contacts.php?
+						activePage=<?php echo $temp?>&
+						sortBy=<?php echo $_POST['sortBy']?>&
+						sortTurn=<?php echo $_POST['sortTurn']?>&
+						noSort=false'><?php echo $temp?></a>
 
 				<?php
 				$temp++;

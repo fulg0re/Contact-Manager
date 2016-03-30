@@ -55,5 +55,5 @@ if(isset($_POST['ADDButton'])){
 };
 
 if(isset($_GET['activePage'])){
-	redirect("contacts.php?activePage=".$_GET['activePage']);
+	redirect("contacts.php?activePage=".$_GET['activePage']."&sortBy=".$_GET['sortBy']);
 };
