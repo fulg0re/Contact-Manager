@@ -53,7 +53,3 @@ if(isset($_POST['ADDButton'])){
 	redirect("contacts.php?msg=Error editing contact...");
 	
 };
-
-if(isset($_GET['activePage'])){
-	redirect("contacts.php?activePage=".$_GET['activePage']."&sortBy=".$_GET['sortBy']);
-};

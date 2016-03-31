@@ -28,23 +28,23 @@
 		<h3>Contact Details</h3>
 		<form action="controller.php" method="post">
 			<div class="field">
-				<label for="first">First</label>
+				<label for="first">First*</label>
 					<input type="text" name="first" id="first" value="<?php echo $_POST['firstname']?>" /></br>
-				<label for="last">Last</label>
+				<label for="last">Last*</label>
 					<input type="text" name="last" id="last" value="<?php echo $_POST['lastname'];?>" /></br>
-				<label for="email">Email</label>
+				<label for="email">Email*</label>
 					<input type="text" name="email" id="email" value="<?php echo $_POST['email'];?>" /></br>
-				<label for="home">Home</label>
+				<label for="home">Home*</label>
 					<input type="radio" name="bestPhone" value="home_phone" checked>
 					
 					<input type="text" name="home" id="home" value="<?php echo $_POST['home_phone'];?>" /></br>
-				<label for="work">Work</label>
+				<label for="work">Work*</label>
 					<input type="radio" name="bestPhone" value="work_phone"
 								<?php if ($_POST['best_phone'] == "work_phone"){
 									echo checked;
 								}?>>
 					<input type="text" name="work" id="work" value="<?php echo $_POST['work_phone'];?>" /></br>
-				<label for="cell">Cell</label>
+				<label for="cell">Cell*</label>
 					<input type="radio" name="bestPhone" value="cell_phone"
 								<?php if ($_POST['best_phone'] == "cell_phone"){
 									echo checked;
@@ -62,8 +62,8 @@
 					<input type="text" name="zip" id="zip" value="<?php echo $_POST['zip'];?>" /></br>
 				<label for="country">Country</label>
 					<input type="text" name="country" id="country" value="<?php echo $_POST['country'];?>" /></br>
-				<label for="birthday">Birthday</label>
-					<input type="text" name="birthday" id="birthday" value="<?php echo $_POST['birthday'];?>" /></br>
+				<label for="birthday">Birthday*</label>
+					<input type="text" name="birthday" id="birthday" placeholder="YYYY-MM-DD" value="<?php echo $_POST['birthday'];?>" /></br>
 									
 					<input type="hidden" name="id" value="<?php echo $_POST['id'];?>"></br>
 			</div>

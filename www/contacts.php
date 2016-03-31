@@ -78,7 +78,6 @@
 			$maxPages = ceil($_POST['numberOfContacts']/MAX_ON_PAGE);
 			$temp = 1;
 			while ($temp <= $maxPages) {
-				$tempUrl = "controller.php?activePage=".$temp;
 				?>
 
 				<a href='contacts.php?
