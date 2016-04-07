@@ -9,12 +9,12 @@
 
 			include_once("includes/functions.php");
 			if ($_GET['button']) {
-				makePostVariables($_GET);	// look at functions...
 				$_POST['button'] = "ADD";
+				makePostVariables($_GET);		// look at functions...
 			}else{
 				$foundedContact = getOneContact($_GET['editId']);
 				if ($foundedContact != false){
-					makePostVariables($foundedContact);
+					makePostVariables($foundedContact);		// look at functions...
 					$_POST['button'] = "Edit";
 				};
 			};

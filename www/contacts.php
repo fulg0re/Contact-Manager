@@ -8,11 +8,19 @@
 		<?php
 			include_once("includes/functions.php");
 			include_once("includes/config.php");
-			if (!$_GET['activePage']){
-				$activePage = 1;
-			};
-			$contacts = getContacts($_GET['activePage'], $_GET['sortBy'], $_GET['sortTurn'], $_GET['noSort']);
-		?>		
+
+
+
+			$_POST['sortBy'] = $_GET['sortBy'];
+			$_POST['sortTurn'] = $_GET['sortTurn'];
+			$_POST['activePage'] = $_GET['activePage'];
+/*
+			var_dump($_POST['activePage']);
+			var_dump($_POST['sortTurn']);
+			var_dump($_POST['sortBy']);
+*/
+			$contacts = getContacts();
+		?>
 		<div class='err'><h3><?php echo $_GET['msg'];?></h3></div>		
 		<a href='logout.php'>logout</a>		
 		<h3>MANAGEMENT MAIN PAGE</h3>
@@ -21,31 +29,23 @@
 			<table style="border: 1px solid">
 				<tr>
 					<th><a href="contacts.php?
-							activePage=<?php echo $_GET['activePage']?>&
-							sortBy=lastname&
-							sortTurn=<?php echo $_POST['sortTurn']?>">Last
-								<?php
-									if ($_POST['sortBy'] == "lastname" && $_POST['sortTurn'] == "DESC"){
-										echo "<img src='img/DESC.png' />";
-									}else
-									if ($_POST['sortBy'] == "lastname" && $_POST['sortTurn'] == "ASC"){
-										echo "<img src='img/ASC.png' />";
-									};
-								?>
-						</a></th>
+						sortBy=lastname&
+						activePage=<?php echo $_POST['activePage']?>&
+						sortTurn=<?php turnSide($_POST['sortTurn']);?>">Last
+							<?php
+							if ($_POST['sortBy'] == "lastname"){
+								inputImage();
+							};
+							?> </a></th>
 					<th><a href="contacts.php?
-							activePage=<?php echo $_GET['activePage']?>&
-							sortBy=firstname&
-							sortTurn=<?php echo $_POST['sortTurn']?>">First
-								<?php
-								if ($_POST['sortBy'] == "firstname" && $_POST['sortTurn'] == "DESC"){
-									echo "<img src='img/DESC.png' />";
-								}else
-									if ($_POST['sortBy'] == "firstname" && $_POST['sortTurn'] == "ASC"){
-										echo "<img src='img/ASC.png' />";
-									};
-								?>
-						</a></th>
+						sortBy=firstname&
+						activePage=<?php echo $_POST['activePage']?>&
+						sortTurn=<?php turnSide($_POST['sortTurn']);?>">First
+							<?php
+							if ($_POST['sortBy'] == "firstname"){
+								inputImage();
+							};
+							?> </a></th>
 					<th>Email</th>
 					<th>Best Phone</th>
 				</tr>
@@ -73,6 +73,18 @@
 			</table>
 			<input type="submit" name="addNewContact" value="ADD"></br></br>
 
+			<a href='contacts.php?
+						sortBy=<?php echo $_POST['sortBy']?>&
+						activePage=<?php
+										$tempPage = (intval($_POST['activePage']));
+										if ($tempPage > 1){
+											echo (intval($_POST['activePage']) - 1);
+										}else{
+											echo 1;
+										};
+									?>&
+						sortTurn=<?php echo $_POST['sortTurn']?>'>previous</a>
+
 			<?php
 
 			$maxPages = ceil($_POST['numberOfContacts']/MAX_ON_PAGE);
@@ -81,16 +93,27 @@
 				?>
 
 				<a href='contacts.php?
-						activePage=<?php echo $temp?>&
 						sortBy=<?php echo $_POST['sortBy']?>&
-						sortTurn=<?php echo $_POST['sortTurn']?>&
-						noSort=false'><?php echo $temp?></a>
+						activePage=<?php echo $temp?>&
+						sortTurn=<?php echo $_POST['sortTurn']?>'><?php echo $temp?></a>
 
 				<?php
 				$temp++;
 			};
 
 			?>
+
+			<a href='contacts.php?
+						sortBy=<?php echo $_POST['sortBy']?>&
+						activePage=<?php
+										$tempPage = (intval($_POST['activePage']));
+										if ($tempPage >= $maxPages){
+											echo $maxPages;
+										}else{
+											echo (intval($_POST['activePage']) + 1);
+										};
+									?>&
+						sortTurn=<?php echo $_POST['sortTurn']?>'>next</a>
 
 		</form>
 	</body>

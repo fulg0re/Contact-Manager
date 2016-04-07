@@ -1,5 +1,22 @@
 <?php
 
+function turnSide($sortTurn){
+	if ($sortTurn == "DESC"){
+		echo "ASC";
+	}else{
+		echo "DESC";
+	};
+};
+
+function inputImage(){	//used at contacts.php...
+	include_once ('config.php');
+	if ($_POST['sortTurn'] == "DESC"){
+		echo "<img src='".IMG_SORT_BY_DESC."' />";
+	}else{
+		echo "<img src='".IMG_SORT_BY_ASC."' />";
+	};
+};
+
 function makePostVariables($data){		//used at edit.php...
 	$_POST['firstname'] = $data['firstname'];
 	$_POST['lastname'] = $data['lastname'];
@@ -19,10 +36,22 @@ function makePostVariables($data){		//used at edit.php...
 };
 
 function validationProcess($post){		//used at controller.php
-	if ($post['first'] == "" || $post['last'] == "" || $post['email'] == "" || $post['birthday'] == "" ||
-		$post['home'] == "" || $post['work'] == "" || $post['cell'] == ""){
+	$arrayForCheck = array($post['first'], $post['last'], $post['email'], $post['birthday']);
+
+	foreach ($arrayForCheck as $i) {
+		if (empty($i)){
+			return false;
+		};
+	};
+
+	if (empty($post['home']) && empty($post['work']) && empty($post['cell'])){	// phone validation...
 		return false;
-	}
+	};
+
+	if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {	// email validation...
+		return false;
+	};
+
 	return true;
 };
 
@@ -101,49 +130,25 @@ function processAddContact($post){		//used at controller.php...
     return false;
 };
 
-function getContacts($activePage, $sortBy, $sortTurn, $noSort){		//used at contacts.php...
+function getContacts(){		//used at contacts.php...
 	include_once ('dbConnection.php');
 	include_once ('config.php');
 
-	if (!$noSort){
-		switch ($sortBy){
-			case "lastname":
-				if ($sortTurn == "ASC"){
-					$_POST['sortBy'] = "lastname";
-					$_POST['sortTurn'] = "DESC";
-				}else{
-					$_POST['sortBy'] = "lastname";
-					$_POST['sortTurn'] = "ASC";
-				};
-				break;
-			case "firstname":
-				if ($sortTurn == "ASC"){
-					$_POST['sortBy'] = "firstname";
-					$_POST['sortTurn'] = "DESC";
-				}else{
-					$_POST['sortBy'] = "firstname";
-					$_POST['sortTurn'] = "ASC";
-				};
-				break;
-			default:
-				$_POST['sortBy'] = "lastname";
-				$_POST['sortTurn'] = "ASC";
-				break;
-		};
-	}else{
-		$_POST['sortBy'] = $sortBy;
-		$_POST['sortTurn'] = $sortTurn;
+	if (!$_POST['sortBy']){
+		$_POST['sortBy'] = "lastname";
+		$_POST['sortTurn'] = "ASC";
+		$_POST['activePage'] = 1;
 	};
 
-	$_POST['numberOfContacts'] = count(mysqli_fetch_all($conn->query("SELECT * FROM contacts"), MYSQLI_ASSOC));
+	$temp = mysqli_fetch_array($conn->query("SELECT COUNT(*) AS allContacts FROM contacts"));
+	$_POST['numberOfContacts'] = $temp['allContacts'];
 
-	$limitFrom = ($activePage*MAX_ON_PAGE)-MAX_ON_PAGE;
-	$limitTo = MAX_ON_PAGE;
-	if ($activePage < 1){
-		$query = "SELECT * FROM contacts ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']." LIMIT 0, ". $limitTo;
-	}else{
-		$query = "SELECT * FROM contacts ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']." LIMIT ".$limitFrom.", ".$limitTo;
+	$offset = ($_POST['activePage']*MAX_ON_PAGE)-MAX_ON_PAGE;
+	$offsetTo = MAX_ON_PAGE;
+	if ($_POST['activePage'] < 1) {
+		$offset = 0;
 	};
+	$query = "SELECT * FROM contacts ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']." LIMIT ".$offset.", ".$offsetTo;
     $result = $conn->query($query);
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 };
