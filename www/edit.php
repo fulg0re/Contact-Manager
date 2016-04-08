@@ -107,7 +107,10 @@
 																									echo $_POST['birthday'];
 																								};?>" /></br>
 									
-					<input type="hidden" name="id" value="<?php echo $_POST['id'];?>"></br>
+					<input type="hidden" name="id" value="<?php
+															if (isset($_POST['id'])){
+																echo $_POST['id'];
+															};?>"></br>
 			</div>
 				
 			<input type="submit" name="<?php echo $_POST['button'];?>Button" value="<?php echo $_POST['button'];?>" /></br>

@@ -65,22 +65,11 @@ function wrongAddContact($post){		//used at controller.php...
 		$button = "ADD";
 	}else $button = "Edit";
 	$tempBestPhone = $post['bestPhone'];
-	return $temp = "firstname=".$post['first']."&
-		lastname=".$post['last']."&
-		email=".$post['email']."&
-		home_phone=".$post['home']."&
-		work_phone=".$post['work']."&
-		cell_phone=".$post['cell']."&
-		best_phone=".$tempBestPhone."&
-		adress1=".$post['adress1']."&
-		adress2=".$post['adress2']."&
-		city=".$post['city']."&
-		state=".$post['state']."&
-		zip=".$post['zip']."&
-		country=".$post['country']."&
-		birthday=".$post['birthday']."&
-		id=".$post['id']."&
-		button=".$button;
+	return $temp = "firstname=".$post['first']."&lastname=".$post['last']."&email=".$post['email']."&home_phone="
+		.$post['home']."&work_phone=".$post['work']."&cell_phone=".$post['cell']."&best_phone="
+		.$tempBestPhone."&adress1=".$post['adress1']."&adress2=".$post['adress2']."&city=".$post['city']."&state="
+		.$post['state']."&zip=".$post['zip']."&country=".$post['country']."&birthday=".$post['birthday']."&id="
+		.$post['id']."&button=".$button;
 };
 
 function getOneContact($id){		//used at edit.php...

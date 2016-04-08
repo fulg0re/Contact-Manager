@@ -45,11 +45,14 @@ if(isset($_POST['EditButton'])){
 
 if(isset($_POST['ADDButton'])){
 	if (validationProcess($_POST) == false) {        //look at functions...
-		redirect("edit.php?msg=Wrong input information!&" . wrongAddContact($_POST));
+		$url = "edit.php?msg=Wrong input information!&" . wrongAddContact($_POST);
+		redirect($url);
 	};
 	if (processAddContact($_POST) == true) {        //look at functions...
-		redirect("contacts.php?msg=Data was successfully added");
-	}
-	redirect("contacts.php?msg=Error editing contact...");
+		$url = "contacts.php?msg=Data was successfully added";
+		redirect($url);
+	};
+	$url = "contacts.php?msg=Error editing contact...";
+	redirect($url);
 	
 };
