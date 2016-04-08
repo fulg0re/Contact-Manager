@@ -6,14 +6,16 @@
 	</head>
 	<body>
 		<?php
+			error_reporting(E_ALL);
+
 			include_once("includes/functions.php");
 			include_once("includes/config.php");
 
-
-
-			$_POST['sortBy'] = $_GET['sortBy'];
-			$_POST['sortTurn'] = $_GET['sortTurn'];
-			$_POST['activePage'] = $_GET['activePage'];
+			if (isset($_GET['sortBy']) && isset($_GET['sortTurn']) && isset($_GET['activePage'])){
+				$_POST['sortBy'] = $_GET['sortBy'];
+				$_POST['sortTurn'] = $_GET['sortTurn'];
+				$_POST['activePage'] = $_GET['activePage'];
+			};
 /*
 			var_dump($_POST['activePage']);
 			var_dump($_POST['sortTurn']);
@@ -21,7 +23,10 @@
 */
 			$contacts = getContacts();
 		?>
-		<div class='err'><h3><?php echo $_GET['msg'];?></h3></div>		
+		<div class='err'><h3><?php
+								if (isset($_GET['msg'])){
+									echo $_GET['msg'];
+								};?></h3></div>
 		<a href='logout.php'>logout</a>		
 		<h3>MANAGEMENT MAIN PAGE</h3>
 		<form action="controller.php" method="post">

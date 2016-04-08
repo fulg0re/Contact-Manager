@@ -18,21 +18,26 @@ function inputImage(){	//used at contacts.php...
 };
 
 function makePostVariables($data){		//used at edit.php...
-	$_POST['firstname'] = $data['firstname'];
-	$_POST['lastname'] = $data['lastname'];
-	$_POST['email'] = $data['email'];
-	$_POST['home_phone'] = $data['home_phone'];
-	$_POST['work_phone'] = $data['work_phone'];
-	$_POST['cell_phone'] = $data['cell_phone'];
-	$_POST['best_phone'] = $data['best_phone'];
-	$_POST['adress1'] = $data['adress1'];
-	$_POST['adress2'] = $data['adress2'];
-	$_POST['city'] = $data['city'];
-	$_POST['state'] = $data['state'];
-	$_POST['zip'] = $data['zip'];
-	$_POST['country'] = $data['country'];
-	$_POST['birthday'] = $data['birthday'];
-	$_POST['id'] = $data['id'];
+	if (isset($data['firstname']) && isset($data['lastname']) && isset($data['email']) && isset($data['home_phone']) &&
+		isset($data['work_phone']) && isset($data['cell_phone']) && isset($data['best_phone']) && isset($data['adress1']) &&
+		isset($data['adress2']) && isset($data['city']) && isset($data['state']) && isset($data['zip']) &&
+		isset($data['country']) && isset($data['birthday']) && isset($data['id'])){
+		$_POST['firstname'] = $data['firstname'];
+		$_POST['lastname'] = $data['lastname'];
+		$_POST['email'] = $data['email'];
+		$_POST['home_phone'] = $data['home_phone'];
+		$_POST['work_phone'] = $data['work_phone'];
+		$_POST['cell_phone'] = $data['cell_phone'];
+		$_POST['best_phone'] = $data['best_phone'];
+		$_POST['adress1'] = $data['adress1'];
+		$_POST['adress2'] = $data['adress2'];
+		$_POST['city'] = $data['city'];
+		$_POST['state'] = $data['state'];
+		$_POST['zip'] = $data['zip'];
+		$_POST['country'] = $data['country'];
+		$_POST['birthday'] = $data['birthday'];
+		$_POST['id'] = $data['id'];
+	};
 };
 
 function validationProcess($post){		//used at controller.php
@@ -134,7 +139,7 @@ function getContacts(){		//used at contacts.php...
 	include_once ('dbConnection.php');
 	include_once ('config.php');
 
-	if (!$_POST['sortBy']){
+	if (!isset($_POST['sortBy'])){
 		$_POST['sortBy'] = "lastname";
 		$_POST['sortTurn'] = "ASC";
 		$_POST['activePage'] = 1;
