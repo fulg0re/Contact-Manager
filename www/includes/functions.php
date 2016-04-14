@@ -1,43 +1,32 @@
 <?php
 
+include_once ('config.php');
+
 function turnSide($sortTurn){
-	if ($sortTurn == "DESC"){
-		echo "ASC";
-	}else{
-		echo "DESC";
-	};
+    return ($sortTurn == "DESC") ? "ASC" : "DESC";
 };
 
 function inputImage(){	//used at contacts.php...
-	include_once ('config.php');
-	if ($_POST['sortTurn'] == "DESC"){
-		echo "<img src='".IMG_SORT_BY_DESC."' />";
-	}else{
-		echo "<img src='".IMG_SORT_BY_ASC."' />";
-	};
+    return ($_POST['sortTurn'] == "DESC") ? IMG_SORT_BY_DESC : IMG_SORT_BY_ASC;
 };
 
 function makePostVariables($data){		//used at edit.php...
-	if (isset($data['firstname']) && isset($data['lastname']) && isset($data['email']) && isset($data['home_phone']) &&
-		isset($data['work_phone']) && isset($data['cell_phone']) && isset($data['best_phone']) && isset($data['adress1']) &&
-		isset($data['adress2']) && isset($data['city']) && isset($data['state']) && isset($data['zip']) &&
-		isset($data['country']) && isset($data['birthday']) && isset($data['id'])){
-		$_POST['firstname'] = $data['firstname'];
-		$_POST['lastname'] = $data['lastname'];
-		$_POST['email'] = $data['email'];
-		$_POST['home_phone'] = $data['home_phone'];
-		$_POST['work_phone'] = $data['work_phone'];
-		$_POST['cell_phone'] = $data['cell_phone'];
-		$_POST['best_phone'] = $data['best_phone'];
-		$_POST['adress1'] = $data['adress1'];
-		$_POST['adress2'] = $data['adress2'];
-		$_POST['city'] = $data['city'];
-		$_POST['state'] = $data['state'];
-		$_POST['zip'] = $data['zip'];
-		$_POST['country'] = $data['country'];
-		$_POST['birthday'] = $data['birthday'];
-		$_POST['id'] = $data['id'];
-	};
+    $_POST['firstname'] = $data['firstname'];
+    $_POST['lastname'] = $data['lastname'];
+    $_POST['email'] = $data['email'];
+    $_POST['home_phone'] = $data['home_phone'];
+    $_POST['work_phone'] = $data['work_phone'];
+    $_POST['cell_phone'] = $data['cell_phone'];
+    $_POST['best_phone'] = $data['best_phone'];
+    $_POST['adress1'] = $data['adress1'];
+    $_POST['adress2'] = $data['adress2'];
+    $_POST['city'] = $data['city'];
+    $_POST['state'] = $data['state'];
+    $_POST['zip'] = $data['zip'];
+    $_POST['country'] = $data['country'];
+    $_POST['birthday'] = $data['birthday'];
+    $_POST['id'] = $data['id'];
+    $_POST['button'] = "Edit";
 };
 
 function validationProcess($post){		//used at controller.php
@@ -61,15 +50,45 @@ function validationProcess($post){		//used at controller.php
 };
 
 function wrongAddContact($post){		//used at controller.php...
-	if ($post['ADDButton']){
-		$button = "ADD";
-	}else $button = "Edit";
-	$tempBestPhone = $post['bestPhone'];
-	return $temp = "firstname=".$post['first']."&lastname=".$post['last']."&email=".$post['email']."&home_phone="
-		.$post['home']."&work_phone=".$post['work']."&cell_phone=".$post['cell']."&best_phone="
-		.$tempBestPhone."&adress1=".$post['adress1']."&adress2=".$post['adress2']."&city=".$post['city']."&state="
-		.$post['state']."&zip=".$post['zip']."&country=".$post['country']."&birthday=".$post['birthday']."&id="
-		.$post['id']."&button=".$button;
+    $post['ADDButton'] ? $_SESSION['wrongAdd']['button'] = "ADD" : $_SESSION['wrongAdd']['button'] = "Edit";
+    $_SESSION['wrongAdd']['firstname'] = $post['first'];
+    $_SESSION['wrongAdd']['lastname'] = $post['last'];
+    $_SESSION['wrongAdd']['email'] = $post['email'];
+    $_SESSION['wrongAdd']['home_phone'] = $post['home'];
+    $_SESSION['wrongAdd']['work_phone'] = $post['work'];
+    $_SESSION['wrongAdd']['cell_phone'] = $post['cell'];
+    $_SESSION['wrongAdd']['best_phone'] = $post['bestPhone'];
+    $_SESSION['wrongAdd']['adress1'] = $post['adress1'];
+    $_SESSION['wrongAdd']['adress2'] = $post['adress2'];
+    $_SESSION['wrongAdd']['city'] = $post['city'];
+    $_SESSION['wrongAdd']['state'] = $post['state'];
+    $_SESSION['wrongAdd']['zip'] = $post['zip'];
+    $_SESSION['wrongAdd']['country'] = $post['country'];
+    $_SESSION['wrongAdd']['birthday'] = $post['birthday'];
+    $_SESSION['wrongAdd']['id'] = $post['id'];
+    $_SESSION['wrongAdd']['msg'] = "Wrong input information!";
+};
+
+function getWrongFields($session){
+    $_POST['button'] = $session['button'];
+    $_POST['firstname'] = $session['firstname'];
+    $_POST['lastname'] = $session['lastname'];
+    $_POST['email'] = $session['email'];
+    $_POST['home_phone'] = $session['home_phone'];
+    $_POST['work_phone'] = $session['work_phone'];
+    $_POST['cell_phone'] = $session['cell_phone'];
+    $_POST['best_phone'] = $session['best_phone'];
+    $_POST['adress1'] = $session['adress1'];
+    $_POST['adress2'] = $session['adress2'];
+    $_POST['city'] = $session['city'];
+    $_POST['state'] = $session['state'];
+    $_POST['zip'] = $session['zip'];
+    $_POST['country'] = $session['country'];
+    $_POST['birthday'] = $session['birthday'];
+    $_POST['id'] = $session['id'];
+    $_POST['msg'] = $session['msg'];
+
+    unset($_SESSION['wrongAdd']);
 };
 
 function getOneContact($id){		//used at edit.php...
@@ -94,7 +113,8 @@ function generatePassword($pass){		//userd at functions.php >> processLogin()...
 
 function processLogin($post){		//used at controller.php...
 	include_once ('dbConnection.php');
-    $query = "SELECT * FROM users WHERE username = '".$post['uname']."' and password = '".generatePassword($post['pass'])."' Limit 1";
+    $query = "SELECT * FROM users WHERE username = '".
+        $post['username']."' and password = '".generatePassword($post['password'])."' Limit 1";
     $results = $conn->query($query);
     if ($results->num_rows <= 0){
 		return false;
@@ -106,27 +126,27 @@ function processLogin($post){		//used at controller.php...
 	return true;
 };
 
+function getRequiredFields(){
+    return ("firstname, lastname, email, home_phone, work_phone, cell_phone, ".
+                "best_phone, adress1, adress2, city, state, zip, country, birthday");
+};
+
+function getOptionalFields($contact){
+    return ("'".$contact['first']."', '".$contact['last']."', '".$contact['email']."', '".$contact['home']."', '".
+            $contact['work']."', '".$contact['cell']."', '".$contact['bestPhone']."', '".$contact['adress1']."', '".
+            $contact['adress2']."', '".$contact['city']."', '".$contact['state']."', '".$contact['zip']."', '".
+            $contact['country']."', '".$contact['birthday']."'");
+};
+
 function processAddContact($post){		//used at controller.php...
 	include_once ('dbConnection.php');
-	$tempBestPhone = $post['bestPhone'];
-    $query = "INSERT INTO contacts 
-					(firstname, lastname, email, home_phone, work_phone, cell_phone, best_phone,
-					adress1, adress2, city, state, zip, country, birthday)
-			VALUES ('".$post['first']."', '".$post['last']."', '".$post['email']."',
-					'".$post['home']."', '".$post['work']."', '".$post['cell']."',
-					'".$tempBestPhone."', '".$post['adress1']."', '".$post['adress2']."',
-					'".$post['city']."', '".$post['state']."', '".$post['zip']."',
-					'".$post['country']."',	'".$post['birthday']."')";
+    $query = "INSERT INTO contacts (".getRequiredFields().") VALUES (".getOptionalFields($post).")";
     $results = $conn->query($query);
-    if (!$results->error){
-		return true;
-	}
-    return false;
+    return (!$results->error) ? true : false;
 };
 
 function getContacts(){		//used at contacts.php...
 	include_once ('dbConnection.php');
-	include_once ('config.php');
 
 	if (!isset($_POST['sortBy'])){
 		$_POST['sortBy'] = "lastname";

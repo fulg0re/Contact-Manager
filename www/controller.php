@@ -1,13 +1,9 @@
 <?php
 
-session_start();
+include_once('includes/session.php');       // session_start(); and error_reporting(E_ALL);
 
-include_once("includes/functions.php");	
-/*
-if (!$_SESSION['LoggedIn']){
-	redirect("index.php");
-}
-*/
+include_once("includes/functions.php");
+
 if(isset($_GET['editId'])){
 	$foundedContact = getOneContact($_GET['editId']);	//look at functions...
 	if ($foundedContact != false){
@@ -24,35 +20,40 @@ if(isset($_POST['tryToLogin'])){
 	if (processLogin($_POST) == true){		//look at functions...
 		redirect("contacts.php");
 	};
-	redirect("index.php?msg=Login credentials incorrect!&
-						wrongLogin=".$_POST['uname']."&
-						wrongPassword=".$_POST['pass']);
+	$_SESSION['username'] = $_POST['username'];
+	$_SESSION['password'] = $_POST['password'];
+	$_SESSION['msg'] = "Wrong login or password!";
+	redirect("index.php");
 };
 
 if(isset($_POST['addNewContact'])){
-	redirect("edit.php?button=ADD");
+	$_SESSION['button'] = "ADD";
+	redirect("edit.php");
 };
 
 if(isset($_POST['EditButton'])){
 	if (validationProcess($_POST) == false) {        //look at functions...
-		redirect("edit.php?editId=" . $_POST['id']);
+		$_SESSION['editId'] = $_POST['id'];
+		redirect("edit.php");
 	};
 	if (processEditing($_POST) == true) {            //look at functions...
-		redirect("contacts.php?msg=Edit was successful");
-	}
-	redirect("contacts.php?msg=Error editing contact...");
+		$_SESSION['msg'] = "Edit was successful";
+		redirect("contacts.php");
+	};
+	$_SESSION['msg'] = "Error editing contact...";
+	redirect("contacts.php");
 };
 
 if(isset($_POST['ADDButton'])){
 	if (validationProcess($_POST) == false) {        //look at functions...
-		$url = "edit.php?msg=Wrong input information!&" . wrongAddContact($_POST);
-		redirect($url);
+		wrongAddContact($_POST);
+		redirect("edit.php");
 	};
 	if (processAddContact($_POST) == true) {        //look at functions...
-		$url = "contacts.php?msg=Data was successfully added";
-		redirect($url);
+		$_SESSION['msg'] = "Data was successfully added";
+		redirect("contacts.php");
 	};
-	$url = "contacts.php?msg=Error editing contact...";
-	redirect($url);
+	$_SESSION['msg'] = "Error editing contact...";
+	redirect("contacts.php");
 	
 };
