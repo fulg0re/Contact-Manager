@@ -30,7 +30,7 @@ $contacts = getContacts();
 		<a href='logout.php'>logout</a>		
 		<h3>MANAGEMENT MAIN PAGE</h3>
 		<form action="controller.php" method="post">
-			<input type="submit" name="addNewContact" value="ADD"></br>
+			<input type="submit" class="button blue medium" name="addNewContact" value="ADD"></br>
 			<table style="border: 1px solid">
 				<tr>
 					<th><a href="contacts.php?
