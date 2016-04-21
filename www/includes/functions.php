@@ -140,9 +140,10 @@ function getOptionalFields($contact){
 
 function processAddContact($post){		//used at controller.php...
 	include_once ('dbConnection.php');
+    $err = "";
     $query = "INSERT INTO contacts (".getRequiredFields().") VALUES (".getOptionalFields($post).")";
-    $results = $conn->query($query);
-    return (!$results->error) ? true : false;
+    $conn->query($query);
+    return (!$conn->error) ? true : false;
 };
 
 function getContacts(){		//used at contacts.php...
@@ -196,4 +197,17 @@ function processEditing($post){		//used at controller.php...
 		return true;
 	}
     return false;
+};
+
+function checkForMessage(){
+    if (isset($_SESSION['msg'])){
+        $_POST['msg'] = $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    };
+};
+
+function sortingVariables($sortBy, $sortTurn, $activePage){
+    $_POST['sortBy'] = $sortBy;
+    $_POST['sortTurn'] = $sortTurn;
+    $_POST['activePage'] = $activePage;
 };

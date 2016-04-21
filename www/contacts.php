@@ -5,16 +5,12 @@ include_once('includes/authorization.php');
 include_once("includes/functions.php");
 include_once("includes/config.php");
 
-if (isset($_SESSION['msg'])){
-    $_POST['msg'] = $_SESSION['msg'];
-    unset($_SESSION['msg']);
-};
+checkForMessage();
 
 if (isset($_GET['sortBy']) && isset($_GET['sortTurn']) && isset($_GET['activePage'])){
-    $_POST['sortBy'] = $_GET['sortBy'];
-    $_POST['sortTurn'] = $_GET['sortTurn'];
-    $_POST['activePage'] = $_GET['activePage'];
+	sortingVariables($_GET['sortBy'], $_GET['sortTurn'], $_GET['activePage']);
 };
+
 $contacts = getContacts();
 
 ?>
@@ -27,10 +23,11 @@ $contacts = getContacts();
 	<body>
         <!-- error part -->
 		<div class='err'><h3><?php echo (isset($_POST['msg'])) ? $_POST['msg'] : null;?></h3></div>
-		<a href='logout.php'>logout</a>		
+		<a href='logout.php'>logout</a>
 		<h3>MANAGEMENT MAIN PAGE</h3>
 		<form action="controller.php" method="post">
-			<input type="submit" class="button blue medium" name="addNewContact" value="ADD"></br>
+			<a href='selection.php'>selectionPage</a><br><br>
+			<input type="submit" name="addNewContact" value="ADD"></br>
 			<table style="border: 1px solid">
 				<tr>
 					<th><a href="contacts.php?

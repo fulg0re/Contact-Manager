@@ -57,3 +57,7 @@ if(isset($_POST['ADDButton'])){
 	redirect("contacts.php");
 	
 };
+
+if(isset($_GET['checkbox'])){
+		var_dump($_GET['checkbox']);
+};
