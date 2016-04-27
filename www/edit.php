@@ -4,20 +4,25 @@ include_once('includes/session.php');       // session_start(); and error_report
 include_once('includes/authorization.php');
 include_once("includes/functions.php");
 
-if (isset($_SESSION['wrongAdd'])){
-    getWrongFields($_SESSION['wrongAdd']);
+if (isset($_SESSION['msg'])) {
+	$_POST['msg'] = $_SESSION['msg'];
+	unset($_SESSION['msg']);
 };
 
-if (isset($_SESSION['msg'])) {
-    $_POST['msg'] = $_SESSION['msg'];
-    unset($_SESSION['msg']);
+if (isset($_SESSION['wrongAdd'])){
+	if (isset($_SESSION['emptyInput'])){
+		$_POST['msg'] = $_SESSION['emptyInput'];
+		unset($_SESSION['emptyInput']);
+	};
+    getWrongFields($_SESSION['wrongAdd']);
 };
 
 if (isset($_SESSION['button'])) {
     $_POST['button'] = $_SESSION['button'];
     unset($_SESSION['button']);
-}elseif (isset($_GET['editId'])){
-    $_POST['editId'] = $_GET['editId'];
+}elseif (isset($_SESSION['editId'])){
+    $_POST['editId'] = $_SESSION['editId'];
+	unset($_SESSION['editId']);
     $foundedContact = getOneContact($_POST['editId']);
     if ($foundedContact != false){
         makePostVariables($foundedContact);		// look at functions...
@@ -34,7 +39,8 @@ if (isset($_SESSION['button'])) {
 	<body>
         <!-- error part -->
 		<div class='err'><h3><?php echo (isset($_POST['msg'])) ? $_POST['msg'] : null;?></h3></div>
-		<a href='logout.php'>logout</a>
+		<a href='logout.php'>logout</a><br><br>
+		<a href='contacts.php'>back</a>
 		<h3>Contact Details</h3>
 		<form action="controller.php" method="post">
 			<div class="field">

@@ -3,17 +3,22 @@
 include_once('includes/session.php');       // session_start(); and error_reporting(E_ALL);
 
 include_once("includes/functions.php");
-
+/*
 if(isset($_GET['editId'])){
 	$foundedContact = getOneContact($_GET['editId']);	//look at functions...
 	if ($foundedContact != false){
 		redirect("edit.php");
 	};
 };
-
+*/
 if(isset($_GET['deleteId'])){
 	deleteRow($_GET['deleteId']);	//look at functions...
 	redirect("contacts.php");
+};
+
+if(isset($_GET['editId'])){
+	$_SESSION['editId'] = $_GET['editId'];	//look at functions...
+	redirect("edit.php");
 };
 
 if(isset($_POST['tryToLogin'])){
@@ -34,6 +39,7 @@ if(isset($_POST['addNewContact'])){
 if(isset($_POST['EditButton'])){
 	if (validationProcess($_POST) == false) {        //look at functions...
 		$_SESSION['editId'] = $_POST['id'];
+		wrongAddContact($_POST);
 		redirect("edit.php");
 	};
 	if (processEditing($_POST) == true) {            //look at functions...

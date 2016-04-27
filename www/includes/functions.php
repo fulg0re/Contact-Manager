@@ -30,19 +30,26 @@ function makePostVariables($data){		//used at edit.php...
 };
 
 function validationProcess($post){		//used at controller.php
-	$arrayForCheck = array($post['first'], $post['last'], $post['email'], $post['birthday']);
+	$arrayForCheck = array(
+        "First Name" => $post['first'],
+        "Last Name" => $post['last'],
+        "Email" => $post['email'],
+        "Birthday" => $post['birthday']);
 
-	foreach ($arrayForCheck as $i) {
+	foreach ($arrayForCheck as $key => $i) {
 		if (empty($i)){
+            $_SESSION['emptyInput'] = "Please enter \"".$key."\"!!!";
 			return false;
 		};
 	};
 
-	if (empty($post['home']) && empty($post['work']) && empty($post['cell'])){	// phone validation...
-		return false;
-	};
+    if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {	// email validation...
+        $_SESSION['emptyInput'] = "Wrong Email format!!!";
+        return false;
+    };
 
-	if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {	// email validation...
+	if (empty($post['home']) && empty($post['work']) && empty($post['cell'])){	// phone validation...
+        $_SESSION['emptyInput'] = "Please enter etleast one phone number!!!";
 		return false;
 	};
 
@@ -50,7 +57,7 @@ function validationProcess($post){		//used at controller.php
 };
 
 function wrongAddContact($post){		//used at controller.php...
-    $post['ADDButton'] ? $_SESSION['wrongAdd']['button'] = "ADD" : $_SESSION['wrongAdd']['button'] = "Edit";
+    isset($post['ADDButton']) ? $_SESSION['wrongAdd']['button'] = "ADD" : $_SESSION['wrongAdd']['button'] = "Edit";
     $_SESSION['wrongAdd']['firstname'] = $post['first'];
     $_SESSION['wrongAdd']['lastname'] = $post['last'];
     $_SESSION['wrongAdd']['email'] = $post['email'];
@@ -66,7 +73,7 @@ function wrongAddContact($post){		//used at controller.php...
     $_SESSION['wrongAdd']['country'] = $post['country'];
     $_SESSION['wrongAdd']['birthday'] = $post['birthday'];
     $_SESSION['wrongAdd']['id'] = $post['id'];
-    $_SESSION['wrongAdd']['msg'] = "Wrong input information!";
+    //$_SESSION['wrongAdd']['msg'] = "Wrong input information!";
 };
 
 function getWrongFields($session){
@@ -86,7 +93,7 @@ function getWrongFields($session){
     $_POST['country'] = $session['country'];
     $_POST['birthday'] = $session['birthday'];
     $_POST['id'] = $session['id'];
-    $_POST['msg'] = $session['msg'];
+    //$_POST['msg'] = $session['msg'];
 
     unset($_SESSION['wrongAdd']);
 };
@@ -156,6 +163,9 @@ function getContacts(){		//used at contacts.php...
 	};
 
 	$temp = mysqli_fetch_array($conn->query("SELECT COUNT(*) AS allContacts FROM contacts"));
+    if ($temp['allContacts'] <= 0){
+        $_SESSION['noContacts'] = true;
+    };
 	$_POST['numberOfContacts'] = $temp['allContacts'];
 
 	$offset = ($_POST['activePage']*MAX_ON_PAGE)-MAX_ON_PAGE;
@@ -192,11 +202,8 @@ function processEditing($post){		//used at controller.php...
 					country = '".$post['country']."',
 					birthday = '".$post['birthday']."'
 				WHERE id = ".$post['id'];				
-    $results = $conn->query($query);
-    if (!$results->error){
-		return true;
-	}
-    return false;
+    $conn->query($query);
+    return true;
 };
 
 function checkForMessage(){

@@ -12,6 +12,10 @@ if (isset($_GET['sortBy']) && isset($_GET['sortTurn']) && isset($_GET['activePag
 };
 
 $contacts = getContacts();
+if (isset($_SESSION['noContacts'])){
+	$_POST['noContacts'] = "Please add contacts!";
+	unset($_SESSION['noContacts']);
+};
 
 ?>
 <!DOCTYPE html>
@@ -28,43 +32,47 @@ $contacts = getContacts();
 		<form action="controller.php" method="post">
 			<a href='selection.php'>selectionPage</a><br><br>
 			<input type="submit" name="addNewContact" value="ADD"></br>
-			<table style="border: 1px solid">
-				<tr>
-					<th><a href="contacts.php?
-						sortBy=lastname&
-						activePage=<?php echo $_POST['activePage']?>&
-						sortTurn=<?php echo (turnSide($_POST['sortTurn']));?>">Last
-                            <img src='<?php echo ($_POST['sortBy'] == "lastname") ? inputImage() : null;?>' /></a></th>
-					<th><a href="contacts.php?
-						sortBy=firstname&
-						activePage=<?php echo $_POST['activePage']?>&
-						sortTurn=<?php echo (turnSide($_POST['sortTurn']));?>">First
-                            <img src='<?php echo ($_POST['sortBy'] == "firstname") ? inputImage() : null;?>' /></a></th>
-					<th>Email</th>
-					<th>Best Phone</th>
-				</tr>
-				<?php foreach ($contacts as $v) {?>
+			<?php if (!isset($_POST['noContacts'])){ ?>
+				<table style="border: 1px solid">
 					<tr>
-						<td><?php echo $v['lastname']?></td>
-						<td><?php echo $v['firstname']?></td>
-						<td><?php echo $v['email']?></td>
-						<td><?php switch ($v['best_phone']) {
-									case "home_phone":
-										echo $v['home_phone'];
-										break;
-									case "work_phone":
-										echo $v['work_phone'];
-										break;
-									case "cell_phone":
-										echo $v['cell_phone'];
-										break;
-								};?></td>
-						<?php $contactId = $v['id'];?>
-						<td><a href='edit.php?editId=<?php echo $contactId?>'>edit/view</a></td>
-						<td><a href='controller.php?deleteId=<?php echo $contactId?>'>delete</a></td>
+						<th><a href="contacts.php?
+							sortBy=lastname&
+							activePage=<?php echo $_POST['activePage']?>&
+							sortTurn=<?php echo (turnSide($_POST['sortTurn']));?>">Last
+								<img src='<?php echo ($_POST['sortBy'] == "lastname") ? inputImage() : null;?>' /></a></th>
+						<th><a href="contacts.php?
+							sortBy=firstname&
+							activePage=<?php echo $_POST['activePage']?>&
+							sortTurn=<?php echo (turnSide($_POST['sortTurn']));?>">First
+								<img src='<?php echo ($_POST['sortBy'] == "firstname") ? inputImage() : null;?>' /></a></th>
+						<th>Email</th>
+						<th>Best Phone</th>
 					</tr>
-				<?php }?>				
-			</table>
+					<?php foreach ($contacts as $v) {?>
+						<tr>
+							<td><?php echo $v['lastname']?></td>
+							<td><?php echo $v['firstname']?></td>
+							<td><?php echo $v['email']?></td>
+							<td><?php switch ($v['best_phone']) {
+										case "home_phone":
+											echo $v['home_phone'];
+											break;
+										case "work_phone":
+											echo $v['work_phone'];
+											break;
+										case "cell_phone":
+											echo $v['cell_phone'];
+											break;
+									};?></td>
+							<?php $contactId = $v['id'];?>
+							<td><a href='controller.php?editId=<?php echo $contactId?>'>edit/view</a></td>
+							<td><a href='controller.php?deleteId=<?php echo $contactId?>'>delete</a></td>
+						</tr>
+					<?php }?>
+				</table>
+			<?php }else{ ?>
+				<h2><?php echo $_POST['noContacts'] ?></h2>
+			<?php }; ?>
 			<input type="submit" name="addNewContact" value="ADD"></br></br>
 
 			<a href='contacts.php?
