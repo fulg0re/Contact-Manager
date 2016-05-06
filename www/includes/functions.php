@@ -30,11 +30,7 @@ function makePostVariables($data){		//used at edit.php...
 };
 
 function validationProcess($post){		//used at controller.php
-	$arrayForCheck = array(
-        "First Name" => $post['first'],
-        "Last Name" => $post['last'],
-        "Email" => $post['email'],
-        "Birthday" => $post['birthday']);
+	$arrayForCheck = getRequiredFields($post);
 
 	foreach ($arrayForCheck as $key => $i) {
 		if (empty($i)){
@@ -73,7 +69,6 @@ function wrongAddContact($post){		//used at controller.php...
     $_SESSION['wrongAdd']['country'] = $post['country'];
     $_SESSION['wrongAdd']['birthday'] = $post['birthday'];
     $_SESSION['wrongAdd']['id'] = $post['id'];
-    //$_SESSION['wrongAdd']['msg'] = "Wrong input information!";
 };
 
 function getWrongFields($session){
@@ -93,7 +88,6 @@ function getWrongFields($session){
     $_POST['country'] = $session['country'];
     $_POST['birthday'] = $session['birthday'];
     $_POST['id'] = $session['id'];
-    //$_POST['msg'] = $session['msg'];
 
     unset($_SESSION['wrongAdd']);
 };
@@ -133,30 +127,55 @@ function processLogin($post){		//used at controller.php...
 	return true;
 };
 
-function getRequiredFields(){
-    return ("firstname, lastname, email, home_phone, work_phone, cell_phone, ".
-                "best_phone, adress1, adress2, city, state, zip, country, birthday");
+function getRequiredFields($post){
+	return array(
+        "First Name" => $post['first'],
+        "Last Name" => $post['last'],
+        "Email" => $post['email'],
+        "Birthday" => $post['birthday']);
 };
 
 function getOptionalFields($contact){
-    return ("'".$contact['first']."', '".$contact['last']."', '".$contact['email']."', '".$contact['home']."', '".
-            $contact['work']."', '".$contact['cell']."', '".$contact['bestPhone']."', '".$contact['adress1']."', '".
-            $contact['adress2']."', '".$contact['city']."', '".$contact['state']."', '".$contact['zip']."', '".
-            $contact['country']."', '".$contact['birthday']."'");
+	return ['home_phone', 'work_phone', 'cell_phone', 'best_phone', 'adress1', 'adress2',
+			'city', 'state', 'zip', 'country'];
+};
+
+function makeAddContactQuery($contact){
+	return " (firstname, lastname, email, home_phone, work_phone, cell_phone, ".
+             "best_phone, adress1, adress2, city, state, zip, country, birthday) ".
+			"VALUES ('".$contact['first']."', '".$contact['last']."', '".$contact['email']."', '".$contact['home']."', ".
+					"'".$contact['work']."', '".$contact['cell']."', '".$contact['bestPhone']."', '".$contact['adress1']."', ".
+					"'".$contact['adress2']."', '".$contact['city']."', '".$contact['state']."', '".$contact['zip']."', ".
+					"'".$contact['country']."', '".$contact['birthday']."')";
 };
 
 function processAddContact($post){		//used at controller.php...
 	include_once ('dbConnection.php');
-    $err = "";
-    $query = "INSERT INTO contacts (".getRequiredFields().") VALUES (".getOptionalFields($post).")";
+    $query = "INSERT INTO ". CONTACTS_DB. makeAddContactQuery($post);  //getRequiredFields().") VALUES (".getOptionalFields($post).")";
     $conn->query($query);
-    return (!$conn->error) ? true : false;
+    return !$conn->error ? true : false;
+};
+
+function inputValidation($offset){
+	if (($_POST['sortBy'] != "lastname") && ($_POST['sortBy'] != "firstname")){
+		$_POST['sortBy'] = "lastname";
+	};
+	if (($_POST['sortTurn'] != "ASC") && ($_POST['sortTurn'] != "DESC")){
+		$_POST['sortTurn'] = "ASC";
+	};
+	if ($offset > $_POST['numberOfContacts']){
+		$_POST['activePage'] = 1;
+		return 0;
+	}else{
+		return $offset;
+	};
 };
 
 function getContacts(){		//used at contacts.php...
+
 	include_once ('dbConnection.php');
 
-	if (!isset($_POST['sortBy'])){
+	if (!isset($_POST['sortBy']) || !isset($_POST['sortTurn']) || !isset($_POST['activePage'])){
 		$_POST['sortBy'] = "lastname";
 		$_POST['sortTurn'] = "ASC";
 		$_POST['activePage'] = 1;
@@ -168,12 +187,17 @@ function getContacts(){		//used at contacts.php...
     };
 	$_POST['numberOfContacts'] = $temp['allContacts'];
 
-	$offset = ($_POST['activePage']*MAX_ON_PAGE)-MAX_ON_PAGE;
-	$offsetTo = MAX_ON_PAGE;
 	if ($_POST['activePage'] < 1) {
 		$offset = 0;
+	}else{
+		$offset = ($_POST['activePage']*MAX_ON_PAGE)-MAX_ON_PAGE;		
 	};
-	$query = "SELECT * FROM contacts ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']." LIMIT ".$offset.", ".$offsetTo;
+	$offsetTo = MAX_ON_PAGE;
+
+	$offset = inputValidation($offset);
+
+	$query = "SELECT * FROM contacts ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn'].
+		" LIMIT ".$offset.", ".$offsetTo;
     $result = $conn->query($query);
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 };
