@@ -94,18 +94,50 @@ function getWrongFields($session){
 
 function getOneContact($id){		//used at edit.php...
 	include_once ('dbConnection.php');
+
+	$stmt = $conn->prepare("SELECT * FROM ".CONTACTS_DB." WHERE id = ?");
+
+	$stmt->bind_param("s", $id);
+
+	$stmt->execute();
+
+	$res = $stmt->get_result();
+
+	if ($res->num_rows > 0){
+		while ($row = $res->fetch_assoc()){
+			foreach($row as $key => $val){
+				$result[$key] = $val;
+			};
+		};
+		$stmt->close();
+		return $result;
+	};
+
+	$stmt->close();
+	return false;
+
+/*
+	include_once ('dbConnection.php');
     $query = "SELECT * FROM contacts WHERE id = ".$id;
     $results = $conn->query($query);
     if ($results->num_rows > 0){
 		return $results->fetch_array(MYSQLI_ASSOC);
 	}
 	return false;
+*/
 };
 
 function deleteRow($id){		//used at controller.php...
 	include_once ('dbConnection.php');
+	$stmt = $conn->prepare("DELETE FROM ".CONTACTS_DB." WHERE id=?");
+	$stmt->bind_param("i", $id);
+	$stmt->execute();
+	$stmt->close();
+/*
+	include_once ('dbConnection.php');
 	$query = "DELETE FROM contacts WHERE id=".$id;
     $result = $conn->query($query);
+*/
 };
 
 function generatePassword($pass){		//userd at functions.php >> processLogin()...
@@ -114,7 +146,25 @@ function generatePassword($pass){		//userd at functions.php >> processLogin()...
 
 function processLogin($post){		//used at controller.php...
 	include_once ('dbConnection.php');
-    $query = "SELECT * FROM users WHERE username = '".
+
+	$stmt = $conn->prepare("SELECT * FROM ".USERS_DB." WHERE username = ? and password = ? Limit 1");
+	$stmt->bind_param("ss", $post['username'], generatePassword($post['password']));
+
+	$stmt->execute();
+	$stmt->bind_result($id, $login, $password);
+	$stmt->fetch();
+
+	$stmt->close();
+
+	if (isset($login)){
+		$_SESSION['LoggedIn'] = true;
+		$_SESSION['id'] = $id;
+		$_SESSION['username'] = $login;
+		return true;
+	};
+	return false;
+/*
+    $query = "SELECT * FROM ".USERS_DB." WHERE username = '".
         $post['username']."' and password = '".generatePassword($post['password'])."' Limit 1";
     $results = $conn->query($query);
     if ($results->num_rows <= 0){
@@ -125,6 +175,7 @@ function processLogin($post){		//used at controller.php...
 	$_SESSION['id'] = $row['id'];
 	$_SESSION['username'] = $row['username'];
 	return true;
+*/
 };
 
 function getRequiredFields($post){
@@ -209,6 +260,23 @@ function redirect($roadTo){
 
 function processEditing($post){		//used at controller.php...
 	include_once ('dbConnection.php');
+
+	$stmt = $conn->prepare("UPDATE ".CONTACTS_DB." SET ".
+								"firstname=?, lastname=?, email=?, home_phone=?, work_phone=?, cell_phone=?, ".
+								"best_phone=?, adress1=?, adress2=?, city=?, state=?, zip=?, country=?, birthday=? ".
+								"WHERE id= ?");
+
+	$stmt->bind_param("sssssssssssssss", $post['first'], $post['last'], $post['email'], $post['home'], $post['work'],
+							$post['cell'], $post['bestPhone'], $post['adress1'], $post['adress2'], $post['city'],
+							$post['state'], $post['zip'], $post['country'], $post['birthday'], $post['id']);
+
+	$stmt->execute();
+
+	$stmt->close();
+
+	return true;
+
+/*
 	$tempBestPhone = $post['bestPhone'];
     $query = "UPDATE contacts SET 
 					firstname = '".$post['first']."',
@@ -228,6 +296,7 @@ function processEditing($post){		//used at controller.php...
 				WHERE id = ".$post['id'];				
     $conn->query($query);
     return true;
+*/
 };
 
 function checkForMessage(){
