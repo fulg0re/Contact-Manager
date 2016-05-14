@@ -202,9 +202,19 @@ function makeAddContactQuery($contact){
 
 function processAddContact($post){		//used at controller.php...
 	include_once ('dbConnection.php');
+
+	$stmt = $conn->prepare("INSERT INTO ". CONTACTS_DB. makeAddContactQuery($post));
+
+	$stmt->execute();
+
+	$stmt->close();
+
+/*
+	include_once ('dbConnection.php');
     $query = "INSERT INTO ". CONTACTS_DB. makeAddContactQuery($post);  //getRequiredFields().") VALUES (".getOptionalFields($post).")";
     $conn->query($query);
     return !$conn->error ? true : false;
+*/
 };
 
 function inputValidation($offset){
@@ -232,7 +242,21 @@ function getContacts(){		//used at contacts.php...
 		$_POST['activePage'] = 1;
 	};
 
+	$stmt = $conn->prepare("SELECT COUNT(*) AS allContacts FROM ".CONTACTS_DB);
+
+	$stmt->execute();
+  
+	$stmt->bind_result($allContacts); 
+ 
+	if ($stmt->fetch()){
+		//echo "<pre>", var_dump($allContacts), "</pre>";
+		$temp['allContacts'] = $allContacts;
+	};
+
+	$stmt->close();
+/*
 	$temp = mysqli_fetch_array($conn->query("SELECT COUNT(*) AS allContacts FROM contacts"));
+*/
     if ($temp['allContacts'] <= 0){
         $_SESSION['noContacts'] = true;
     };
@@ -247,10 +271,32 @@ function getContacts(){		//used at contacts.php...
 
 	$offset = inputValidation($offset);
 
+	$stmt = $conn->prepare("SELECT * FROM ".CONTACTS_DB." ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']." LIMIT ".$offset.", ".$offsetTo);
+
+	$stmt->execute();
+
+	$res = $stmt->get_result();
+
+	if ($res->num_rows > 0){
+		$i = 0;
+		while ($row = $res->fetch_assoc()){
+			//echo "<pre>", var_dump($row), "</pre>";
+			$result[$i] = $row;
+			$i++;
+		};
+		$stmt->close();
+		return $result;
+	};
+
+	$stmt->close();
+
+/*
 	$query = "SELECT * FROM contacts ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn'].
 		" LIMIT ".$offset.", ".$offsetTo;
     $result = $conn->query($query);
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
+*/
+
 };
 
 function redirect($roadTo){
