@@ -44,28 +44,28 @@ if (isset($_SESSION['button'])) {
 		<h3>Contact Details</h3>
 		<form action="controller.php" method="post">
 			<div class="field">
-				<label for="first">First*</label>
-					<input type="text" name="first" id="first"
+				<label for="firstname">FirstName*</label>
+					<input type="text" name="firstname" id="firstname"
                            value="<?php	echo (isset($_POST['firstname'])) ? $_POST['firstname'] : null;?>" /></br>
-				<label for="last">Last*</label>
-					<input type="text" name="last" id="last"
+				<label for="lastname">LastName*</label>
+					<input type="text" name="lastname" id="lastname"
                            value="<?php echo (isset($_POST['lastname'])) ? $_POST['lastname'] : null;?>" /></br>
 				<label for="email">Email*</label>
 					<input type="text" name="email" id="email"
                            value="<?php echo (isset($_POST['email'])) ? $_POST['email'] : null;?>" /></br>
-				<label for="home">Home*</label>
-					<input type="radio" name="bestPhone" value="home_phone" checked>
-					<input type="text" name="home" id="home"
+				<label for="home_phone">HomePhone*</label>
+					<input type="radio" name="best_phone" value="home_phone" checked>
+					<input type="text" name="home_phone" id="home_phone"
                            value="<?php echo (isset($_POST['home_phone'])) ? $_POST['home_phone'] : null;?>" /></br>
-				<label for="work">Work*</label>
-					<input type="radio" name="bestPhone" value="work_phone"
+				<label for="work_phone">WorkPhone*</label>
+					<input type="radio" name="best_phone" value="work_phone"
                         <?php echo (isset($_POST['best_phone']) && $_POST['best_phone'] == "work_phone") ? "checked" : null;?>>
-					<input type="text" name="work" id="work"
+					<input type="text" name="work_phone" id="work_phone"
                            value="<?php echo (isset($_POST['work_phone'])) ? $_POST['work_phone'] : null;?>" /></br>
-				<label for="cell">Cell*</label>
-					<input type="radio" name="bestPhone" value="cell_phone"
+				<label for="cell_phone">CellPhone*</label>
+					<input type="radio" name="best_phone" value="cell_phone"
                         <?php echo (isset($_POST['best_phone']) && $_POST['best_phone'] == "cell_phone") ? "checked" : null;?>>
-					<input type="text" name="cell" id="cell"
+					<input type="text" name="cell_phone" id="cell_phone"
                            value="<?php echo (isset($_POST['cell_phone'])) ? $_POST['cell_phone'] : null;?>" /></br>
 				<label for="adress1">Adress 1</label>
 					<input type="text" name="adress1" id="adress1"

@@ -11,21 +11,14 @@ function inputImage(){	//used at contacts.php...
 };
 
 function makePostVariables($data){		//used at edit.php...
-    $_POST['firstname'] = $data['firstname'];
-    $_POST['lastname'] = $data['lastname'];
-    $_POST['email'] = $data['email'];
-    $_POST['home_phone'] = $data['home_phone'];
-    $_POST['work_phone'] = $data['work_phone'];
-    $_POST['cell_phone'] = $data['cell_phone'];
-    $_POST['best_phone'] = $data['best_phone'];
-    $_POST['adress1'] = $data['adress1'];
-    $_POST['adress2'] = $data['adress2'];
-    $_POST['city'] = $data['city'];
-    $_POST['state'] = $data['state'];
-    $_POST['zip'] = $data['zip'];
-    $_POST['country'] = $data['country'];
-    $_POST['birthday'] = $data['birthday'];
-    $_POST['id'] = $data['id'];
+	$allFields = unserialize(ALL_CONTACTS_FIELDS);
+	//var_dump(count($allFields));
+	$i = 0;
+	while($i < count($allFields)){
+		//echo "<pre>", var_dump($allFields[$i]), "</pre>";
+		$_POST[$allFields[$i]] = $data[$allFields[$i]];
+		$i++;
+	};
     $_POST['button'] = "Edit";
 };
 
@@ -44,7 +37,7 @@ function validationProcess($post){		//used at controller.php
         return false;
     };
 
-	if (empty($post['home']) && empty($post['work']) && empty($post['cell'])){	// phone validation...
+	if (empty($post['home_phone']) && empty($post['work_phone']) && empty($post['cell_phone'])){	// phone validation...
         $_SESSION['emptyInput'] = "Please enter etleast one phone number!!!";
 		return false;
 	};
@@ -53,41 +46,27 @@ function validationProcess($post){		//used at controller.php
 };
 
 function wrongAddContact($post){		//used at controller.php...
+	$allFields = unserialize(ALL_CONTACTS_FIELDS);
+
     isset($post['ADDButton']) ? $_SESSION['wrongAdd']['button'] = "ADD" : $_SESSION['wrongAdd']['button'] = "Edit";
-    $_SESSION['wrongAdd']['firstname'] = $post['first'];
-    $_SESSION['wrongAdd']['lastname'] = $post['last'];
-    $_SESSION['wrongAdd']['email'] = $post['email'];
-    $_SESSION['wrongAdd']['home_phone'] = $post['home'];
-    $_SESSION['wrongAdd']['work_phone'] = $post['work'];
-    $_SESSION['wrongAdd']['cell_phone'] = $post['cell'];
-    $_SESSION['wrongAdd']['best_phone'] = $post['bestPhone'];
-    $_SESSION['wrongAdd']['adress1'] = $post['adress1'];
-    $_SESSION['wrongAdd']['adress2'] = $post['adress2'];
-    $_SESSION['wrongAdd']['city'] = $post['city'];
-    $_SESSION['wrongAdd']['state'] = $post['state'];
-    $_SESSION['wrongAdd']['zip'] = $post['zip'];
-    $_SESSION['wrongAdd']['country'] = $post['country'];
-    $_SESSION['wrongAdd']['birthday'] = $post['birthday'];
-    $_SESSION['wrongAdd']['id'] = $post['id'];
+
+	$i = 0;
+	while($i < count($allFields)){
+		$_SESSION['wrongAdd'][$allFields[$i]] = $post[$allFields[$i]];
+		$i++;
+	};
 };
 
 function getWrongFields($session){
+	$allFields = unserialize(ALL_CONTACTS_FIELDS);
+
     $_POST['button'] = $session['button'];
-    $_POST['firstname'] = $session['firstname'];
-    $_POST['lastname'] = $session['lastname'];
-    $_POST['email'] = $session['email'];
-    $_POST['home_phone'] = $session['home_phone'];
-    $_POST['work_phone'] = $session['work_phone'];
-    $_POST['cell_phone'] = $session['cell_phone'];
-    $_POST['best_phone'] = $session['best_phone'];
-    $_POST['adress1'] = $session['adress1'];
-    $_POST['adress2'] = $session['adress2'];
-    $_POST['city'] = $session['city'];
-    $_POST['state'] = $session['state'];
-    $_POST['zip'] = $session['zip'];
-    $_POST['country'] = $session['country'];
-    $_POST['birthday'] = $session['birthday'];
-    $_POST['id'] = $session['id'];
+
+	$i = 0;
+	while($i < count($allFields)){
+		$_POST[$allFields[$i]] = $session[$allFields[$i]];
+		$i++;
+	};
 
     unset($_SESSION['wrongAdd']);
 };
@@ -180,8 +159,8 @@ function processLogin($post){		//used at controller.php...
 
 function getRequiredFields($post){
 	return array(
-        "First Name" => $post['first'],
-        "Last Name" => $post['last'],
+        "First Name" => $post['firstname'],
+        "Last Name" => $post['lastname'],
         "Email" => $post['email'],
         "Birthday" => $post['birthday']);
 };
@@ -194,8 +173,8 @@ function getOptionalFields($contact){
 function makeAddContactQuery($contact){
 	return " (firstname, lastname, email, home_phone, work_phone, cell_phone, ".
              "best_phone, adress1, adress2, city, state, zip, country, birthday) ".
-			"VALUES ('".$contact['first']."', '".$contact['last']."', '".$contact['email']."', '".$contact['home']."', ".
-					"'".$contact['work']."', '".$contact['cell']."', '".$contact['bestPhone']."', '".$contact['adress1']."', ".
+			"VALUES ('".$contact['firstname']."', '".$contact['lastname']."', '".$contact['email']."', '".$contact['home_phone']."', ".
+					"'".$contact['work_phone']."', '".$contact['cell_phone']."', '".$contact['best_phone']."', '".$contact['adress1']."', ".
 					"'".$contact['adress2']."', '".$contact['city']."', '".$contact['state']."', '".$contact['zip']."', ".
 					"'".$contact['country']."', '".$contact['birthday']."')";
 };
@@ -312,8 +291,8 @@ function processEditing($post){		//used at controller.php...
 								"best_phone=?, adress1=?, adress2=?, city=?, state=?, zip=?, country=?, birthday=? ".
 								"WHERE id= ?");
 
-	$stmt->bind_param("sssssssssssssss", $post['first'], $post['last'], $post['email'], $post['home'], $post['work'],
-							$post['cell'], $post['bestPhone'], $post['adress1'], $post['adress2'], $post['city'],
+	$stmt->bind_param("sssssssssssssss", $post['firstname'], $post['lastname'], $post['email'], $post['home_phone'], $post['work_phone'],
+							$post['cell_phone'], $post['best_phone'], $post['adress1'], $post['adress2'], $post['city'],
 							$post['state'], $post['zip'], $post['country'], $post['birthday'], $post['id']);
 
 	$stmt->execute();
@@ -323,14 +302,14 @@ function processEditing($post){		//used at controller.php...
 	return true;
 
 /*
-	$tempBestPhone = $post['bestPhone'];
+	$tempBestPhone = $post['best_phone'];
     $query = "UPDATE contacts SET 
-					firstname = '".$post['first']."',
-					lastname = '".$post['last']."',
+					firstname = '".$post['firstname']."',
+					lastname = '".$post['lastname']."',
 					email = '".$post['email']."',
-					home_phone = '".$post['home']."',
-					work_phone = '".$post['work']."',
-					cell_phone = '".$post['cell']."',
+					home_phone = '".$post['home_phone']."',
+					work_phone = '".$post['work_phone']."',
+					cell_phone = '".$post['cell_phone']."',
 					best_phone = '".$tempBestPhone."',
 					adress1 = '".$post['adress1']."',
 					adress2 = '".$post['adress2']."',
