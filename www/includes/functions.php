@@ -1,4 +1,6 @@
 <?php
+//echo "<pre>", var_dump($allFields[$i]), "</pre>";
+session_start();
 
 include_once ('config.php');
 
@@ -6,38 +8,42 @@ function turnSide($sortTurn){
     return ($sortTurn == "DESC") ? "ASC" : "DESC";
 };
 
-function inputImage(){	//used at contacts.php...
+//used at contacts.php...
+function inputImage(){
     return ($_POST['sortTurn'] == "DESC") ? IMG_SORT_BY_DESC : IMG_SORT_BY_ASC;
 };
 
-function makePostVariables($data){		//used at edit.php...
+//used at edit.php...
+function makePostVariables($data){
 	$allFields = unserialize(ALL_CONTACTS_FIELDS);
-	//var_dump(count($allFields));
 	$i = 0;
 	while($i < count($allFields)){
-		//echo "<pre>", var_dump($allFields[$i]), "</pre>";
 		$_POST[$allFields[$i]] = $data[$allFields[$i]];
 		$i++;
 	};
     $_POST['button'] = "Edit";
 };
 
-function validationProcess($post){		//used at controller.php
-	$arrayForCheck = getRequiredFields($post);
+//used at controller.php
+function validationProcess($post){
+	$requiredFields = unserialize(REQUIRED_CONTACTS_FIELDS);
 
-	foreach ($arrayForCheck as $key => $i) {
-		if (empty($i)){
-            $_SESSION['emptyInput'] = "Please enter \"".$key."\"!!!";
+	//fields validation(check for empty fields)...
+	foreach ($requiredFields as $i) {
+		if (empty($post[$i])){
+            $_SESSION['emptyInput'] = "Please enter \"".$i."\"!!!";
 			return false;
 		};
 	};
 
-    if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {	// email validation...
-        $_SESSION['emptyInput'] = "Wrong Email format!!!";
+	// email validation...
+    if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['emptyInput'] = "Wrong \"email\" format!!!";
         return false;
     };
 
-	if (empty($post['home_phone']) && empty($post['work_phone']) && empty($post['cell_phone'])){	// phone validation...
+	// phone validation...
+	if (empty($post['home_phone']) && empty($post['work_phone']) && empty($post['cell_phone'])){
         $_SESSION['emptyInput'] = "Please enter etleast one phone number!!!";
 		return false;
 	};
@@ -45,7 +51,8 @@ function validationProcess($post){		//used at controller.php
 	return true;
 };
 
-function wrongAddContact($post){		//used at controller.php...
+//used at controller.php...
+function wrongAddContact($post){
 	$allFields = unserialize(ALL_CONTACTS_FIELDS);
 
     isset($post['ADDButton']) ? $_SESSION['wrongAdd']['button'] = "ADD" : $_SESSION['wrongAdd']['button'] = "Edit";
@@ -71,7 +78,8 @@ function getWrongFields($session){
     unset($_SESSION['wrongAdd']);
 };
 
-function getOneContact($id){		//used at edit.php...
+//used at edit.php...
+function getOneContact($id){
 	include_once ('dbConnection.php');
 
 	$stmt = $conn->prepare("SELECT * FROM ".CONTACTS_DB." WHERE id = ?");
@@ -94,36 +102,24 @@ function getOneContact($id){		//used at edit.php...
 
 	$stmt->close();
 	return false;
-
-/*
-	include_once ('dbConnection.php');
-    $query = "SELECT * FROM contacts WHERE id = ".$id;
-    $results = $conn->query($query);
-    if ($results->num_rows > 0){
-		return $results->fetch_array(MYSQLI_ASSOC);
-	}
-	return false;
-*/
 };
 
-function deleteRow($id){		//used at controller.php...
+//used at controller.php...
+function deleteRow($id){
 	include_once ('dbConnection.php');
 	$stmt = $conn->prepare("DELETE FROM ".CONTACTS_DB." WHERE id=?");
 	$stmt->bind_param("i", $id);
 	$stmt->execute();
 	$stmt->close();
-/*
-	include_once ('dbConnection.php');
-	$query = "DELETE FROM contacts WHERE id=".$id;
-    $result = $conn->query($query);
-*/
 };
 
-function generatePassword($pass){		//userd at functions.php >> processLogin()...
+//userd at functions.php >> processLogin()...
+function generatePassword($pass){
 	return sha1($pass);
 };
 
-function processLogin($post){		//used at controller.php...
+//used at controller.php...
+function processLogin($post){
 	include_once ('dbConnection.php');
 
 	$stmt = $conn->prepare("SELECT * FROM ".USERS_DB." WHERE username = ? and password = ? Limit 1");
@@ -142,35 +138,36 @@ function processLogin($post){		//used at controller.php...
 		return true;
 	};
 	return false;
-/*
-    $query = "SELECT * FROM ".USERS_DB." WHERE username = '".
-        $post['username']."' and password = '".generatePassword($post['password'])."' Limit 1";
-    $results = $conn->query($query);
-    if ($results->num_rows <= 0){
-		return false;
-	}
-	$row = $results->fetch_array(MYSQLI_ASSOC);
-	$_SESSION['LoggedIn'] = true;
-	$_SESSION['id'] = $row['id'];
-	$_SESSION['username'] = $row['username'];
-	return true;
-*/
-};
-
-function getRequiredFields($post){
-	return array(
-        "First Name" => $post['firstname'],
-        "Last Name" => $post['lastname'],
-        "Email" => $post['email'],
-        "Birthday" => $post['birthday']);
-};
-
-function getOptionalFields($contact){
-	return ['home_phone', 'work_phone', 'cell_phone', 'best_phone', 'adress1', 'adress2',
-			'city', 'state', 'zip', 'country'];
 };
 
 function makeAddContactQuery($contact){
+/*
+	$result = " (";
+	$allFields = unserialize(ALL_CONTACTS_FIELDS);
+	$i = 1;	// we do not nead an "id" field for this(look to config.php)...
+	while($i < count($allFields)){
+		$result =+ $allFields[$i];
+		if ($i < count($allFields) - 1){
+			$result =+ ", ";
+		};
+		$i++;
+	};
+	$result =+ ") VALUES (";
+	$i = 1;	// we do not nead an "id" field for this(look to config.php)...
+	while($i < count($allFields)){
+		$result =+ "'";
+		$result =+ $contact[$allFields[$i]];
+		if ($i < count($allFields) - 1){
+			$result =+ "', '";
+		}else{
+			$result =+ "'";
+		};
+		$i++;
+	};
+	$result =+ ")";
+	$_SESSION['temptemp'] = $result;
+	return $result;
+*/
 	return " (firstname, lastname, email, home_phone, work_phone, cell_phone, ".
              "best_phone, adress1, adress2, city, state, zip, country, birthday) ".
 			"VALUES ('".$contact['firstname']."', '".$contact['lastname']."', '".$contact['email']."', '".$contact['home_phone']."', ".
@@ -179,21 +176,19 @@ function makeAddContactQuery($contact){
 					"'".$contact['country']."', '".$contact['birthday']."')";
 };
 
-function processAddContact($post){		//used at controller.php...
+//used at controller.php...
+function processAddContact($post){
 	include_once ('dbConnection.php');
 
 	$stmt = $conn->prepare("INSERT INTO ". CONTACTS_DB. makeAddContactQuery($post));
 
-	$stmt->execute();
-
-	$stmt->close();
-
-/*
-	include_once ('dbConnection.php');
-    $query = "INSERT INTO ". CONTACTS_DB. makeAddContactQuery($post);  //getRequiredFields().") VALUES (".getOptionalFields($post).")";
-    $conn->query($query);
-    return !$conn->error ? true : false;
-*/
+	if ($stmt->execute()) {
+		$stmt->close();
+		return true;
+	}else{
+		$stmt->close();
+		return false;
+	};
 };
 
 function inputValidation($offset){
@@ -211,7 +206,8 @@ function inputValidation($offset){
 	};
 };
 
-function getContacts(){		//used at contacts.php...
+//used at contacts.php...
+function getContacts(){
 
 	include_once ('dbConnection.php');
 
@@ -228,14 +224,11 @@ function getContacts(){		//used at contacts.php...
 	$stmt->bind_result($allContacts); 
  
 	if ($stmt->fetch()){
-		//echo "<pre>", var_dump($allContacts), "</pre>";
 		$temp['allContacts'] = $allContacts;
 	};
 
 	$stmt->close();
-/*
-	$temp = mysqli_fetch_array($conn->query("SELECT COUNT(*) AS allContacts FROM contacts"));
-*/
+
     if ($temp['allContacts'] <= 0){
         $_SESSION['noContacts'] = true;
     };
@@ -259,7 +252,6 @@ function getContacts(){		//used at contacts.php...
 	if ($res->num_rows > 0){
 		$i = 0;
 		while ($row = $res->fetch_assoc()){
-			//echo "<pre>", var_dump($row), "</pre>";
 			$result[$i] = $row;
 			$i++;
 		};
@@ -268,14 +260,6 @@ function getContacts(){		//used at contacts.php...
 	};
 
 	$stmt->close();
-
-/*
-	$query = "SELECT * FROM contacts ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn'].
-		" LIMIT ".$offset.", ".$offsetTo;
-    $result = $conn->query($query);
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-*/
-
 };
 
 function redirect($roadTo){
@@ -283,7 +267,8 @@ function redirect($roadTo){
 	exit;
 };
 
-function processEditing($post){		//used at controller.php...
+//used at controller.php...
+function processEditing($post){
 	include_once ('dbConnection.php');
 
 	$stmt = $conn->prepare("UPDATE ".CONTACTS_DB." SET ".
@@ -300,28 +285,6 @@ function processEditing($post){		//used at controller.php...
 	$stmt->close();
 
 	return true;
-
-/*
-	$tempBestPhone = $post['best_phone'];
-    $query = "UPDATE contacts SET 
-					firstname = '".$post['firstname']."',
-					lastname = '".$post['lastname']."',
-					email = '".$post['email']."',
-					home_phone = '".$post['home_phone']."',
-					work_phone = '".$post['work_phone']."',
-					cell_phone = '".$post['cell_phone']."',
-					best_phone = '".$tempBestPhone."',
-					adress1 = '".$post['adress1']."',
-					adress2 = '".$post['adress2']."',
-					city = '".$post['city']."',
-					state = '".$post['state']."',
-					zip = '".$post['zip']."',
-					country = '".$post['country']."',
-					birthday = '".$post['birthday']."'
-				WHERE id = ".$post['id'];				
-    $conn->query($query);
-    return true;
-*/
 };
 
 function checkForMessage(){

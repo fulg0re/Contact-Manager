@@ -20,3 +20,6 @@ define("USERS_DB", "/*name of users table*/");
 // all fields for contacts...
 define ("ALL_CONTACTS_FIELDS", serialize (array ("id", "firstname", "lastname", "email", "home_phone", "work_phone",
 			"cell_phone", "best_phone", "adress1", "adress2", "city", "state", "zip", "country", "birthday")));
+
+// required fields for contacts...
+define ("REQUIRED_CONTACTS_FIELDS", serialize (array ("firstname", "lastname", "email", "birthday")));

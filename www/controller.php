@@ -59,9 +59,8 @@ if(isset($_POST['ADDButton'])){
 		$_SESSION['msg'] = "Data was successfully added";
 		redirect("contacts.php");
 	};
-	$_SESSION['msg'] = "Error editing contact...";
-	redirect("contacts.php");
-	
+	$_SESSION['msg'] = "Error add contact...";
+	redirect("contacts.php");	
 };
 
 if(isset($_GET['checkbox'])){
