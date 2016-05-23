@@ -1,8 +1,19 @@
 <?php
 //echo "<pre>", var_dump($allFields[$i]), "</pre>";
+
 session_start();
 
 include_once ('config.php');
+
+//***************************************************************************************
+function allContactsFields(){
+	return ["id", "firstname", "lastname", "email", "home_phone", "work_phone", "cell_phone",
+						"best_phone", "adress1", "adress2", "city", "state", "zip", "country", "birthday"];
+};
+
+function requiredContactsFields(){
+	return ["firstname", "lastname", "email", "birthday"];
+};
 
 function turnSide($sortTurn){
     return ($sortTurn == "DESC") ? "ASC" : "DESC";
@@ -15,7 +26,7 @@ function inputImage(){
 
 //used at edit.php...
 function makePostVariables($data){
-	$allFields = unserialize(ALL_CONTACTS_FIELDS);
+	$allFields = allContactsFields();
 	$i = 0;
 	while($i < count($allFields)){
 		$_POST[$allFields[$i]] = $data[$allFields[$i]];
@@ -26,7 +37,7 @@ function makePostVariables($data){
 
 //used at controller.php
 function validationProcess($post){
-	$requiredFields = unserialize(REQUIRED_CONTACTS_FIELDS);
+	$requiredFields = requiredContactsFields();
 
 	//fields validation(check for empty fields)...
 	foreach ($requiredFields as $i) {
@@ -53,7 +64,7 @@ function validationProcess($post){
 
 //used at controller.php...
 function wrongAddContact($post){
-	$allFields = unserialize(ALL_CONTACTS_FIELDS);
+	$allFields = allContactsFields();
 
     isset($post['ADDButton']) ? $_SESSION['wrongAdd']['button'] = "ADD" : $_SESSION['wrongAdd']['button'] = "Edit";
 
@@ -65,7 +76,7 @@ function wrongAddContact($post){
 };
 
 function getWrongFields($session){
-	$allFields = unserialize(ALL_CONTACTS_FIELDS);
+	$allFields = allContactsFields();
 
     $_POST['button'] = $session['button'];
 
@@ -141,39 +152,30 @@ function processLogin($post){
 };
 
 function makeAddContactQuery($contact){
-/*
 	$result = " (";
-	$allFields = unserialize(ALL_CONTACTS_FIELDS);
+	$allFields = allContactsFields();
 	$i = 1;	// we do not nead an "id" field for this(look to config.php)...
 	while($i < count($allFields)){
-		$result =+ $allFields[$i];
+		$result .= $allFields[$i];
 		if ($i < count($allFields) - 1){
-			$result =+ ", ";
+			$result .= ", ";
 		};
 		$i++;
 	};
-	$result =+ ") VALUES (";
+	$result .= ") VALUES (";
 	$i = 1;	// we do not nead an "id" field for this(look to config.php)...
 	while($i < count($allFields)){
-		$result =+ "'";
-		$result =+ $contact[$allFields[$i]];
+		$result .= "'";
+		$result .= $contact[$allFields[$i]];
 		if ($i < count($allFields) - 1){
-			$result =+ "', '";
+			$result .= "', ";
 		}else{
-			$result =+ "'";
+			$result .= "'";
 		};
 		$i++;
 	};
-	$result =+ ")";
-	$_SESSION['temptemp'] = $result;
+	$result .= ")";
 	return $result;
-*/
-	return " (firstname, lastname, email, home_phone, work_phone, cell_phone, ".
-             "best_phone, adress1, adress2, city, state, zip, country, birthday) ".
-			"VALUES ('".$contact['firstname']."', '".$contact['lastname']."', '".$contact['email']."', '".$contact['home_phone']."', ".
-					"'".$contact['work_phone']."', '".$contact['cell_phone']."', '".$contact['best_phone']."', '".$contact['adress1']."', ".
-					"'".$contact['adress2']."', '".$contact['city']."', '".$contact['state']."', '".$contact['zip']."', ".
-					"'".$contact['country']."', '".$contact['birthday']."')";
 };
 
 //used at controller.php...
