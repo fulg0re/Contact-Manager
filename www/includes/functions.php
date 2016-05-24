@@ -193,13 +193,27 @@ function processAddContact($post){
 	};
 };
 
+function getSortByArrayForCheck(){
+	return ['lastname', 'firstname'];
+};
+
+function getSortTurnArrayForCheck(){
+	return ['ASC', 'DESC'];
+};
+
 function inputValidation($offset){
-	if (($_POST['sortBy'] != "lastname") && ($_POST['sortBy'] != "firstname")){
+
+	// check URL variable "sortBy" if correct...	
+	if (!in_array($_POST['sortBy'], getSortByArrayForCheck())) {
 		$_POST['sortBy'] = "lastname";
 	};
-	if (($_POST['sortTurn'] != "ASC") && ($_POST['sortTurn'] != "DESC")){
+	
+	// check URL variable "sortTurn" if correct...
+	if (!in_array($_POST['sortTurn'], getSortTurnArrayForCheck())) {
 		$_POST['sortTurn'] = "ASC";
 	};
+	
+	// check URL variable "activePage" if correct...
 	if ($offset > $_POST['numberOfContacts']){
 		$_POST['activePage'] = 1;
 		return 0;
