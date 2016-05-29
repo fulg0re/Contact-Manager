@@ -5,11 +5,12 @@ include_once ('config.php');
 
 //******************************************************************************
 function allContactsFields(){
-	return ["id", "firstname", "lastname",
-			"email", "home_phone", "work_phone",
-			"cell_phone", "best_phone", "adress1",
-			"adress2", "city", "state",
-			"zip", "country", "birthday"];
+	return [
+		"id", "firstname", "lastname",
+		"email", "home_phone", "work_phone",
+		"cell_phone", "best_phone", "adress1",
+		"adress2", "city", "state",
+		"zip", "country", "birthday"];
 };
 
 function requiredContactsFields(){
@@ -17,22 +18,28 @@ function requiredContactsFields(){
 };
 
 function turnSide($sortTurn){
-    return ($sortTurn == "DESC") ? "ASC" : "DESC";
+    return ($sortTurn == "DESC") 
+    	? "ASC" 
+    	: "DESC";
 };
 
 //used at contacts.php...
 function inputImage(){
-    return ($_POST['sortTurn'] == "DESC") ? IMG_SORT_BY_DESC : IMG_SORT_BY_ASC;
+    return ($_POST['sortTurn'] == "DESC") 
+    	? IMG_SORT_BY_DESC 
+    	: IMG_SORT_BY_ASC;
 };
 
 //used at edit.php...
 function makePostVariables($data){
 	$allFields = allContactsFields();
+	
 	$i = 0;
 	while($i < count($allFields)){
 		$_POST[$allFields[$i]] = $data[$allFields[$i]];
 		$i++;
 	};
+    
     $_POST['button'] = "Edit";
 };
 
@@ -140,10 +147,10 @@ function processLogin($post){
 	include_once ('dbConnection.php');
 
 	$stmt = $conn->prepare("SELECT * FROM ".USERS_DB
-							." WHERE username = ? and password = ? Limit 1");
+		." WHERE username = ? and password = ? Limit 1");
 							
 	$stmt->bind_param("ss",
-			$post['username'], generatePassword($post['password']));
+		$post['username'], generatePassword($post['password']));
 
 	$stmt->execute();
 	$stmt->bind_result($id, $login, $password);
@@ -192,7 +199,7 @@ function processAddContact($post){
 	include_once ('dbConnection.php');
 
 	$stmt = $conn->prepare("INSERT INTO ".CONTACTS_DB
-							.makeAddContactQuery($post));
+		.makeAddContactQuery($post));
 
 	if ($stmt->execute()) {
 		$stmt->close();
@@ -273,8 +280,8 @@ function getContacts(){
 	$offset = inputValidation($offset);
 
 	$stmt = $conn->prepare("SELECT * FROM ".CONTACTS_DB
-				." ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']
-				." LIMIT ".$offset.", ".$offsetTo);
+		." ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']
+		." LIMIT ".$offset.", ".$offsetTo);
 
 	$stmt->execute();
 
@@ -303,18 +310,18 @@ function processEditing($post){
 	include_once ('dbConnection.php');
 
 	$stmt = $conn->prepare("UPDATE ".CONTACTS_DB." SET "
-					."firstname=?, lastname=?, email=?, "
-					."home_phone=?, work_phone=?, cell_phone=?, "
-					."best_phone=?, adress1=?, adress2=?, city=?, "
-					."state=?, zip=?, country=?, birthday=? "
-					."WHERE id= ?");
+		."firstname=?, lastname=?, email=?, "
+		."home_phone=?, work_phone=?, cell_phone=?, "
+		."best_phone=?, adress1=?, adress2=?, city=?, "
+		."state=?, zip=?, country=?, birthday=? "
+		."WHERE id= ?");
 
 	$stmt->bind_param("sssssssssssssss", 
-			$post['firstname'], $post['lastname'], $post['email'],
-			$post['home_phone'], $post['work_phone'], $post['cell_phone'],
-			$post['best_phone'], $post['adress1'], $post['adress2'],
-			$post['city'], $post['state'], $post['zip'], $post['country'],
-			$post['birthday'], $post['id']);
+		$post['firstname'], $post['lastname'], $post['email'],
+		$post['home_phone'], $post['work_phone'], $post['cell_phone'],
+		$post['best_phone'], $post['adress1'], $post['adress2'],
+		$post['city'], $post['state'], $post['zip'], $post['country'],
+		$post['birthday'], $post['id']);
 
 	$stmt->execute();
 
