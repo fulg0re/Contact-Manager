@@ -1,14 +1,15 @@
 <?php
 //echo "<pre>", var_dump($allFields[$i]), "</pre>";
 
-session_start();
-
 include_once ('config.php');
 
-//***************************************************************************************
+//******************************************************************************
 function allContactsFields(){
-	return ["id", "firstname", "lastname", "email", "home_phone", "work_phone", "cell_phone",
-						"best_phone", "adress1", "adress2", "city", "state", "zip", "country", "birthday"];
+	return ["id", "firstname", "lastname",
+			"email", "home_phone", "work_phone",
+			"cell_phone", "best_phone", "adress1",
+			"adress2", "city", "state",
+			"zip", "country", "birthday"];
 };
 
 function requiredContactsFields(){
@@ -54,8 +55,11 @@ function validationProcess($post){
     };
 
 	// phone validation...
-	if (empty($post['home_phone']) && empty($post['work_phone']) && empty($post['cell_phone'])){
-        $_SESSION['emptyInput'] = "Please enter etleast one phone number!!!";
+	if (empty($post['home_phone']) 
+		&& empty($post['work_phone']) 
+		&& empty($post['cell_phone'])){
+	    
+	    $_SESSION['emptyInput'] = "Please enter etleast one phone number!!!";
 		return false;
 	};
 
@@ -66,7 +70,9 @@ function validationProcess($post){
 function wrongAddContact($post){
 	$allFields = allContactsFields();
 
-    isset($post['ADDButton']) ? $_SESSION['wrongAdd']['button'] = "ADD" : $_SESSION['wrongAdd']['button'] = "Edit";
+    isset($post['ADDButton']) 
+    	? $_SESSION['wrongAdd']['button'] = "ADD" 
+    	: $_SESSION['wrongAdd']['button'] = "Edit";
 
 	$i = 0;
 	while($i < count($allFields)){
@@ -133,8 +139,11 @@ function generatePassword($pass){
 function processLogin($post){
 	include_once ('dbConnection.php');
 
-	$stmt = $conn->prepare("SELECT * FROM ".USERS_DB." WHERE username = ? and password = ? Limit 1");
-	$stmt->bind_param("ss", $post['username'], generatePassword($post['password']));
+	$stmt = $conn->prepare("SELECT * FROM ".USERS_DB
+							." WHERE username = ? and password = ? Limit 1");
+							
+	$stmt->bind_param("ss",
+			$post['username'], generatePassword($post['password']));
 
 	$stmt->execute();
 	$stmt->bind_result($id, $login, $password);
@@ -182,7 +191,8 @@ function makeAddContactQuery($contact){
 function processAddContact($post){
 	include_once ('dbConnection.php');
 
-	$stmt = $conn->prepare("INSERT INTO ". CONTACTS_DB. makeAddContactQuery($post));
+	$stmt = $conn->prepare("INSERT INTO ".CONTACTS_DB
+							.makeAddContactQuery($post));
 
 	if ($stmt->execute()) {
 		$stmt->close();
@@ -227,7 +237,10 @@ function getContacts(){
 
 	include_once ('dbConnection.php');
 
-	if (!isset($_POST['sortBy']) || !isset($_POST['sortTurn']) || !isset($_POST['activePage'])){
+	if (!isset($_POST['sortBy']) 
+		|| !isset($_POST['sortTurn']) 
+		|| !isset($_POST['activePage'])){
+		
 		$_POST['sortBy'] = "lastname";
 		$_POST['sortTurn'] = "ASC";
 		$_POST['activePage'] = 1;
@@ -259,7 +272,9 @@ function getContacts(){
 
 	$offset = inputValidation($offset);
 
-	$stmt = $conn->prepare("SELECT * FROM ".CONTACTS_DB." ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']." LIMIT ".$offset.", ".$offsetTo);
+	$stmt = $conn->prepare("SELECT * FROM ".CONTACTS_DB
+				." ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']
+				." LIMIT ".$offset.", ".$offsetTo);
 
 	$stmt->execute();
 
@@ -287,14 +302,19 @@ function redirect($roadTo){
 function processEditing($post){
 	include_once ('dbConnection.php');
 
-	$stmt = $conn->prepare("UPDATE ".CONTACTS_DB." SET ".
-								"firstname=?, lastname=?, email=?, home_phone=?, work_phone=?, cell_phone=?, ".
-								"best_phone=?, adress1=?, adress2=?, city=?, state=?, zip=?, country=?, birthday=? ".
-								"WHERE id= ?");
+	$stmt = $conn->prepare("UPDATE ".CONTACTS_DB." SET "
+					."firstname=?, lastname=?, email=?, "
+					."home_phone=?, work_phone=?, cell_phone=?, "
+					."best_phone=?, adress1=?, adress2=?, city=?, "
+					."state=?, zip=?, country=?, birthday=? "
+					."WHERE id= ?");
 
-	$stmt->bind_param("sssssssssssssss", $post['firstname'], $post['lastname'], $post['email'], $post['home_phone'], $post['work_phone'],
-							$post['cell_phone'], $post['best_phone'], $post['adress1'], $post['adress2'], $post['city'],
-							$post['state'], $post['zip'], $post['country'], $post['birthday'], $post['id']);
+	$stmt->bind_param("sssssssssssssss", 
+			$post['firstname'], $post['lastname'], $post['email'],
+			$post['home_phone'], $post['work_phone'], $post['cell_phone'],
+			$post['best_phone'], $post['adress1'], $post['adress2'],
+			$post['city'], $post['state'], $post['zip'], $post['country'],
+			$post['birthday'], $post['id']);
 
 	$stmt->execute();
 
