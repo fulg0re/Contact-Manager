@@ -17,6 +17,10 @@ function requiredContactsFields(){
 	return ["firstname", "lastname", "email", "birthday"];
 };
 
+function allPhoneFields(){
+	return ["home_phone", "work_phone", "cell_phone"];
+};
+
 function turnSide($sortTurn){
     return ($sortTurn == "DESC") 
     	? "ASC" 
@@ -69,7 +73,14 @@ function validationProcess($post){
 	    $_SESSION['emptyInput'] = "Please enter etleast one phone number!!!";
 		return false;
 	};
-
+	
+	// radioButton validation...
+	$allPhones = allPhoneFields();
+	if (empty($post[$post['best_phone']])){
+		$_SESSION['emptyInput'] = "Please choose 'best phone number'!!!";
+		return false;
+	};
+	
 	return true;
 };
 
@@ -169,28 +180,17 @@ function processLogin($post){
 
 function makeAddContactQuery($contact){
 	$result = " (";
-	$allFields = allContactsFields();
-	$i = 1;	// we do not nead an "id" field for this(look to config.php)...
+	$allFields = array_slice(allContactsFields(), 1); //without "id" field...
+	$result .= join(', ', $allFields);
+	$result .= ") VALUES ('";
+	$temp;
+	$i = 0;
 	while($i < count($allFields)){
-		$result .= $allFields[$i];
-		if ($i < count($allFields) - 1){
-			$result .= ", ";
-		};
+		$temp[$i] = $contact[$allFields[$i]];
 		$i++;
 	};
-	$result .= ") VALUES (";
-	$i = 1;	// we do not nead an "id" field for this(look to config.php)...
-	while($i < count($allFields)){
-		$result .= "'";
-		$result .= $contact[$allFields[$i]];
-		if ($i < count($allFields) - 1){
-			$result .= "', ";
-		}else{
-			$result .= "'";
-		};
-		$i++;
-	};
-	$result .= ")";
+	$result .= join("', '", $temp);
+	$result .= "')";
 	return $result;
 };
 
