@@ -1,9 +1,19 @@
 <?php
 
-//include_once('../includes/config.php');
-
 interface dbInterface{
 
-	public function __construct();
+	public function connect();
+	
+	public function disconnect();
+	
+	public function query($query);
+	
+	public function getLastInsertId();
+	
+	public function getArray();
+	
+	public function getLastQuery();
+	
+	public function prepare();
 
 }
