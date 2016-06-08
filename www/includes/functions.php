@@ -180,7 +180,8 @@ function processLogin($post){
 
 function makeAddContactQuery($contact){
 	$result = " (";
-	$allFields = array_slice(allContactsFields(), 1); //without "id" field...
+	$allFields = allContactsFields();
+	$allFields = array_merge(array_diff($allFields, array("id")));	//without "id" field...	
 	$result .= join(', ', $allFields);
 	$result .= ") VALUES ('";
 	$temp;
