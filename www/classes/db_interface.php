@@ -8,7 +8,9 @@ interface dbInterface{
 	
 	public function disconnect();
 	
-	public function query($toDo, $whotToDo, $Table);
+	public function query($query);
+	
+	public function getNumRows();
 	
 	public function getLastInsertId();
 	
@@ -16,6 +18,6 @@ interface dbInterface{
 	
 	public function getLastQuery();
 	
-	public function prepare($numberOfVariables);
+	public function prepare($query/*$numberOfVariables*/);
 
 }

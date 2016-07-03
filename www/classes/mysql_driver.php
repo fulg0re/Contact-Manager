@@ -11,6 +11,7 @@ class MysqlDriver implements dbInterface
 	private $dbPassword;
 	private $dbName;
 	private $lastQuery;
+	private $result;
 	
 	function __construct($host, $user, $password, $name)
 	{
@@ -22,29 +23,41 @@ class MysqlDriver implements dbInterface
 
 	public function connect()
 	{
-		$this->dbConnection = new mysqli(
-			$this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
+		if (!$this->dbConnection){
+			$this->dbConnection = new mysqli(
+				$this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
+		}else{
+			printf("Already connected to DB!");	//temporary line...
+		};
 		
 		if ($this->dbConnection->connect_errno) {
 			printf("Connect failed: %s\n", $this->dbConnection->connect_error);
 			exit();
-		}
+		};
 		
 		printf("Connected to DB, nice))");	//temporary line...
 	}
 	
 	public function disconnect()
 	{
-		if (mysqli_close($this->dbConnection)){
-			return true;
+		if (!$this->dbConnection){
+			return false;
+		}else{
+			$this->dbConnection->close();
+			return false;
 		};
-		return false;
 	}
 	
-	public function query($toDo, $whotToDo, $Table)
+	public function query($query)
 	{
+	/*
 		$this->lastQuery = $toDo." ".$whotToDo." FROM ".$Table;
 		return true;
+	*/
+	}
+	
+	public function getNumRows(){
+		
 	}
 	
 	public function getLastInsertId()
@@ -54,6 +67,7 @@ class MysqlDriver implements dbInterface
 	
 	public function getArray($toDo, $whotToDo, $Table)
 	{
+	/*
 		switch ($toDo) {
 			case "SELECT":
 				if ($this->query($toDo, $whotToDo, $Table) == true){
@@ -68,7 +82,7 @@ class MysqlDriver implements dbInterface
 				break;
 		};
 		
-		
+	*/
 		// bind results, and get results from query...
 	}
 	
@@ -77,8 +91,9 @@ class MysqlDriver implements dbInterface
 		return $this->lastQuery;
 	}
 	
-	public function prepare($numberOfVariables)
+	public function prepare($query/*$numberOfVariables*/)
 	{
+	/*
 		if ($numberOfVariables == null){
 			$this->preparedDBConnection = $this->dbConnection->prepare($this->lastQuery);
 			
@@ -101,6 +116,7 @@ class MysqlDriver implements dbInterface
 		}else{
 			
 		};
+	*/
 	}
 }
 
