@@ -41,58 +41,31 @@ class MysqlDriver implements dbInterface
 	public function disconnect()
 	{
 		if (!$this->dbConnection){
-			return false;
+			printf("There is no connection...");	//temporary line...
 		}else{
 			$this->dbConnection->close();
-			return false;
+			printf("Disconnected, nice))");	//temporary line...
 		};
 	}
 	
 	public function query($query)
 	{
-	/*
-		$this->lastQuery = $toDo." ".$whotToDo." FROM ".$Table;
-		return true;
-	*/
+		$this->lastQuery = $query;
 	}
 	
-	public function getNumRows(){
-		
-	}
-	
-	public function getLastInsertId()
+	public function prepare()
 	{
-		return $this->dbConnection->insert_id;
-	}
-	
-	public function getArray($toDo, $whotToDo, $Table)
-	{
-	/*
-		switch ($toDo) {
-			case "SELECT":
-				if ($this->query($toDo, $whotToDo, $Table) == true){
-					if (($result = $this->prepare(null)) != false){
-						return $result;
-					}else{
-						//make error message...
-					};
-				}else{
-					//make error message...
-				};
-				break;
+		$this->preparedDBConnection = $this->dbConnection->prepare($this->lastQuery);
+			
+		if ($this->preparedDBConnection->execute()){
+			$this->preparedDBConnection->close();
+			return true;
 		};
 		
-	*/
-		// bind results, and get results from query...
-	}
+		$this->preparedDBConnection->close();
+		return false;
 	
-	public function getLastQuery()
-	{
-		return $this->lastQuery;
-	}
 	
-	public function prepare($query/*$numberOfVariables*/)
-	{
 	/*
 		if ($numberOfVariables == null){
 			$this->preparedDBConnection = $this->dbConnection->prepare($this->lastQuery);
@@ -117,6 +90,26 @@ class MysqlDriver implements dbInterface
 			
 		};
 	*/
+	}
+	
+	public function getNumRows(){
+		
+	}
+	
+	public function getLastInsertId()
+	{
+		return $this->dbConnection->insert_id;
+	}
+	
+	public function getArray($toDo, $whotToDo, $Table)
+	{
+		
+		// bind results, and get results from query...
+	}
+	
+	public function getLastQuery()
+	{
+		return $this->lastQuery;
 	}
 }
 

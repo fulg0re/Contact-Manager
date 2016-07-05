@@ -18,6 +18,6 @@ interface dbInterface{
 	
 	public function getLastQuery();
 	
-	public function prepare($query/*$numberOfVariables*/);
+	public function prepare();
 
 }
