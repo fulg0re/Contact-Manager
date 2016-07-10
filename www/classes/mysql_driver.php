@@ -51,48 +51,14 @@ class MysqlDriver implements dbInterface
 	public function query($query)
 	{
 		$this->lastQuery = $query;
-	}
-	
-	public function prepare()
-	{
+		//echo "<pre>", var_dump($query), "</pre>";	//temporary line...
 		$this->preparedDBConnection = $this->dbConnection->prepare($this->lastQuery);
 			
-		if ($this->preparedDBConnection->execute()){
-			$this->preparedDBConnection->close();
-			return true;
-		};
-		
-		$this->preparedDBConnection->close();
-		return false;
-	
-	
-	/*
-		if ($numberOfVariables == null){
-			$this->preparedDBConnection = $this->dbConnection->prepare($this->lastQuery);
-			
-			$this->preparedDBConnection->execute();
-
-			$res = $this->preparedDBConnection->get_result();
-
-			if ($res->num_rows > 0){
-				$i = 0;
-				while ($row = $res->fetch_assoc()){
-					$result[$i] = $row;
-					$i++;
-				};
-				$this->preparedDBConnection->close();
-				return $result;
-			};
-
-			$this->preparedDBConnection->close();
-			return false;
-		}else{
-			
-		};
-	*/
+		return ($this->preparedDBConnection->execute()) ? true : false;
 	}
 	
-	public function getNumRows(){
+	public function getNumRows()
+	{
 		
 	}
 	
@@ -101,10 +67,23 @@ class MysqlDriver implements dbInterface
 		return $this->dbConnection->insert_id;
 	}
 	
-	public function getArray($toDo, $whotToDo, $Table)
+	public function getArray()
 	{
+		$res = $this->preparedDBConnection->get_result();
 		
-		// bind results, and get results from query...
+		if ($res->num_rows > 0){
+			$i = 0;
+			while ($row = $res->fetch_assoc()){
+				$result[$i] = $row;
+				$i++;
+			};
+
+			$this->preparedDBConnection->close();
+			
+			return $result;
+
+		};
+		return false;
 	}
 	
 	public function getLastQuery()

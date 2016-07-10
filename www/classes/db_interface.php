@@ -14,10 +14,7 @@ interface dbInterface{
 	
 	public function getLastInsertId();
 	
-	public function getArray($toDo, $whotToDo, $Table);
+	public function getArray();
 	
 	public function getLastQuery();
-	
-	public function prepare();
-
 }

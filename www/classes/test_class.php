@@ -22,17 +22,27 @@ class TestClass extends Table
 		};
 	}
 	
-	public function query($query)
+	private function query($query)
 	{ 
 		$this->database->query($query);
 	}
 	
-	public function prepare()
+	private function getArray()
 	{
-		return $this->database->prepare();
+		return $this->database->getArray();
 	}
 	
-	private function allContactsFields()
+	private function getLastInsertId()
+	{
+		return $this->database->getLastInsertId();
+	}
+	
+	private function getNumRows()
+	{
+		return $this->database->getNumRows();
+	}
+	
+	private function allFields()
 	{
 		return [
 			"id", "firstname", "lastname",
@@ -42,10 +52,10 @@ class TestClass extends Table
 			"zip", "country", "birthday"];
 	}
 	
-	private function makeAddContactQuery($data)
+	private function makeInsertQuery($data)	// used by method `insert`...
 	{
 		$result = " (";
-		$allFields = $this->allContactsFields();
+		$allFields = $this->allFields();
 		$allFields = array_merge(array_diff($allFields, array("id")));	//without "id" field...	
 		$result .= join(', ', $allFields);
 		$result .= ") VALUES ('";
@@ -62,9 +72,8 @@ class TestClass extends Table
 	
 	public function insert($data)
 	{
-		$query = "INSERT INTO ".$this->table.$this->makeAddContactQuery($data);
+		$query = "INSERT INTO ".$this->table.$this->makeInsertQuery($data);
 		$this->query($query);
-		$res = $this->prepare();
 		printf("Inserted contact: ".$res);	//temporary line...
 	}
 
@@ -72,13 +81,12 @@ class TestClass extends Table
 	{
 		$query = "DELETE FROM ".$this->table." WHERE ".$where;
 		$this->query($query);
-		$res = $this->prepare();
 		printf("Deleted contact: ".$res);	//temporary line...
 	}
 	
-	private function makeUpdateQuery($data)
+	private function makeUpdateQuery($data)	// used by method `update`...
 	{
-		$allFields = $this->allContactsFields();
+		$allFields = $this->allFields();
 		$allFields = array_merge(array_diff($allFields, array("id")));	//without "id" field...	
 		$temp;
 		for ($i=0; $i < count($allFields); $i++){
@@ -91,37 +99,75 @@ class TestClass extends Table
 	{
 		$query = "UPDATE ".$this->table." SET ".$this->makeUpdateQuery($data)." WHERE ".$where;
 		$this->query($query);
-		$res = $this->prepare();
-		printf("Updated contact: ".$res);	//temporary line...
+		printf("Updated contact: ");	//temporary line...
 	}
 	
-	public function select($fields, $asParam, $where, $sort_col, $sort_ord, $page, $limit)
+	private function getSortColArray()	// used by method `select`...
 	{
-		$query = "SELECT ".$fields." ";
-		if (isset($asParam)){
-			$query .= "AS ".$asParam." ";
+		return ['lastname', 'firstname'];
+	}
+
+	private function getSortOrdArray()	// used by method `select`...
+	{
+		return ['ASC', 'DESC'];
+	}
+	
+	private function selectValidation($data)	// used by method `select`...
+	{
+		// seting default data...
+		if (!isset($data['sortCol']) 
+			|| !isset($data['sortOrd']) 
+			|| !isset($data['page']) 
+			|| !isset($data['limit'])){
+		
+			$data['sortCol'] = "lastname";
+			$data['sortOrd'] = "ASC";
+			$data['page'] = 1;
+			$data['limit'] = 5;
 		};
-		$query .= "FROM ".$this->table." ";
-		if (isset($sort_col)){
-			$query .= "ORDER BY ".$sort_col." ".$sort_ord." ";
+		
+		// check URL variable "sortBy" if correct...
+		if (!in_array($data['sortCol'], $this->getSortColArray())) {
+			$data['sortCol'] = "lastname";
 		};
-		if (isset($where)){
-			$query .= "WHERE ";
+	
+		// check URL variable "sortTurn" if correct...
+		if (!in_array($data['sortOrd'], $this->getSortOrdArray())) {
+			$data['sortOrd'] = "ASC";
 		};
 		
-		/*
-		("SELECT * FROM ".CONTACTS_DB." ORDER BY ".$_POST['sortBy']." ".$_POST['sortTurn']." 
-		LIMIT ".$offset.", ".$offsetTo);
+		return $data;
+	}
+
+	//	input data: $data['fields'], $data['sortCol'], $data['sortOrd'], 
+	//				$data['page'], $data'[limit'], $data['where'], 
+	//				$data['whereChoise']
+	public function select($data)
+	{
+		$data['offset'] = $this->getOffset($data);
 		
-		("SELECT * FROM ".USERS_DB." 
-		WHERE username = ? and password = ? Limit 1");
+		$data = $this->selectValidation($data);
+	
+		// making WHERE... part
+		$_where = $this->getWhere($data);		
 		
-		("SELECT * FROM ".CONTACTS_DB." 
-		WHERE id = ?");
-		
-		("SELECT COUNT(*) AS allContacts FROM ".CONTACTS_DB)
-		
-		*/
+		$query = sprintf(
+			"SELECT %s FROM %s WHERE %s ORDER BY %s %s LIMIT %d, %d",
+			$data['fields'], $this->table, $_where,
+			$data['sortCol'], $data['sortOrd'],
+			$data['offset'], $data['limit']
+		);
+		$this->query($query);
+		$res = $this->getArray();
+		echo "<pre>", var_dump($res), "</pre>";	//temporary line...
+	}
+	
+	public function selectCount()
+	{
+		$query = "SELECT COUNT(*) AS allContacts FROM ".$this->table;
+		$this->query($query);
+		$result = $this->getArray();
+		return $result[0]['allContacts'];
 	}
 
 }
@@ -129,7 +175,7 @@ class TestClass extends Table
 
 function getData(){		// temporary function...
 	$array = array(
-		"firstname" => "bar",
+		"firstname" => "bareeee",
 		"lastname" => "foo",
 		"email" => "foo",
 		"home_phone" => "foo",
@@ -147,10 +193,31 @@ function getData(){		// temporary function...
 	return $array;
 };
 
+function getSelectData(){
+	$data = array(
+		'fields' => '*',
+		
+		'sortCol' => 'lastname',
+		'sortOrd' => 'DESC',
+		'page' => 0,
+		'limit' => 5,
+		
+		'where' => array(
+			'id' => 1
+		),
+		'whereChoise' => 'AND',
+		
+		'lololo' => 'qweqwe'
+	);
+	return $data;
+};
+
 $testClass = new TestClass(['host'=>'localhost', 'user'=>'root', 'password'=>'123', 'dbName'=>'contact_manager'], 'contacts');
-//$testClass->delete("id=24");		//working...
+//$testClass->delete("id=28");		//working...
 //$testClass->insert(getData());		//working...
 //$testClass->update(getData(), "id=29");		//working...
+//$testClass->selectCount();		//working...
+$testClass->select(getSelectData());		//working...
 
 //echo "<pre>", var_dump($result), "</pre>";	//temporary line...
 
