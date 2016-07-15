@@ -72,10 +72,9 @@ class MysqlDriver implements dbInterface
 		$res = $this->preparedDBConnection->get_result();
 		
 		if ($res->num_rows > 0){
-			$i = 0;
+			$result = [];
 			while ($row = $res->fetch_assoc()){
-				$result[$i] = $row;
-				$i++;
+				array_push($result, $row);
 			};
 
 			$this->preparedDBConnection->close();

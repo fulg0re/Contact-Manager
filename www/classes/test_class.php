@@ -24,7 +24,7 @@ class TestClass extends Table
 	
 	private function query($query)
 	{ 
-		$this->database->query($query);
+		return $this->database->query($query);
 	}
 	
 	private function getArray()
@@ -73,15 +73,17 @@ class TestClass extends Table
 	public function insert($data)
 	{
 		$query = "INSERT INTO ".$this->table.$this->makeInsertQuery($data);
-		$this->query($query);
-		printf("Inserted contact: ".$res);	//temporary line...
+		if ($this->query($query)){
+			printf("Inserted contact: ".$res);	//temporary line...
+		};
 	}
 
 	public function delete($where)
 	{
 		$query = "DELETE FROM ".$this->table." WHERE ".$where;
-		$this->query($query);
-		printf("Deleted contact: ".$res);	//temporary line...
+		if ($this->query($query)){
+			printf("Deleted contact: ".$res);	//temporary line...
+		};
 	}
 	
 	private function makeUpdateQuery($data)	// used by method `update`...
@@ -98,8 +100,9 @@ class TestClass extends Table
 	public function update($data, $where)
 	{
 		$query = "UPDATE ".$this->table." SET ".$this->makeUpdateQuery($data)." WHERE ".$where;
-		$this->query($query);
-		printf("Updated contact: ");	//temporary line...
+		if ($this->query($query)){
+			printf("Updated contact: ");	//temporary line...
+		};
 	}
 	
 	private function getSortColArray()	// used by method `select`...
@@ -140,8 +143,8 @@ class TestClass extends Table
 	}
 
 	//	input data: $data['fields'], $data['sortCol'], $data['sortOrd'], 
-	//				$data['page'], $data'[limit'], $data['where'], 
-	//				$data['whereChoise']
+	//				$data['page'], $data'[limit'], $data['whereAndChoise'], 
+	//				$data['whereOrChoise']
 	public function select($data)
 	{
 		$data['offset'] = $this->getOffset($data);
@@ -157,17 +160,22 @@ class TestClass extends Table
 			$data['sortCol'], $data['sortOrd'],
 			$data['offset'], $data['limit']
 		);
-		$this->query($query);
-		$res = $this->getArray();
-		echo "<pre>", var_dump($res), "</pre>";	//temporary line...
+		
+		//echo "<pre>", var_dump($query), "</pre>";	//temporary line...
+		
+		if ($this->query($query)){
+			$res = $this->getArray();
+			echo "<pre>", var_dump($res), "</pre>";	//temporary line...
+		};
 	}
 	
 	public function selectCount()
 	{
 		$query = "SELECT COUNT(*) AS allContacts FROM ".$this->table;
-		$this->query($query);
-		$result = $this->getArray();
-		return $result[0]['allContacts'];
+		if ($this->query($query)){
+			$result = $this->getArray();
+			return $result[0]['allContacts'];
+		};
 	}
 
 }
@@ -201,11 +209,17 @@ function getSelectData(){
 		'sortOrd' => 'DESC',
 		'page' => 0,
 		'limit' => 5,
-		
-		'where' => array(
-			'id' => 1
+		/*
+		'whereAndChoise' => array(
+			'id' => 1,
+			'lastname' => 'Denys'
 		),
-		'whereChoise' => 'AND',
+		*/
+		
+		'whereOrChoise' => [
+			'id' => 1234,
+			'lastname' => 'Denys'
+		],
 		
 		'lololo' => 'qweqwe'
 	);

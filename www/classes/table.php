@@ -10,17 +10,38 @@ abstract class Table
 	
 	abstract public function update($data, $where);
 	
+	protected function makeWhere($whereArray)
+	{
+		$tempArray = [];
+		foreach ($whereArray as $key => $val){
+			$temp = $key . "='" . $whereArray[$key] ."'";
+			array_push($tempArray, $temp);
+		};
+		return $tempArray;
+	}
+	
 	protected function getWhere($data)	// used by method `select`...
 	{
-		if (!isset($data['where'])){
+		if (!isset($data['whereAndChoise']) && !isset($data['whereOrChoise'])){
 			return "1";
 		};
 		
-		$tempArray = array();
-		foreach ($data['where'] as $key => $val){
-			$tempArray[$key] = $key . "=" . $data['where'][$key];
+		$result = "";
+		if (isset($data['whereAndChoise'])){
+			$result = join(' AND ', $this->makeWhere($data['whereAndChoise']));
 		};
-		return join(' '.$data['whereChoise'].' ', $tempArray);
+		
+		if (isset($data['whereAndChoise']) && isset($data['whereOrChoise'])){
+			$result .= " AND ";
+		};
+		
+		if (isset($data['whereOrChoise'])){
+			$result .= "( ";
+			$result .= join(' OR ', $this->makeWhere($data['whereOrChoise']));
+			$result .= " )";
+		};		
+		
+		return $result;
 	}
 
 	protected function getOffset($data)	// used by method `select`...
