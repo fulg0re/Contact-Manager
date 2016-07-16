@@ -53,7 +53,7 @@ class MysqlDriver implements dbInterface
 		$this->lastQuery = $query;
 		//echo "<pre>", var_dump($query), "</pre>";	//temporary line...
 		$this->preparedDBConnection = $this->dbConnection->prepare($this->lastQuery);
-			
+		//echo "<pre>", var_dump($this->lastQuery), "</pre>";	//temporary line...
 		return ($this->preparedDBConnection->execute()) ? true : false;
 	}
 	
