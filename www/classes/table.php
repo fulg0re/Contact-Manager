@@ -32,9 +32,14 @@ abstract class Table
 	
 	public function delete($where)
 	{
-		$query = "DELETE FROM ".$this->table." WHERE ".$where;
-		if ($this->query($query)){
-			printf("Deleted contact: ".$res);	//temporary line...
+		if (!$where){
+			printf("Nothing to delete...");
+			die();
+		};
+		//echo "<pre>", var_dump($where), "</pre>";	//temporary line...
+		$query = "DELETE FROM ".$this->table." WHERE ".$this->getWhere($where);
+		if ($res = $this->query($query)){
+			printf("Deleted ".$res." record(s).");	//temporary line...
 		};
 	}
 	
@@ -72,7 +77,7 @@ abstract class Table
 		$query = "INSERT INTO ".$this->table.$this->makeInsertQuery($data);
 		
 		if ($res = $this->query($query)){
-			printf("Inserted contact: ".$res);	//temporary line...
+			printf("Inserted ".$res." record(s).");	//temporary line...
 		};
 		
 	}
@@ -170,8 +175,8 @@ abstract class Table
 		$data['allFields'] = $this->allFields();
 		
 		$query = "UPDATE ".$this->table." SET ".$this->makeUpdateQuery($data)." WHERE ".$where;
-		if ($this->query($query)){
-			printf("Updated contact: ");	//temporary line...
+		if ($res = $this->query($query)){
+			printf("Updated ".$res." record(s).");	//temporary line...
 		};
 	}
 	

@@ -54,12 +54,12 @@ class MysqlDriver implements dbInterface
 		//echo "<pre>", var_dump($query), "</pre>";	//temporary line...
 		$this->preparedDBConnection = $this->dbConnection->prepare($this->lastQuery);
 		//echo "<pre>", var_dump($this->lastQuery), "</pre>";	//temporary line...
-		return ($this->preparedDBConnection->execute()) ? true : false;
+		return ($this->preparedDBConnection->execute()) ? $this->getNumRows() : false;
 	}
 	
 	public function getNumRows()
 	{
-		
+		return $this->preparedDBConnection->affected_rows;
 	}
 	
 	public function getLastInsertId()
