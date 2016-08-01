@@ -1,7 +1,5 @@
 <?php
-
 include_once('mysql_driver.php');
-
 abstract class Table
 {	
 	
@@ -11,13 +9,10 @@ abstract class Table
 	abstract protected function allFields();
 	
 	abstract protected function getSortColArray();
-
 	abstract protected function getSortOrdArray();
-
 	abstract protected function getOffset($data);
 	
 	abstract protected function selectValidation($data);
-
 	function __construct($database, $table)
 	{
 		if (isset($database) && isset($table)){
@@ -40,6 +35,8 @@ abstract class Table
 		$query = "DELETE FROM ".$this->table." WHERE ".$this->getWhere($where);
 		if ($res = $this->query($query)){
 			printf("Deleted ".$res." record(s).");	//temporary line...
+		}else{
+			printf("ERROR deleting record(s).");	//temporary line...
 		};
 	}
 	
@@ -78,6 +75,8 @@ abstract class Table
 		
 		if ($res = $this->query($query)){
 			printf("Inserted ".$res." record(s).");	//temporary line...
+		}else{
+			printf("ERROR inserting record(s).");	//temporary line...
 		};
 		
 	}
@@ -92,33 +91,61 @@ abstract class Table
 		return $tempArray;
 	}
 	
+	public function temp($where, $key1 = "AND")
+	{
+		$result = [];
+		foreach ($where as $key => $val){
+			if (($key != "AND") 
+					&& ($key != "OR") 
+					&& ($key != "NOT")){
+				$tempArray = [];
+				foreach ($where as $lastKey => $lastVal){
+					if ($key1 == "NOT"){
+						array_push($tempArray, "NOT ".$lastKey."='".$lastVal."'");
+					}else{
+						array_push($tempArray, $lastKey."='".$lastVal."'");
+					};
+				};
+				return "(".join(' AND ', $tempArray).")";
+			}else{
+				$result[$key] = $this->temp($where[$key], $key);
+			};
+		};
+		return "(".join($key1, $result).")";
+	}
+
 	protected function getWhere($data)	// used by method `select`...
 	{
-		if (!isset($data['whereAndChoise']) && !isset($data['whereOrChoise'])){
+		if (!isset($data['AND']) && !isset($data['OR'])){
 			return "1";
 		};
 		
 		$result = "";
-		if (isset($data['whereAndChoise'])){
-			$result = join(' AND ', $this->makeWhere($data['whereAndChoise']));
+
+		
+
+
+
+
+		if (isset($data['AND'])){
+			$result = join(' AND ', $this->makeWhere($data['AND']));
 		};
 		
-		if (isset($data['whereAndChoise']) && isset($data['whereOrChoise'])){
+		if (isset($data['AND']) && isset($data['OR'])){
 			$result .= " AND ";
 		};
 		
-		if (isset($data['whereOrChoise'])){
+		if (isset($data['OR'])){
 			$result .= "( ";
-			$result .= join(' OR ', $this->makeWhere($data['whereOrChoise']));
+			$result .= join(' OR ', $this->makeWhere($data['OR']));
 			$result .= " )";
 		};		
 		
 		return $result;
 	}
-
 	//	input data: $data['fields'], $data['sortCol'], $data['sortOrd'],
-	//				$data['page'], $data'[limit'], $data['whereAndChoise'],
-	//				$data['whereOrChoise']
+	//				$data['page'], $data'[limit'], $data['AND'], $data['OR'],
+	//				$data['NOT']
 	public function select($data)
 	{
 		if ((!isset($data['page'])) && (!isset($data['limit']))){
@@ -142,10 +169,15 @@ abstract class Table
 		
 		//echo "<pre>", var_dump($query), "</pre>";	//temporary line...
 		
+		$res = $this->query($query, "select");
+		echo "<pre>", var_dump($res), "</pre>";	//temporary line...
+		
+		/*
 		if ($this->query($query)){
 			$res = $this->getArray();
 			echo "<pre>", var_dump($res), "</pre>";	//temporary line...
 		};
+		*/
 	}
 	
 	public function selectCount()
@@ -177,12 +209,14 @@ abstract class Table
 		$query = "UPDATE ".$this->table." SET ".$this->makeUpdateQuery($data)." WHERE ".$where;
 		if ($res = $this->query($query)){
 			printf("Updated ".$res." record(s).");	//temporary line...
+		}else{
+			printf("ERROR updating record(s).");	//temporary line...
 		};
 	}
 	
-	protected function query($query)
+	protected function query($query, $method = "")
 	{ 
-		return $this->database->query($query);
+		return $this->database->query($query, $method);
 	}
 	
 	protected function getArray()
@@ -199,7 +233,5 @@ abstract class Table
 	{
 		return $this->database->getNumRows();
 	}
-
 }
-
 // cakephp framework...

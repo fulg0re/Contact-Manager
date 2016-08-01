@@ -1,7 +1,5 @@
 <?php
-
 include_once('db_interface.php');
-
 class MysqlDriver implements dbInterface
 {
 	private $dbConnection;
@@ -20,7 +18,6 @@ class MysqlDriver implements dbInterface
 		$this->dbPassword = $password;
 		$this->dbName = $name;
 	}
-
 	public function connect()
 	{
 		if (!$this->dbConnection){
@@ -48,17 +45,23 @@ class MysqlDriver implements dbInterface
 		};
 	}
 	
-	public function query($query)
+	public function query($query, $method = "")
 	{
 		$this->lastQuery = $query;
-		//echo "<pre>", var_dump($query), "</pre>";	//temporary line...
+		echo "<pre>", var_dump($query), "</pre>";	//temporary line...
 		$this->preparedDBConnection = $this->dbConnection->prepare($this->lastQuery);
 		//echo "<pre>", var_dump($this->lastQuery), "</pre>";	//temporary line...
-		return ($this->preparedDBConnection->execute()) ? $this->getNumRows() : false;
+		return 
+			($this->preparedDBConnection->execute()) 
+				? ($method == "select") 
+					? $this->getArray() 
+					: $this->getNumRows() 
+				: false;
 	}
 	
 	public function getNumRows()
 	{
+		//var_dump("this is getNumRows()...");
 		return $this->preparedDBConnection->affected_rows;
 	}
 	
@@ -69,20 +72,17 @@ class MysqlDriver implements dbInterface
 	
 	public function getArray()
 	{
+		//var_dump("this is getArray()...");
+		$result = false;
 		$res = $this->preparedDBConnection->get_result();
-		
 		if ($res->num_rows > 0){
 			$result = [];
 			while ($row = $res->fetch_assoc()){
 				array_push($result, $row);
 			};
-
-			$this->preparedDBConnection->close();
-			
-			return $result;
-
 		};
-		return false;
+		$this->preparedDBConnection->close();			
+		return $result;
 	}
 	
 	public function getLastQuery()
@@ -90,15 +90,6 @@ class MysqlDriver implements dbInterface
 		return $this->lastQuery;
 	}
 }
-
 //$temp = new MysqlDriver("localhost", "root", "123", "contact_manager");
 //$temp->connect();
 //echo "<pre>", var_dump($mysqlDriver->getOneContact('1')), "</pre>";	//temporary line...
-
-
-
-
-
-
-
-

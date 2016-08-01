@@ -72,7 +72,7 @@ class Contacts extends Table
 
 function getInsertUpdateData(){		// temporary function...
 	$array = array(
-		"firstname" => "bare",
+		"firstname" => "baaaar",
 		"lastname" => "foo",
 		"email" => "foo",
 		"home_phone" => "foo",
@@ -96,18 +96,22 @@ function getSelectData(){
 		
 		'sortCol' => 'lastname',
 		'sortOrd' => 'DESC',
-		'page' => 2,
+		'page' => 1,
 		'limit' => 5,
 		/*
-		'whereAndChoise' => array(
-			'id' => 1,
-			'lastname' => 'Denys'
+		'AND' => array(
+			'id' => 37,
+			'lastname' => 'foo'
 		),
-		
-		
-		'whereOrChoise' => [
+		*/
+		/*
+		'OR' => [
 			'id' => 1234,
 			'lastname' => 'Denys'
+		],
+		*/
+		/*
+		'NOT' => [
 		],
 		*/
 		'lololo' => 'qweqwe'
@@ -117,22 +121,62 @@ function getSelectData(){
 
 function getDeleteData(){
 	$data= [
-		'whereAndChoise' => [
-			'id' => 30
+		'AND' => [
+			'id' => 36
 		]
 	];
 	return $data;
 };
 
+function makewhereObj(){
+	$temp = [
+		'OR' => [
+			'OR' =>[
+				'AND' => [
+					'id' => 5,
+					'zip' => 12314
+				],
+				'OR' => [
+					'id' => 6,
+					'zip' => 23424
+				]
+			],
+			'AND' =>[
+				'id' => 2,
+				'firstname' => 'bar'
+			],
+			'NOT' =>[
+				'id' => 20,
+				'id2' => 21
+			],
+		]
+	];
+	
+	return $temp;
+};
+
 $testClass = new Contacts(['host'=>'localhost', 'user'=>'root', 'password'=>'123', 'dbName'=>'contact_manager'], 'contacts');
 
-$testClass->delete(getDeleteData());		//working...
+//$testClass->delete(getDeleteData());		//working...
 //$testClass->insert(getInsertUpdateData());		//working...
-//$testClass->update(getInsertUpdateData(), "id=18");		//working...
-//$testClass->selectCount();		//working...
+//$testClass->update(getInsertUpdateData(), "id=32");		//working...
+/*
+$r = $testClass->selectCount();		//working...
+echo "<pre>", var_dump($r), "</pre>";	//temporary line...
+*/
 //$testClass->select(getSelectData());		//working...
 
 //echo "<pre>", var_dump($result), "</pre>";	//temporary line...
+
+
+$resss = $testClass->temp(makewhereObj());		//working...
+echo "<pre>", var_dump($resss), "</pre>";	//temporary line...
+
+
+
+
+
+
 
 
 
