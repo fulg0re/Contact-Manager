@@ -98,22 +98,25 @@ function getSelectData(){
 		'sortOrd' => 'DESC',
 		'page' => 1,
 		'limit' => 5,
-		/*
-		'AND' => array(
-			'id' => 37,
-			'lastname' => 'foo'
-		),
-		*/
-		/*
-		'OR' => [
-			'id' => 1234,
-			'lastname' => 'Denys'
+		
+		'where' => [
+			'OR' => [
+				'AND' => [
+					'id' => 46,
+					'lastname' => 'foo'
+				],
+				'OR' => [
+					'id' => 41,
+					'lastname' => 'foo'
+				],
+				/*
+				'NOT' => [
+					'id' => 37
+				]
+				*/
+			]
 		],
-		*/
-		/*
-		'NOT' => [
-		],
-		*/
+		
 		'lololo' => 'qweqwe'
 	);
 	return $data;
@@ -164,14 +167,14 @@ $testClass = new Contacts(['host'=>'localhost', 'user'=>'root', 'password'=>'123
 $r = $testClass->selectCount();		//working...
 echo "<pre>", var_dump($r), "</pre>";	//temporary line...
 */
-//$testClass->select(getSelectData());		//working...
+$testClass->select(getSelectData());		//working...
 
 //echo "<pre>", var_dump($result), "</pre>";	//temporary line...
 
-
+/*
 $resss = $testClass->temp(makewhereObj());		//working...
 echo "<pre>", var_dump($resss), "</pre>";	//temporary line...
-
+*/
 
 
 

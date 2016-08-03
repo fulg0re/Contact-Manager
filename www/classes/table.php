@@ -81,17 +81,7 @@ abstract class Table
 		
 	}
 	
-	protected function makeWhere($whereArray)
-	{
-		$tempArray = [];
-		foreach ($whereArray as $key => $val){
-			$temp = $key . "='" . $whereArray[$key] ."'";
-			array_push($tempArray, $temp);
-		};
-		return $tempArray;
-	}
-	
-	public function temp($where, $key1 = "AND")
+	protected function makeWhere($where, $key1 = "AND")
 	{
 		$result = [];
 		foreach ($where as $key => $val){
@@ -108,44 +98,14 @@ abstract class Table
 				};
 				return "(".join(' AND ', $tempArray).")";
 			}else{
-				$result[$key] = $this->temp($where[$key], $key);
+				$result[$key] = $this->makeWhere($where[$key], $key);
 			};
 		};
 		return "(".join($key1, $result).")";
 	}
 
-	protected function getWhere($data)	// used by method `select`...
-	{
-		if (!isset($data['AND']) && !isset($data['OR'])){
-			return "1";
-		};
-		
-		$result = "";
-
-		
-
-
-
-
-		if (isset($data['AND'])){
-			$result = join(' AND ', $this->makeWhere($data['AND']));
-		};
-		
-		if (isset($data['AND']) && isset($data['OR'])){
-			$result .= " AND ";
-		};
-		
-		if (isset($data['OR'])){
-			$result .= "( ";
-			$result .= join(' OR ', $this->makeWhere($data['OR']));
-			$result .= " )";
-		};		
-		
-		return $result;
-	}
 	//	input data: $data['fields'], $data['sortCol'], $data['sortOrd'],
-	//				$data['page'], $data'[limit'], $data['AND'], $data['OR'],
-	//				$data['NOT']
+	//				$data['page'], $data'[limit'], $data['where']
 	public function select($data)
 	{
 		if ((!isset($data['page'])) && (!isset($data['limit']))){
@@ -158,7 +118,7 @@ abstract class Table
 		$data = $this->selectValidation($data);
 	
 		// making WHERE... part
-		$_where = $this->getWhere($data);		
+		$_where = (isset($data['where'])) ? $this->makeWhere($data['where']) : 1;
 		
 		$query = sprintf(
 			"SELECT %s FROM %s WHERE %s ORDER BY %s %s LIMIT %d, %d",
