@@ -5,6 +5,8 @@ abstract class Table
 	
 	protected $database;
 	protected $table;
+	public static $asc = 'ASC';
+	public static $desc = 'DESC';
 	
 	abstract protected function allFields();
 	
@@ -29,14 +31,14 @@ abstract class Table
 	{
 		if (!$where){
 			printf("Nothing to delete...");
-			die();
-		};
-		//echo "<pre>", var_dump($where), "</pre>";	//temporary line...
-		$query = "DELETE FROM ".$this->table." WHERE ".$this->getWhere($where);
-		if ($res = $this->query($query)){
-			printf("Deleted ".$res." record(s).");	//temporary line...
 		}else{
-			printf("ERROR deleting record(s).");	//temporary line...
+			//echo "<pre>", var_dump($where), "</pre>";	//temporary line...
+			$query = "DELETE FROM ".$this->table." WHERE ".$this->getWhere($where);
+			if ($res = $this->query($query)){
+				printf("Deleted ".$res." record(s).");	//temporary line...
+			}else{
+				printf("ERROR deleting record(s).");	//temporary line...
+			};
 		};
 	}
 	
@@ -129,23 +131,23 @@ abstract class Table
 		
 		//echo "<pre>", var_dump($query), "</pre>";	//temporary line...
 		
-		$res = $this->query($query, "select");
+		$res = $this->query($query);
 		echo "<pre>", var_dump($res), "</pre>";	//temporary line...
-		
-		/*
-		if ($this->query($query)){
-			$res = $this->getArray();
-			echo "<pre>", var_dump($res), "</pre>";	//temporary line...
-		};
-		*/
 	}
 	
-	public function selectCount()
+	public function selectCount($where = 1)
 	{
-		$query = "SELECT COUNT(*) AS allContacts FROM ".$this->table;
+		$_where = ($where == 1) 
+			? $where
+			: makeWhere($where);
+
+		//$query = "SELECT COUNT(*) AS countedFields FROM ".$this->table;
+
+		$query = sprintf("SELECT COUNT(*) AS countedFields FROM ".$this->table." WHERE %s", $_where);
+
 		if ($this->query($query)){
 			$result = $this->getArray();
-			return $result[0]['allContacts'];
+			return $result[0]['countedFields'];
 		};
 	}
 	
@@ -174,9 +176,9 @@ abstract class Table
 		};
 	}
 	
-	protected function query($query, $method = "")
+	protected function query($query)
 	{ 
-		return $this->database->query($query, $method);
+		return $this->database->query($query);
 	}
 	
 	protected function getArray()

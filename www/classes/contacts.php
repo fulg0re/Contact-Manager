@@ -61,7 +61,7 @@ class Contacts extends Table
 		};
 	
 		// check URL variable "sortTurn" if correct...
-		if (!in_array($data['sortOrd'], $this->getSortOrdArray())) {
+		if (!in_array($data['sortOrd'], [Table::$asc, Table::$desc])) {
 			$data['sortOrd'] = "ASC";
 		};
 		
@@ -72,7 +72,7 @@ class Contacts extends Table
 
 function getInsertUpdateData(){		// temporary function...
 	$array = array(
-		"firstname" => "baaaar",
+		"firstname" => "baaaarrrrr",
 		"lastname" => "foo",
 		"email" => "foo",
 		"home_phone" => "foo",
@@ -109,11 +109,11 @@ function getSelectData(){
 					'id' => 41,
 					'lastname' => 'foo'
 				],
-				/*
+				
 				'NOT' => [
 					'id' => 37
 				]
-				*/
+			
 			]
 		],
 		

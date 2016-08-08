@@ -45,18 +45,20 @@ class MysqlDriver implements dbInterface
 		};
 	}
 	
-	public function query($query, $method = "")
+	public function query($query)
 	{
 		$this->lastQuery = $query;
 		echo "<pre>", var_dump($query), "</pre>";	//temporary line...
 		$this->preparedDBConnection = $this->dbConnection->prepare($this->lastQuery);
 		//echo "<pre>", var_dump($this->lastQuery), "</pre>";	//temporary line...
-		return 
-			($this->preparedDBConnection->execute()) 
-				? ($method == "select") 
-					? $this->getArray() 
-					: $this->getNumRows() 
-				: false;
+
+		return ($this->preparedDBConnection->execute())
+					? (strpos($query, 'SELECT') !== false)
+						? (strpos($query, 'COUNT') !== false)
+							? $this->getNumRows()
+							: $this->getArray()
+						: $this->getNumRows()
+					: false;
 	}
 	
 	public function getNumRows()

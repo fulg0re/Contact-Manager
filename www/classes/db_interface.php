@@ -8,7 +8,7 @@ interface dbInterface{
 	
 	public function disconnect();
 	
-	public function query($query, $method);
+	public function query($query);
 	
 	public function getNumRows();
 	
