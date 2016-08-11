@@ -3,7 +3,26 @@
 include_once('table.php');
 
 class Contacts extends Table
-{		
+{
+	public $fields = [
+				'firstname' => [
+					'required' => true,
+					'message' => 'Firstname field is required!'
+				],
+				'lastname' => [
+					'required' => true,
+					'message' => 'Lastname field is required!'
+				],
+				'email' => [
+					'required' => true,
+					'message' => 'Email field is required!'
+				],
+				'birthday' => [
+					'required' => true,
+					'message' => 'Birthday field is required!'
+				],
+			];
+
 	protected function allFields()
 	{
 		return [
@@ -18,12 +37,12 @@ class Contacts extends Table
 	{
 		return ['lastname', 'firstname'];
 	}
-
+/*
 	protected function getSortOrdArray()	// used by method `select`...
 	{
 		return ['ASC', 'DESC'];
 	}
-
+*/
 	protected function getOffset($data)	// used by method `select`...
 	{
 		if (!isset($data['page']) || $data['page'] <= 1){
@@ -72,26 +91,26 @@ class Contacts extends Table
 
 function getInsertUpdateData(){		// temporary function...
 	$array = array(
-		"firstname" => "baaaarrrrr",
-		"lastname" => "foo",
-		"email" => "foo",
-		"home_phone" => "foo",
-		"work_phone" => "foo",
-		"cell_phone" => "foow",
-		"best_phone" => "foo",
-		"adress1" => "foo",
-		"adress2" => "foo",
-		"city" => "foo",
-		"state" => "foo",
-		"zip" => "foo",
-		"country" => "foo",
-		"birthday" => "foo",
+		"firstname" => "Oleh",
+		"lastname" => "Kolos",
+		"email" => "oleh.k@gmail.com",
+		"home_phone" => "383083",
+		"work_phone" => "581411",
+		"cell_phone" => "0974515035",
+		"best_phone" => "cell_phone",
+		"adress1" => "Ternopil1",
+		"adress2" => "Ternopil2",
+		"city" => "Ternopil3",
+		"state" => "Ternopil4",
+		"zip" => "45014",
+		"country" => "Ukraine",
+		"birthday" => "17-05-1989",
 	);
 	return $array;
 };
 
 function getSelectData(){
-	$data = array(
+	$data = [
 		'fields' => '*',
 		
 		'sortCol' => 'lastname',
@@ -102,23 +121,18 @@ function getSelectData(){
 		'where' => [
 			'OR' => [
 				'AND' => [
-					'id' => 46,
-					'lastname' => 'foo'
+					'lastname' => 'Denys',
+					'home_phone' => '289083'
 				],
 				'OR' => [
-					'id' => 41,
-					'lastname' => 'foo'
-				],
-				
-				'NOT' => [
-					'id' => 37
+					'lastname' => 'Miha',
+					'home_phone' => '283083'
 				]
-			
 			]
 		],
 		
 		'lololo' => 'qweqwe'
-	);
+	];
 	return $data;
 };
 
@@ -132,6 +146,21 @@ function getDeleteData(){
 };
 
 function makewhereObj(){
+
+	$temp = [
+		'OR' => [
+			'AND' => [
+				'lastname' => 'Denys',
+				'home_phone' => '289083'
+			],
+			'OR' => [
+				'lastname' => 'Miha',
+				'home_phone' => '283083'
+			]
+		]
+	];
+	
+	/*
 	$temp = [
 		'OR' => [
 			'OR' =>[
@@ -154,7 +183,7 @@ function makewhereObj(){
 			],
 		]
 	];
-	
+	*/
 	return $temp;
 };
 
@@ -172,10 +201,9 @@ $testClass->select(getSelectData());		//working...
 //echo "<pre>", var_dump($result), "</pre>";	//temporary line...
 
 /*
-$resss = $testClass->temp(makewhereObj());		//working...
+$resss = $testClass->makeWhere(makewhereObj());		//working...
 echo "<pre>", var_dump($resss), "</pre>";	//temporary line...
 */
-
 
 
 

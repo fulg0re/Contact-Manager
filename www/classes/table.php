@@ -11,7 +11,7 @@ abstract class Table
 	abstract protected function allFields();
 	
 	abstract protected function getSortColArray();
-	abstract protected function getSortOrdArray();
+	//abstract protected function getSortOrdArray();
 	abstract protected function getOffset($data);
 	
 	abstract protected function selectValidation($data);
@@ -83,27 +83,28 @@ abstract class Table
 		
 	}
 	
-	protected function makeWhere($where, $key1 = "AND")
+	protected function makeWhere($where)
 	{
 		$result = [];
+		$globalKey = "";
 		foreach ($where as $key => $val){
 			if (($key != "AND") 
 					&& ($key != "OR") 
 					&& ($key != "NOT")){
-				$tempArray = [];
-				foreach ($where as $lastKey => $lastVal){
-					if ($key1 == "NOT"){
-						array_push($tempArray, "NOT ".$lastKey."='".$lastVal."'");
+				foreach ($where as $key2 => $val2){
+					if ($key == "NOT"){
+						array_push($result, "NOT ".$key2."='".$val2."'");
 					}else{
-						array_push($tempArray, $lastKey."='".$lastVal."'");
+						array_push($result, $key2."='".$val2."'");
 					};
 				};
-				return "(".join(' AND ', $tempArray).")";
+				return "(".join(' AND ', $result).")";
 			}else{
-				$result[$key] = $this->makeWhere($where[$key], $key);
+				$globalKey = $key;
+				array_push($result, $this->makeWhere($where[$key]));
 			};
 		};
-		return "(".join($key1, $result).")";
+		return "(".join($globalKey, $result).")";
 	}
 
 	//	input data: $data['fields'], $data['sortCol'], $data['sortOrd'],
@@ -126,8 +127,7 @@ abstract class Table
 			"SELECT %s FROM %s WHERE %s ORDER BY %s %s LIMIT %d, %d",
 			$data['fields'], $this->table, $_where,
 			$data['sortCol'], $data['sortOrd'],
-			$data['offset'], $data['limit']
-		);
+			$data['offset'], $data['limit']);
 		
 		//echo "<pre>", var_dump($query), "</pre>";	//temporary line...
 		
