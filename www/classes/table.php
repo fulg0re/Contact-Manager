@@ -15,6 +15,7 @@ abstract class Table
 	abstract protected function getOffset($data);
 	
 	abstract protected function selectValidation($data);
+
 	function __construct($database, $table)
 	{
 		if (isset($database) && isset($table)){
@@ -30,21 +31,21 @@ abstract class Table
 	public function delete($where)
 	{
 		if (!$where){
-			printf("Nothing to delete...");
+			return "Nothing to delete...";
 		}else{
 			//echo "<pre>", var_dump($where), "</pre>";	//temporary line...
-			$query = "DELETE FROM ".$this->table." WHERE ".$this->getWhere($where);
+			$query = "DELETE FROM ".$this->table." WHERE ".$this->makeWhere($where);
 			if ($res = $this->query($query)){
-				printf("Deleted ".$res." record(s).");	//temporary line...
+				return "Deleted ".$res." record(s).";
 			}else{
-				printf("ERROR deleting record(s).");	//temporary line...
+				return "ERROR deleting record(s).";
 			};
 		};
 	}
 	
 	protected function makeInsertQuery($data)	// used by method `insert`...
 	{
-		$result = " (";
+		$result = "(";
 		$data['allFields'] = array_merge(array_diff($data['allFields'], array("id")));	//without "id" field...	
 		$result .= join(', ', $data['allFields']);
 		$result .= ") VALUES ('";
@@ -68,19 +69,81 @@ abstract class Table
 		$result .= "')";
 		return $result;
 	}
+
+	private function insertValidation($data)
+	{
+		$validRes = [
+			'res' => true,
+			'message'=>''
+		];
+
+		//fields validation(check for requird fields)...
+		foreach($this->fields as $key => $val){
+			foreach($this->fields[$key] as $key2 => $val2){
+				if (($key2 == "required") 
+						&& ($val2 == true) 
+						&& (!isset($data[$key]))
+						|| (empty($data[$key]))){
+
+					$validRes['res'] = false;
+					$validRes['message'] = $this->fields[$key]['message'];
+					return $validRes;
+				};
+			};
+		};
+
+		// email validation...
+		if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+			$validRes['res'] = false;
+			$validRes['message'] = "Wrong \"email\" format!!!";
+			return $validRes;
+		};
+
+		// phone validation for empty...
+		if (empty($data['home_phone']) 
+			&& empty($data['work_phone']) 
+			&& empty($data['cell_phone'])){
+			
+			$validRes['res'] = false;
+			$validRes['message'] = "Please enter etleast one phone number!!!";
+			return $validRes;
+		};
+	
+		// radioButton validation...
+		if (empty($data['best_phone'])){
+			$validRes['res'] = false;
+			$validRes['message'] = "Please choose 'best phone number'!!!";
+			return $validRes;
+		};
+		
+		return $validRes;
+		
+		//echo "<pre>", var_dump($requiredField), "</pre>";	//temporary line...
+		//echo "<pre>", var_dump($this->fields), "</pre>";	//temporary line...
+	}
 	
 	public function insert($data)
 	{
+		$validRes = $this->insertValidation($data);
+		if ($validRes['res'] == false){
+			return $validRes['message'];
+		};
+
 		$data['allFields'] = $this->allFields();
 		
-		$query = "INSERT INTO ".$this->table.$this->makeInsertQuery($data);
+		$query = "INSERT INTO ".$this->table." ".$this->makeInsertQuery($data);
 		
 		if ($res = $this->query($query)){
-			printf("Inserted ".$res." record(s).");	//temporary line...
+			return "Inserted ".$res." record(s).";
 		}else{
-			printf("ERROR inserting record(s).");	//temporary line...
+			return "ERROR inserting record(s).";
 		};
 		
+	}
+
+	private function arrayKeySearch($array, $key)
+	{
+		return array_key_exists($key, $array) ? true : false;
 	}
 	
 	protected function makeWhere($where)
@@ -88,11 +151,11 @@ abstract class Table
 		$result = [];
 		$globalKey = "";
 		foreach ($where as $key => $val){
-			if (($key != "AND") 
-					&& ($key != "OR") 
-					&& ($key != "NOT")){
+			if ((!$this->arrayKeySearch($where, "AND")) 
+					&& (!$this->arrayKeySearch($where, "OR")) 
+					&& (!$this->arrayKeySearch($where, "NOT"))){
 				foreach ($where as $key2 => $val2){
-					if ($key == "NOT"){
+					if ($this->arrayKeySearch($where, "NOT")){
 						array_push($result, "NOT ".$key2."='".$val2."'");
 					}else{
 						array_push($result, $key2."='".$val2."'");
@@ -132,21 +195,19 @@ abstract class Table
 		//echo "<pre>", var_dump($query), "</pre>";	//temporary line...
 		
 		$res = $this->query($query);
-		echo "<pre>", var_dump($res), "</pre>";	//temporary line...
+		//echo "<pre>", var_dump($res), "</pre>";	//temporary line...
+		return $res;
 	}
 	
 	public function selectCount($where = 1)
 	{
 		$_where = ($where == 1) 
 			? $where
-			: makeWhere($where);
-
-		//$query = "SELECT COUNT(*) AS countedFields FROM ".$this->table;
+			: $this->makeWhere($where);
 
 		$query = sprintf("SELECT COUNT(*) AS countedFields FROM ".$this->table." WHERE %s", $_where);
 
-		if ($this->query($query)){
-			$result = $this->getArray();
+		if ($result = $this->query($query)){
 			return $result[0]['countedFields'];
 		};
 	}
@@ -170,9 +231,9 @@ abstract class Table
 		
 		$query = "UPDATE ".$this->table." SET ".$this->makeUpdateQuery($data)." WHERE ".$where;
 		if ($res = $this->query($query)){
-			printf("Updated ".$res." record(s).");	//temporary line...
+			return "Updated ".$res." record(s).";
 		}else{
-			printf("ERROR updating record(s).");	//temporary line...
+			return "ERROR updating record(s).";
 		};
 	}
 	

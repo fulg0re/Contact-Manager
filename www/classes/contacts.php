@@ -139,7 +139,7 @@ function getSelectData(){
 function getDeleteData(){
 	$data= [
 		'AND' => [
-			'id' => 36
+			'id' => 60
 		]
 	];
 	return $data;
@@ -189,14 +189,50 @@ function makewhereObj(){
 
 $testClass = new Contacts(['host'=>'localhost', 'user'=>'root', 'password'=>'123', 'dbName'=>'contact_manager'], 'contacts');
 
-//$testClass->delete(getDeleteData());		//working...
-//$testClass->insert(getInsertUpdateData());		//working...
-//$testClass->update(getInsertUpdateData(), "id=32");		//working...
+//**********************DELETE**********************
 /*
-$r = $testClass->selectCount();		//working...
-echo "<pre>", var_dump($r), "</pre>";	//temporary line...
+$temp = $testClass->delete(getDeleteData());		//working...
+echo "<pre>", var_dump($temp), "</pre>";	//temporary line...
 */
-$testClass->select(getSelectData());		//working...
+//**************************************************
+
+
+
+//**********************INSERT**********************
+/*
+$temp = $testClass->insert(getInsertUpdateData());		//working...
+echo "<pre>", var_dump($temp), "</pre>";	//temporary line...
+*/
+//**************************************************
+
+
+
+//**********************UPDATE**********************
+/*
+$temp = $testClass->update(getInsertUpdateData(), "id=61");		//working...
+echo "<pre>", var_dump($temp), "</pre>";	//temporary line...
+*/
+//**************************************************
+
+
+
+//**********************SELECT_COUNT*****************
+/*
+$temp = $testClass->selectCount();		//working...
+echo "<pre>", var_dump($temp), "</pre>";	//temporary line...
+*/
+//**************************************************
+
+
+
+//**********************SELECT***********************
+/*
+$temp = $testClass->select(getSelectData());		//working...
+echo "<pre>", var_dump($temp), "</pre>";	//temporary line...
+*/
+//**************************************************
+
+
 
 //echo "<pre>", var_dump($result), "</pre>";	//temporary line...
 
@@ -205,9 +241,11 @@ $resss = $testClass->makeWhere(makewhereObj());		//working...
 echo "<pre>", var_dump($resss), "</pre>";	//temporary line...
 */
 
-
-
-
-
+/*
+$temp = $testClass->insertValidation(['firstname'=>'qwe', 
+		'lastname'=>'asd', 'email'=>'afsdf@sdfs.swef', 'birthday'=>'wer',
+		'home_phone'=>'654', 'best_phone'=>'home_phone']);
+echo "<pre>", var_dump($temp), "</pre>";	//temporary line...
+*/
 
 

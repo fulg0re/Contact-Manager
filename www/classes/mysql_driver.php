@@ -24,25 +24,37 @@ class MysqlDriver implements dbInterface
 			$this->dbConnection = new mysqli(
 				$this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
 		}else{
-			printf("Already connected to DB!");	//temporary line...
+			return "Already connected to DB!";
 		};
 		
 		if ($this->dbConnection->connect_errno) {
-			printf("Connect failed: %s\n", $this->dbConnection->connect_error);
+			return ("Connect failed: %s\n".$this->dbConnection->connect_error);
 			exit();
 		};
 		
-		printf("Connected to DB, nice))");	//temporary line...
+		return "Connected to DB, nice))";
 	}
 	
 	public function disconnect()
 	{
 		if (!$this->dbConnection){
-			printf("There is no connection...");	//temporary line...
+			return "There is no connection...";
 		}else{
 			$this->dbConnection->close();
-			printf("Disconnected, nice))");	//temporary line...
+			return "Disconnected, nice))";
 		};
+	}
+
+	private function getTypeQuery($query)
+	{
+		$type = explode(' ',$query);
+
+		// for SELECT COUNT query...
+		if ($type[0] == "SELECT" && $type[1] == "COUNT"){
+			return $type[1];
+		};
+
+		return $type[0];
 	}
 	
 	public function query($query)
@@ -51,7 +63,18 @@ class MysqlDriver implements dbInterface
 		echo "<pre>", var_dump($query), "</pre>";	//temporary line...
 		$this->preparedDBConnection = $this->dbConnection->prepare($this->lastQuery);
 		//echo "<pre>", var_dump($this->lastQuery), "</pre>";	//temporary line...
+		
+		$queryType = $this->getTypeQuery($query);
 
+		return ($this->preparedDBConnection->execute())
+					? ($queryType == 'SELECT')
+						? ($queryType == 'COUNT')
+							? $this->getNumRows()
+							: $this->getArray()
+						: $this->getNumRows()
+					: false;
+
+/*
 		return ($this->preparedDBConnection->execute())
 					? (strpos($query, 'SELECT') !== false)
 						? (strpos($query, 'COUNT') !== false)
@@ -59,6 +82,7 @@ class MysqlDriver implements dbInterface
 							: $this->getArray()
 						: $this->getNumRows()
 					: false;
+*/
 	}
 	
 	public function getNumRows()
