@@ -20,7 +20,7 @@ class Contacts extends Table
 				'birthday' => [
 					'required' => true,
 					'message' => 'Birthday field is required!'
-				],
+				]
 			];
 
 	protected function allFields()
@@ -217,10 +217,10 @@ echo "<pre>", var_dump($temp), "</pre>";	//temporary line...
 
 
 //**********************SELECT_COUNT*****************
-/*
+
 $temp = $testClass->selectCount();		//working...
 echo "<pre>", var_dump($temp), "</pre>";	//temporary line...
-*/
+
 //**************************************************
 
 

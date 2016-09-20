@@ -222,7 +222,7 @@ abstract class Table
 			$tempString = $data['allFields'][$key]."='".$data[$data['allFields'][$key]]."'";
 			array_push($temp, $tempString);
 		};
-		return join(", ", $temp);
+		return join(", ", $temp);	//JxOcWG6PNu
 	}
 	
 	public function update($data, $where)
