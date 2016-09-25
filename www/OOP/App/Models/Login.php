@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Core\Core;
+//use Core\Core;
 
 class Login  extends \Core\Core\Table
 {

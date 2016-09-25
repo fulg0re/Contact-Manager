@@ -23,7 +23,15 @@ class MysqlDriver implements dbInterface
 		$this->dbUser = $user;
 		$this->dbPassword = $password;
 		$this->dbName = $name;
+
+		$this->connect();
 	}
+	
+	function __destruct()
+	{
+		$this->disconnect();
+	}
+
 	public function connect()
 	{
 		if (!$this->dbConnection){
@@ -53,12 +61,12 @@ class MysqlDriver implements dbInterface
 	private function getTypeQuery($query)
 	{
 		$type = explode(' ',$query);
-
+/*
 		// for SELECT COUNT query...
 		if ($type[0] == "SELECT" && $type[1] == "COUNT"){
 			return $type[1];
 		};
-
+*/
 		return $type[0];
 	}
 	
@@ -71,28 +79,26 @@ class MysqlDriver implements dbInterface
 		
 		$queryType = $this->getTypeQuery($query);
 
-		return ($this->preparedDBConnection->execute())
-					? ($queryType == 'SELECT')
-						? ($queryType == 'COUNT')
-							? $this->getNumRows()
-							: $this->getArray()
-						: $this->getNumRows()
-					: false;
-
+		if ($this->preparedDBConnection->execute()){
+			if ($queryType == 'SELECT'){
+				return $this->getArray();
 /*
-		return ($this->preparedDBConnection->execute())
-					? (strpos($query, 'SELECT') !== false)
-						? (strpos($query, 'COUNT') !== false)
-							? $this->getNumRows()
-							: $this->getArray()
-						: $this->getNumRows()
-					: false;
+				if ($queryType == 'COUNT'){
+					return $this->getNumRows();
+				}else{
+					return $this->getArray();
+				};
 */
+			}else{
+				return $this->getNumRows();
+			};
+		}else{
+			return false;
+		};
 	}
 	
 	public function getNumRows()
 	{
-		//var_dump("this is getNumRows()...");
 		return $this->preparedDBConnection->affected_rows;
 	}
 	
@@ -103,7 +109,6 @@ class MysqlDriver implements dbInterface
 	
 	public function getArray()
 	{
-		//var_dump("this is getArray()...");
 		$result = false;
 		$res = $this->preparedDBConnection->get_result();
 		if ($res->num_rows > 0){
@@ -121,6 +126,3 @@ class MysqlDriver implements dbInterface
 		return $this->lastQuery;
 	}
 }
-//$temp = new MysqlDriver("localhost", "root", "123", "contact_manager");
-//$temp->connect();
-//echo "<pre>", var_dump($mysqlDriver->getOneContact('1')), "</pre>";	//temporary line...

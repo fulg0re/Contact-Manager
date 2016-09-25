@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>ContactManager/LoginForm</title>
-		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="/css/main.css">
 	</head>
 	<body>
         <!-- error part -->
@@ -10,7 +10,7 @@
                 <?php echo (isset($message)) ? $message : null;?></h3>
         </div>
 		<h3>Login</h3>
-		<form action="/contacts/login" method="post">
+		<form action="/contacts/index" method="post">
 			<div class="field">
 				<label for="username">UserName</label>
 					<input type="text" name="username" id="username" class="rightInput"

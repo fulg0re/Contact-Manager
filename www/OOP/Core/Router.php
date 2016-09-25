@@ -22,13 +22,13 @@ class Router
 	public function add($route, $params = [])
 	{
 		$route = preg_replace('/\//', '\\/', $route);
-
+		
 		$route = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[a-z-]+)', $route);
-
+		
 		$route = preg_replace('/\{([a-z]+):([^\}]+)\}/', '(?P<\1>\2)', $route);
-
+		
 		$route = '/^' . $route . '$/i';
-
+		
 		$this->routes[$route] = $params;
 	}
 
@@ -57,7 +57,6 @@ class Router
 		if ($this->match($url)){
 			$controller = $this->params['controller'];
 			$controller = $this->convertToStudlyCaps($controller);
-			//$controller = "App\Controllers\\$controller";
 			$controller = $this->getNamespace() . $controller;
 
 			if (class_exists($controller)){

@@ -15,7 +15,7 @@ abstract class Table
 	abstract protected function allFields();
 	
 	abstract protected function getSortColArray();
-	//abstract protected function getSortOrdArray();
+	
 	abstract protected function getOffset($data);
 	
 	abstract protected function selectValidation($data);
@@ -25,7 +25,7 @@ abstract class Table
 		if (isset($database) && isset($table)){
 			$this->database = new MysqlDriver(
 					$database['host'], $database['user'], $database['password'], $database['dbName']);
-			$this->database->connect();
+			//$this->database->connect();
 			$this->table = $table;
 		}else{
 			printf("Please enter all parameters!(database and table)...");	//temporary line...
@@ -45,33 +45,6 @@ abstract class Table
 				return "ERROR deleting record(s).";
 			};
 		};
-	}
-	
-	protected function makeInsertQuery($data)	// used by method `insert`...
-	{
-		$result = "(";
-		$data['allFields'] = array_merge(array_diff($data['allFields'], array("id")));	//without "id" field...	
-		$result .= join(', ', $data['allFields']);
-		$result .= ") VALUES ('";
-		$temp =[];
-		/*
-			$result = [];
-			while ($row = $res->fetch_assoc()){
-				array_push($result, $row);
-			};
-			
-		foreach ($whereArray as $key => $val){
-			$temp = $key . "='" . $whereArray[$key] ."'";
-			array_push($tempArray, $temp);
-		};
-		*/
-		
-		foreach($data['allFields'] as $key => $val){
-			array_push($temp, $data[$data['allFields'][$key]]);
-		};
-		$result .= join("', '", $temp);
-		$result .= "')";
-		return $result;
 	}
 
 	private function insertValidation($data)
@@ -122,8 +95,23 @@ abstract class Table
 		
 		return $validRes;
 		
-		//echo "<pre>", var_dump($requiredField), "</pre>";	//temporary line...
 		//echo "<pre>", var_dump($this->fields), "</pre>";	//temporary line...
+	}
+	
+	protected function makeInsertQuery($data)	// used by method `insert`...
+	{
+		$result = "(";
+		$data['allFields'] = array_merge(array_diff($data['allFields'], array("id")));	//without "id" field...	
+		$result .= join(', ', $data['allFields']);
+		$result .= ") VALUES ('";
+		$temp =[];
+
+		foreach($data['allFields'] as $key => $val){
+			array_push($temp, $data[$data['allFields'][$key]]);
+		};
+		$result .= join("', '", $temp);
+		$result .= "')";
+		return $result;
 	}
 	
 	public function insert($data)
@@ -138,7 +126,7 @@ abstract class Table
 		$query = "INSERT INTO ".$this->table." ".$this->makeInsertQuery($data);
 		
 		if ($res = $this->query($query)){
-			return "Inserted ".$res." record(s).";
+			return $res;
 		}else{
 			return "ERROR inserting record(s).";
 		};
@@ -147,7 +135,10 @@ abstract class Table
 
 	private function arrayKeySearch($array, $key)
 	{
-		return array_key_exists($key, $array) ? true : false;
+		if (array_key_exists($key, $array)){
+			return true;
+		};
+		return false;
 	}
 	
 	protected function makeWhere($where)
@@ -178,11 +169,6 @@ abstract class Table
 	//				$data['page'], $data'[limit'], $data['where']
 	public function select($data)
 	{
-		if ((!isset($data['page'])) && (!isset($data['limit']))){
-			$data['page'] = 1;
-			$data['limit'] = $this->selectCount();
-		};
-		
 		$data['offset'] = $this->getOffset($data);
 		
 		$data = $this->selectValidation($data);
@@ -205,19 +191,6 @@ abstract class Table
 		$res = $this->query($query);
 		//echo "<pre>", var_dump($res), "</pre>";	//temporary line...
 		return $res;
-	}
-	
-	public function selectCount($where = 1)
-	{
-		$_where = ($where == 1) 
-			? $where
-			: $this->makeWhere($where);
-
-		$query = sprintf("SELECT COUNT(*) AS countedFields FROM ".$this->table." WHERE %s", $_where);
-
-		if ($result = $this->query($query)){
-			return $result[0]['countedFields'];
-		};
 	}
 	
 	private function makeUpdateQuery($data)	// used by method `update`...
