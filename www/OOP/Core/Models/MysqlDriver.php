@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Core;
+namespace Core\Models;
 
-include_once('db_interface.php');
+include_once('DB_Interface.php');
 
 use mysqli;
 

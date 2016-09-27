@@ -7,7 +7,7 @@ class Router
 
 	protected $routes = [];
 
-	protected $params = [];
+	public $params = [];
 
 	public function getRoutes()
 	{

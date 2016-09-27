@@ -5,40 +5,24 @@ namespace App\Controllers;
 include_once('../App/config.php');
 
 use \Core\View;
+use \App\Models\User;
+use \App\Models\Contact;
 
 class Contacts extends \Core\Controller
 {
 
 	private $renderParams = [];
 
-	private function generatePassword($pass)
-	{
-		return sha1($pass);
-	}
-
 	public function indexAction()
-	{
-		$login = new \App\Models\Login(['host' => DB_HOST, 'user'=>DB_USER, 
-            				'password'=>DB_PASSWORD, 'dbName'=>DB_NAME], 
-							USERS_DB);
+	{	//http://contactmanager.test/
+		$regExp = "/^http:.+test\/$/i";
+		if (preg_match($regExp, $_SERVER['HTTP_REFERER'], $matches)){
+			$this->renderParams = User::login($_POST['username'], $_POST['password']);
+		}
 
-		$sha1Password = $this->generatePassword($_POST['password']);
-
-		$params = [
-			'fields' => '*',
-			'where' => [
-				'username' => $_POST['username'],
-				'password' => $sha1Password
-			]
-		];
-
-		if ($login->select($params)){
+		if ($this->renderParams['result'] == true){
 			$this->postsAction();
 		}else{
-			$this->renderParams['message'] = 'Wrong username or password!!!';
-			$this->renderParams['username'] = $_POST['username'];
-			$this->renderParams['password'] = $_POST['password'];
-
 			View::render('Home/index.php', $this->renderParams);
 		};
 
@@ -47,31 +31,18 @@ class Contacts extends \Core\Controller
 
 	public function postsAction()
 	{
-		$contacts = new \App\Models\Contacts(['host' => DB_HOST, 'user'=>DB_USER, 
-            				'password'=>DB_PASSWORD, 'dbName'=>DB_NAME], 
-							CONTACTS_DB);
-
-		$params = [
-			'fields' => 'COUNT(*) AS countedFields'
-		];
-
-		$numberOfAllFields = $contacts->select($params)[0]['countedFields'];
-			
-		$params = [
-			'fields' => '*',
+		$temp = [
 			'sortCol' => (isset($_GET['sortBy'])) ? $_GET['sortBy'] : 'lastname',
 			'sortOrd' => (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : 'DESC',
 			'page' => (isset($_GET['activePage'])) ? $_GET['activePage'] : 1,
 			'limit' => MAX_ON_PAGE
 		];
 
-		$this->renderParams['contacts'] = $contacts->select($params);
-		$this->renderParams['numberOfAllFields'] = $numberOfAllFields;
-		$this->renderParams['activePage'] = (isset($_GET['activePage'])) ? $_GET['activePage'] : 1;
-		$this->renderParams['sortBy'] = (isset($_GET['sortBy'])) ? $_GET['sortBy'] : 'lastname';
-		$this->renderParams['sortTurn'] = (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : 'DESC';
-		$this->renderParams['maxOnPage'] = MAX_ON_PAGE;
-		//echo "<pre>", var_dump($result), "</pre>";	//temporary line...
+		$result = Contact::getContacts($temp);
+
+		foreach ($result as $key => $val){
+			$this->renderParams[$key] = $val;
+		};
 
 		View::render('Contacts/index.php', $this->renderParams);
 
@@ -82,89 +53,52 @@ class Contacts extends \Core\Controller
 	{
 		$this->renderParams['button'] = "ADD";
 
-		//echo "<pre>", var_dump($this->renderParams), "</pre>";	//temporary line...
-
 		View::render('Edit/index.php', $this->renderParams);
 	}
 
 	public function editAction()
 	{
-		$contacts = new \App\Models\Contacts(['host' => DB_HOST, 'user'=>DB_USER, 
-            				'password'=>DB_PASSWORD, 'dbName'=>DB_NAME], 
-							CONTACTS_DB);
-
-		$params = [
-			'fields' => '*',
-			'where' => [
-				'id' => (isset($_GET['editId'])) ? $_GET['editId'] : ""
-			]
+		$temp = [
+			'id' => (isset($_GET['editId'])) ? $_GET['editId'] : ""
 		];
 
-		if ($res = $contacts->select($params)){
-			foreach ($res[0] as $key => $val){
-				$this->renderParams[$key] = $val;
-			};
+		$result = Contact::getContacts($temp);
+
+		foreach ($result as $key => $val){
+			$this->renderParams[$key] = $val;
 		};
 
-		$this->renderParams['button'] = "Edit";
+		View::render('Edit/index.php', $this->renderParams);
 
 		//echo "<pre>", var_dump($this->renderParams), "</pre>";	//temporary line...
-
-		View::render('Edit/index.php', $this->renderParams);
 	}
 
 	public function newAction()
 	{
-		$contacts = new \App\Models\Contacts(['host' => DB_HOST, 'user'=>DB_USER, 
-            				'password'=>DB_PASSWORD, 'dbName'=>DB_NAME], 
-							CONTACTS_DB);
-		
-		foreach ($_POST as $key => $val){
-				$this->renderParams[$key] = $val;
-			};
+		$temp = Contact::newRecord($_POST);
 
-		if (isset($_POST['EditButton'])){
-			foreach ($_POST as $key => $val){
-				if ($key != "EditButton" && $key != "id"){
-					$params[$key] = $val;
-				};
-			};
+		if ($temp['status'] == false){
+			unset($temp['status']);
+			$this->renderParams = $temp;
 
-			$this->renderParams['message'] = $contacts->update($params, "id=".$_POST['id']);			
-		}elseif (isset($_POST['ADDButton'])){
-			foreach ($_POST as $key => $val){
-				if ($key != "ADDButton" && $key != "id"){
-					$params[$key] = $val;
-				};
-			};
-			
-			$result = $contacts->insert($params);
-			if (is_numeric($result)){
-				$this->renderParams['message'] = "Inserted ".$result." record(s).";
-			}else{
-				$this->renderParams['message'] = $result;
+			if (isset($temp['ADDButton'])){
 				$this->addAction();
-				return false;
-			};
-			
+			}else{
+				$_GET['editId'] = $temp['id'];
+				$this->editAction();
+			}
+		}else{
+			unset($temp['status']);
+			$this->renderParams = $temp;
+			$this->postsAction();
 		};
-		
-		$this->postsAction();
 
 		//echo "<pre>", var_dump($params), "</pre>";	//temporary line...
 	}
 
 	public function deleteAction()
 	{
-		$contacts = new \App\Models\Contacts(['host' => DB_HOST, 'user'=>DB_USER, 
-            				'password'=>DB_PASSWORD, 'dbName'=>DB_NAME], 
-							CONTACTS_DB);
-		
-		$params = [
-			'id' => $_GET['deleteId']
-		];
-
-		$this->renderParams['message'] = $contacts->delete($params);
+		$this->renderParams = Contact::deleteRecord($_GET);
 
 		$this->postsAction();
 
@@ -173,7 +107,8 @@ class Contacts extends \Core\Controller
 
 	public function logoutAction()
 	{
-		View::render('Home/index.php');
+		//$this->renderParams['beck'] = true;
+		View::render('Home/index.php', $this->renderParams);
 	}
 
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Core;
+namespace Core\Models;
 
-include_once('mysql_driver.php');
+include_once('MysqlDriver.php');
 
 abstract class Table
 {	
@@ -212,7 +212,7 @@ abstract class Table
 		
 		$query = "UPDATE ".$this->table." SET ".$this->makeUpdateQuery($data)." WHERE ".$where;
 		if ($res = $this->query($query)){
-			return "Updated ".$res." record(s).";
+			return $res;
 		}else{
 			return "ERROR updating record(s).";
 		};
