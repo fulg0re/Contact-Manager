@@ -4,7 +4,7 @@ namespace App\Models;
 
 //use Core\Core;
 
-class User  extends \Core\Models\Table
+class User  extends Model
 {
 	
 	protected function allFields()
@@ -65,8 +65,7 @@ class User  extends \Core\Models\Table
 			return [
 					'result' => false,
 					'message' => 'Wrong username or password!!!',
-					'username' => $username,
-					'password' => $password
+					'username' => $username
 				];
 		};
 	}

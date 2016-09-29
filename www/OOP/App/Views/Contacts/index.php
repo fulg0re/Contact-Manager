@@ -1,4 +1,10 @@
 <?php
+
+	if (isset($_SESSION['params'])){
+		extract($_SESSION['params'], EXTR_SKIP);
+		unset($_SESSION['params']);
+	};
+
 	function turnSide($turn){
 		return ($turn == "ASC") ? "DESC" : "ASC";
 	};
@@ -21,7 +27,7 @@
 		<h3>MANAGEMENT MAIN PAGE</h3>
 		<form action="/contacts/add" method="post">
 			<a href='/selection/index'>selectionPage</a><br><br>
-			<input type="submit" name="addNewContact" value="ADD"></br>
+			<input type="submit" name="button" value="ADD"></br>
 			<?php if (!isset($noContacts)): ?>
 				<table style="border: 1px solid">
 					<tr>
@@ -71,7 +77,7 @@
 			<?php else: ?>
 				<h2><?php echo $noContacts ?></h2>
 			<?php endif; ?>
-			<input type="submit" name="addNewContact" value="ADD"></br></br>
+			<input type="submit" name="button" value="ADD"></br></br>
 
 			<a href='/contacts/posts?
 						sortBy=<?php echo $sortBy?>&

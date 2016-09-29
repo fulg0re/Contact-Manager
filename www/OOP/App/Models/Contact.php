@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Contact  extends \Core\Models\Table
+class Contact  extends Model
 {
 	public $fields = [
 				'firstname' => [

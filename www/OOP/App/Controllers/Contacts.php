@@ -4,11 +4,13 @@ namespace App\Controllers;
 
 include_once('../App/config.php');
 
+session_start();
+
 use \Core\View;
 use \App\Models\User;
 use \App\Models\Contact;
 
-class Contacts extends \Core\Controller
+class Contacts extends Controller
 {
 
 	private $renderParams = [];
@@ -17,13 +19,16 @@ class Contacts extends \Core\Controller
 	{	//http://contactmanager.test/
 		$regExp = "/^http:.+test\/$/i";
 		if (preg_match($regExp, $_SERVER['HTTP_REFERER'], $matches)){
-			$this->renderParams = User::login($_POST['username'], $_POST['password']);
+			$temp = User::login($_POST['username'], $_POST['password']);
 		}
 
-		if ($this->renderParams['result'] == true){
-			$this->postsAction();
+		if ($temp['result'] == true){
+			$_SESSION['logined'] = true;
+			header("location: " . SITE . "contacts/posts");
 		}else{
-			View::render('Home/index.php', $this->renderParams);
+			unset($temp['result']);
+			$_SESSION['params'] = $temp;
+			header("location: " . SITE);
 		};
 
 		//echo "<pre>", var_dump($result), "</pre>";	//temporary line...
@@ -51,9 +56,10 @@ class Contacts extends \Core\Controller
 
 	public function addAction()
 	{
-		$this->renderParams['button'] = "ADD";
-
-		View::render('Edit/index.php', $this->renderParams);
+		if (isset($_POST['button'])){
+			$_SESSION['params']['button'] = $_POST['button'];
+		}
+		View::render('Edit/index.php');
 	}
 
 	public function editAction()
@@ -64,11 +70,13 @@ class Contacts extends \Core\Controller
 
 		$result = Contact::getContacts($temp);
 
+		echo "<pre>", var_dump($result), "</pre>";	//temporary line...
+
 		foreach ($result as $key => $val){
-			$this->renderParams[$key] = $val;
+			$_SESSION['params'][$key] = $val;
 		};
 
-		View::render('Edit/index.php', $this->renderParams);
+		header("location: " . SITE . "contacts/add");
 
 		//echo "<pre>", var_dump($this->renderParams), "</pre>";	//temporary line...
 	}
@@ -79,18 +87,20 @@ class Contacts extends \Core\Controller
 
 		if ($temp['status'] == false){
 			unset($temp['status']);
-			$this->renderParams = $temp;
+			$_SESSION['params'] = $temp;
 
 			if (isset($temp['ADDButton'])){
-				$this->addAction();
+				$_SESSION['params']['button'] = "ADD";
+				header("location: " . SITE . "contacts/add");
 			}else{
-				$_GET['editId'] = $temp['id'];
-				$this->editAction();
+				header("location: " . SITE . "contacts/edit");
 			}
+			
 		}else{
 			unset($temp['status']);
-			$this->renderParams = $temp;
-			$this->postsAction();
+			$_SESSION['params'] = $temp;
+
+			header("location: " . SITE . "contacts/posts");
 		};
 
 		//echo "<pre>", var_dump($params), "</pre>";	//temporary line...
@@ -100,15 +110,17 @@ class Contacts extends \Core\Controller
 	{
 		$this->renderParams = Contact::deleteRecord($_GET);
 
-		$this->postsAction();
+		$_SESSION['params']['message'] = $this->renderParams['message'];
+
+		header("location: " . SITE . "contacts/posts");
 
 		//echo "<pre>", var_dump($_GET), "</pre>";	//temporary line...
 	}
 
 	public function logoutAction()
 	{
-		//$this->renderParams['beck'] = true;
-		View::render('Home/index.php', $this->renderParams);
+		unset($_SESSION);
+		header("location: " . SITE);
 	}
 
 }

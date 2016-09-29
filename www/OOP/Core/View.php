@@ -12,7 +12,7 @@ class View
 		$file = "../App/Views/$view";
 
 		if (is_readable($file)){
-				require_once $file;
+			require_once $file;
 		}else{
 			echo "$file not found";
 		}
