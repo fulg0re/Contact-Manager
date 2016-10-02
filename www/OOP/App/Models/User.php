@@ -6,7 +6,7 @@ namespace App\Models;
 
 class User  extends Model
 {
-	
+
 	protected function allFields()
     {
 
@@ -43,29 +43,27 @@ class User  extends Model
 		return sha1($pass);
 	}
 
-	public static function login($username, $password)
+	public function login($params)
 	{
-		$user = new User(['host' => DB_HOST, 'user'=>DB_USER, 
-            				'password'=>DB_PASSWORD, 'dbName'=>DB_NAME], 
-							USERS_DB);
-
-		$sha1Password = $user->generatePassword($password);
+		//$sha1Password = User::$userObj->generatePassword($params['password']);
+		
+		$sha1Password = $this->generatePassword($params['password']);
 
 		$queryParams = [
 			'fields' => '*',
 			'where' => [
-				'username' => $_POST['username'],
+				'username' => $params['username'],
 				'password' => $sha1Password
 			]
 		];
 
-		if ($user->select($queryParams)){
+		if ($this->select($queryParams)){
 			return ['result' => true];
 		}else{
 			return [
 					'result' => false,
 					'message' => 'Wrong username or password!!!',
-					'username' => $username
+					'username' => $params['username']
 				];
 		};
 	}

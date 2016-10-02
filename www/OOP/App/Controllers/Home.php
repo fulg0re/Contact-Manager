@@ -9,7 +9,7 @@ class Home extends Controller
 
 	public function indexAction()
 	{
-		View::render('Home/index.php');
+		$this->homePage();
 	}
 
 }

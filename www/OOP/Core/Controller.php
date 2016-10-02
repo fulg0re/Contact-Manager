@@ -2,15 +2,12 @@
 
 namespace Core;
 
+include_once('../App/config.php');
+
+use \Core\View;
+
 abstract class Controller
 {
-
-	protected $route_params = [];
-
-	public function __construct($route_params)
-	{
-		$this->route_params = $route_params;
-	}
 
 	public function __call($name, $args)
 	{
@@ -33,6 +30,16 @@ abstract class Controller
 
 	protected function after()
 	{
+	}
+
+	protected function redirect($path)
+	{
+		header("location: " . SITE . $path);
+	}
+
+	protected function getLastUrl()
+	{
+		return $_SERVER['HTTP_REFERER'];
 	}
 
 }

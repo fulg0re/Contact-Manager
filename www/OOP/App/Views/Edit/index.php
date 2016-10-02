@@ -5,6 +5,12 @@
 		unset($_SESSION['params']);
 	};
 
+	if (!isset($_GET['editId'])){
+		$formPath = "/contacts/new";
+	}else{
+		$formPath = "/contacts/new?editId=" . $_GET['editId'];
+	};
+
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +25,7 @@
 		<a href='/contacts/logout'>logout</a><br><br>
 		<a href='/contacts/posts'>back</a>
 		<h3>Contact Details</h3>
-		<form action="/contacts/new" method="post">
+		<form action=<?php echo $formPath ?> method="post">
 			<div class="field">
 				<label for="firstname">FirstName*</label>
 					<input type="text" name="firstname" id="firstname"

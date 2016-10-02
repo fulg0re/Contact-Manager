@@ -43,16 +43,16 @@ class Contact  extends Model
 			return 0;
 		};
 		$offset = ($data['page']*$data['limit'])-$data['limit'];
-
+/*
 		$contacts = new \App\Models\Contact(['host' => DB_HOST, 'user'=>DB_USER, 
             				'password'=>DB_PASSWORD, 'dbName'=>DB_NAME], 
 							CONTACTS_DB);
-
+*/
 		$params = [
 			'fields' => 'COUNT(*) AS countedFields'
 		];
 
-		$allContacts = $contacts->select($params)[0]['countedFields'];
+		$allContacts = $this->select($params)[0]['countedFields'];
 		
 		// check URL variable "activePage" if correct...getOffset
 		if ($offset > $allContacts){
@@ -89,12 +89,8 @@ class Contact  extends Model
 		return $data;
     }
 
-	public static function getContacts($params)
+	public function getContacts($params)
 	{
-		$contacts = new Contact(['host' => DB_HOST, 'user'=>DB_USER, 
-            				'password'=>DB_PASSWORD, 'dbName'=>DB_NAME], 
-							CONTACTS_DB);
-
 		// START - if new to get one contact only...
 		if (isset($params['id'])){
 			$queryParams = [
@@ -104,7 +100,7 @@ class Contact  extends Model
 				]
 			];
 
-			if ($temp = $contacts->select($queryParams)){
+			if ($temp = $this->select($queryParams)){
 				foreach ($temp[0] as $key => $val){
 					$result[$key] = $val;
 				};
@@ -120,7 +116,7 @@ class Contact  extends Model
 			'fields' => 'COUNT(*) AS countedFields'
 		];
 
-		$numberOfAllFields = $contacts->select($queryParams)[0]['countedFields'];
+		$numberOfAllFields = $this->select($queryParams)[0]['countedFields'];
 			
 		$queryParams = [
 			'fields' => '*'
@@ -129,7 +125,7 @@ class Contact  extends Model
 		$queryParams += $params;
 
 		$result = [
-			'contacts' => $contacts->select($queryParams),
+			'contacts' => $this->select($queryParams),
 			'numberOfAllFields' => $numberOfAllFields,
 			'activePage' => $params['page'],
 			'sortBy' => $params['sortCol'],
@@ -140,12 +136,8 @@ class Contact  extends Model
 		return $result;		
 	}
 
-	public static function newRecord($params)
+	public function newRecord($params)
 	{
-		$contacts = new Contact(['host' => DB_HOST, 'user'=>DB_USER, 
-            				'password'=>DB_PASSWORD, 'dbName'=>DB_NAME], 
-							CONTACTS_DB);
-
 		foreach ($params as $key => $val){
 			$result[$key] = $val;
 		};
@@ -159,7 +151,7 @@ class Contact  extends Model
 				};
 			};
 
-			$res = $contacts->update($queryParams, "id=".$params['id']);
+			$res = $this->update($queryParams, "id=".$params['id']);
 			if (is_numeric($res)){
 				$result['message'] = "Updated ".$res." record(s).";	// all good...
 			}else{
@@ -173,7 +165,7 @@ class Contact  extends Model
 				};
 			};
 
-			$res = $contacts->insert($queryParams);
+			$res = $this->insert($queryParams);
 			if (is_numeric($res)){
 				$result['message'] = "Inserted ".$res." record(s).";	// all good...
 			}else{
@@ -186,12 +178,8 @@ class Contact  extends Model
 		return $result;
 	}
 
-	public static function deleteRecord($params)
+	public function deleteRecord($params)
 	{
-		$contacts = new Contact(['host' => DB_HOST, 'user'=>DB_USER, 
-            				'password'=>DB_PASSWORD, 'dbName'=>DB_NAME], 
-							CONTACTS_DB);
-		
 		foreach ($params as $key => $val){
 			$result[$key] = $val;
 		};
@@ -200,7 +188,7 @@ class Contact  extends Model
 			'id' => $params['deleteId']
 		];
 
-		$result['message'] = $contacts->delete($queryParams);
+		$result['message'] = $this->delete($queryParams);
 
 		return $result;
 	}

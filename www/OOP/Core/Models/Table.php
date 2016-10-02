@@ -238,4 +238,3 @@ abstract class Table
 		return $this->database->getNumRows();
 	}
 }
-// cakephp framework...
