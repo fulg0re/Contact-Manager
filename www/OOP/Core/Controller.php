@@ -35,6 +35,7 @@ abstract class Controller
 	protected function redirect($path)
 	{
 		header("location: " . SITE . $path);
+		exit;
 	}
 
 	protected function getLastUrl()

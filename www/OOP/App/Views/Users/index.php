@@ -1,7 +1,5 @@
 <?php
 
-	session_start();
-
 	if (isset($_SESSION['params'])){
 		extract($_SESSION['params'], EXTR_SKIP);
 		unset($_SESSION['params']);
@@ -21,7 +19,7 @@
                 <?php echo (isset($message)) ? $message : null;?></h3>
         </div>
 		<h3>Login</h3>
-		<form action="/contacts/index" method="post">
+		<form action="/users/login" method="post">
 			<div class="field">
 				<label for="username">UserName</label>
 					<input type="text" name="username" id="username" class="rightInput"

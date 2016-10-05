@@ -22,7 +22,7 @@ class Controller extends \Core\Controller
 
     protected function homePage($params = [])
     {
-        View::render('Home/index.php', $params);
+        View::render('Users/index.php', $params);
     }
 
     protected function mainPage($params = [])
@@ -32,6 +32,6 @@ class Controller extends \Core\Controller
 
     protected function editPage($params = [])
     {
-        View::render('Edit/index.php', $params);
+        View::render('Contacts/edit.php', $params);
     }
 }

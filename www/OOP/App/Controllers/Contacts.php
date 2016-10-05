@@ -7,18 +7,19 @@ include_once('../App/config.php');
 session_start();
 
 use \Core\View;
-use \App\Models\User;
+//use \App\Models\User;
 use \App\Models\Contact;
 
 class Contacts extends Controller
 {
 
-	private $userModelObj = [];
+	//private $userModelObj = [];
 	private $contactModelObj = [];
 	private $renderParams = [];
 
 	public function __construct()
 	{
+		/*
 		$this->userModelObj = new User(
 			[
 				'host' => DB_HOST, 
@@ -26,7 +27,7 @@ class Contacts extends Controller
 				'password'=>DB_PASSWORD, 
 				'dbName'=>DB_NAME
 			], USERS_DB);
-		
+		*/
 		$this->contactModelObj = new Contact(
 			[
 				'host' => DB_HOST, 
@@ -38,6 +39,7 @@ class Contacts extends Controller
 
 	public function indexAction()
 	{	//http://contactmanager.test/
+	/*
 		$regExp = "/^http:.+test\/$/i";
 		if (preg_match($regExp, $this->getLastUrl(), $matches)){
 			$loginMethodParams = [
@@ -50,13 +52,13 @@ class Contacts extends Controller
 
 		if ($temp['result'] == true){
 			$_SESSION['logined'] = true;
-			$this->redirect("contacts/posts");
+			$this->redirect("/contacts/posts");
 		}else{
 			unset($temp['result']);
 			$_SESSION['params'] = $temp;
-			$this->redirect("");
+			$this->redirect("/");
 		};
-
+*/
 		//echo "<pre>", var_dump($result), "</pre>";	//temporary line...
 	}
 
@@ -123,16 +125,16 @@ class Contacts extends Controller
 
 				if (isset($temp['ADDButton'])){
 					$_SESSION['params']['button'] = "ADD";
-					$this->redirect("contacts/add");
+					$this->redirect("/contacts/add");
 				}else{
-					$this->redirect("contacts/edit?editId=" . $_GET['editId']);
+					$this->redirect("/contacts/edit?editId=" . $_GET['editId']);
 				}
 				
 			}else{
 				unset($temp['status']);
 				$_SESSION['params'] = $temp;
 
-				$this->redirect("contacts/posts");
+				$this->redirect("/contacts/posts");
 			};
 		};
 
@@ -146,7 +148,7 @@ class Contacts extends Controller
 
 			$_SESSION['params']['message'] = $this->renderParams['message'];
 
-			$this->redirect("contacts/posts");
+			$this->redirect("/contacts/posts");
 		};
 
 		//echo "<pre>", var_dump($_GET), "</pre>";	//temporary line...
@@ -155,7 +157,7 @@ class Contacts extends Controller
 	public function logoutAction()
 	{
 		$_SESSION['logined'] = false;
-		$this->redirect("");
+		$this->redirect("/");
 	}
 
 }
