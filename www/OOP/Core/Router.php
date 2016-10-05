@@ -76,7 +76,15 @@ class Router
 				$action = $this->convertToCamelCase($action);
 
 				if (is_callable([$controller_object, $action])){
-					$controller_object->$action();
+
+					//echo "<pre>", var_dump($this->routes), "</pre>";	//temporary line...
+					//echo "<pre>", var_dump($this->params), "</pre>";	//temporary line...
+
+					if (isset($this->params['id'])){
+						$controller_object->$action($this->params['id']);
+					}else{
+						$controller_object->$action();
+					}
 				}else{
 					echo "Method $action (in controller $controller) not found";
 				}

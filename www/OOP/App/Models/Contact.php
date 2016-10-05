@@ -178,14 +178,10 @@ class Contact  extends Model
 		return $result;
 	}
 
-	public function deleteRecord($params)
+	public function deleteRecord($id)
 	{
-		foreach ($params as $key => $val){
-			$result[$key] = $val;
-		};
-
 		$queryParams = [
-			'id' => $params['deleteId']
+			'id' => $id
 		];
 
 		$result['message'] = $this->delete($queryParams);

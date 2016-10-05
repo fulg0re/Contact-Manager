@@ -5,10 +5,10 @@
 		unset($_SESSION['params']);
 	};
 
-	if (!isset($_GET['editId'])){
+	if (!isset($id)){
 		$formPath = "/contacts/new";
 	}else{
-		$formPath = "/contacts/new?editId=" . $_GET['editId'];
+		$formPath = "/contacts/" . $id . "/new";
 	};
 
 ?>

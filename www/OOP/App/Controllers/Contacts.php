@@ -94,12 +94,11 @@ class Contacts extends Controller
 		};
 	}
 
-	public function editAction()
+	public function editAction($id)
 	{
 		if ($this->authorizationCheck()){
-			$editId = $_GET['editId'];
 			$temp = [
-				'id' => (isset($editId)) ? $editId : ""
+				'id' => $id
 			];
 
 			$result = $this->contactModelObj->getContacts($temp);
@@ -114,7 +113,7 @@ class Contacts extends Controller
 		//echo "<pre>", var_dump($this->renderParams), "</pre>";	//temporary line...
 	}
 
-	public function newAction()
+	public function newAction($id)
 	{
 		if ($this->authorizationCheck()){
 			$temp = $this->contactModelObj->newRecord($_POST);
@@ -127,7 +126,7 @@ class Contacts extends Controller
 					$_SESSION['params']['button'] = "ADD";
 					$this->redirect("/contacts/add");
 				}else{
-					$this->redirect("/contacts/edit?editId=" . $_GET['editId']);
+					$this->redirect("/contacts/" . $id . "/edit");
 				}
 				
 			}else{
@@ -141,10 +140,10 @@ class Contacts extends Controller
 		//echo "<pre>", var_dump($params), "</pre>";	//temporary line...
 	}
 
-	public function deleteAction()
+	public function deleteAction($id)
 	{
 		if ($this->authorizationCheck()){
-			$this->renderParams = $this->contactModelObj->deleteRecord($_GET);
+			$this->renderParams = $this->contactModelObj->deleteRecord($id);
 
 			$_SESSION['params']['message'] = $this->renderParams['message'];
 

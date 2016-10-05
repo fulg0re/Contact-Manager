@@ -63,9 +63,8 @@
 										break;
 								endswitch; ?></td>
 							<?php $contactId = $v['id'];?>
-							<td><a href='/contacts/edit?editId=<?php echo $contactId?>'>edit/view</a></td>
-							<td><a href='/contacts/delete?
-								deleteId=<?php echo $contactId?>&
+							<td><a href='/contacts/<?php echo $contactId ?>/edit'>edit/view</a></td>
+							<td><a href='/contacts/<?php echo $contactId ?>/delete?
 								activePage=<?php 
 									echo (count($contacts) > 1) ? $activePage : $activePage - 1 
 									?>&
