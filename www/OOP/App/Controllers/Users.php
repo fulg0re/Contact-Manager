@@ -11,9 +11,11 @@ class Users extends Controller
 {
 
 	private $userModelObj = [];
+	private $renderParams = [];
 
 	public function __construct()
 	{
+		
 		$this->userModelObj = new User(
 			[
 				'host' => DB_HOST, 
@@ -21,11 +23,12 @@ class Users extends Controller
 				'password'=>DB_PASSWORD, 
 				'dbName'=>DB_NAME
 			], USERS_DB);
+		
 	}
 
 	public function indexAction()
 	{
-		$this->homePage();
+		$this->homePage($this->renderParams);
 	}
 
 	public function loginAction()

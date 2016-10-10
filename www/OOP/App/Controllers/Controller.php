@@ -7,18 +7,16 @@ use \Core\View;
 class Controller extends \Core\Controller
 {
 
-	protected function authorizationCheck()
-	{
-		if ($_SESSION['logined'] != true){
-            $_SESSION['params'] = [
-                'message' => 'You must login first!'
-            ];
-
-			$this->redirect("");
-		}else{
-            return true;
-        }
-	}
+    protected $component = [
+        'allow' => [
+            'route1' => 'indexAction',
+            'route2' => 'loginAction'
+        ],
+        'deny' => [
+            'route1' => 'Contacts/index.php',
+            'route2' => 'Contacts/edit.php',
+        ]
+    ];
 
     protected function homePage($params = [])
     {

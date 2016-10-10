@@ -36,6 +36,7 @@ class MysqlDriver implements dbInterface
 	{
 		if (!$this->dbConnection){
 			$this->dbConnection = new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
+			//$this->dbConnection = mysqli_connect($this->dbHost, $this->dbUser, $this->dbPassword);
 		}else{
 			return "Already connected to DB!";
 		};

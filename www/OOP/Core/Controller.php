@@ -4,6 +4,8 @@ namespace Core;
 
 include_once('../App/config.php');
 
+//session_start();
+
 use \Core\View;
 
 abstract class Controller
@@ -14,7 +16,7 @@ abstract class Controller
 		$method = $name . 'Action';
 
 		if (method_exists($this, $method)){
-			if ($this->before() !== false){
+			if ($this->before($method) !== false){
 				call_user_func_array([$this, $method], $args);
 				$this->after();
 			}
@@ -23,9 +25,24 @@ abstract class Controller
 		}
 	}
 
-	protected function before()
+	protected function before($method)
 	{
-		//do the "return" function if you nead to check for user is logined...
+		if ($_SESSION['logined'] != true){
+			$allowRoute = $this->component['allow'];
+			foreach($allowRoute as $key => $val){
+				if ($val == $method){
+					return true;
+				};
+			};
+
+            $_SESSION['params'] = [
+                'message' => 'You must login first!'
+            ];
+
+			$this->redirect("/");
+		}else{
+            return true;
+        }
 	}
 
 	protected function after()

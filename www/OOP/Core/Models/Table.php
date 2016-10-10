@@ -2,6 +2,7 @@
 
 namespace Core\Models;
 
+//include_once('../App/config.php');
 include_once('MysqlDriver.php');
 
 abstract class Table
@@ -24,8 +25,10 @@ abstract class Table
 	{
 		if (isset($database) && isset($table)){
 			$this->database = new MysqlDriver(
-					$database['host'], $database['user'], $database['password'], $database['dbName']);
-			//$this->database->connect();
+				$database['host'], 
+				$database['user'], 
+				$database['password'], 
+				$database['dbName']);
 			$this->table = $table;
 		}else{
 			printf("Please enter all parameters!(database and table)...");	//temporary line...
