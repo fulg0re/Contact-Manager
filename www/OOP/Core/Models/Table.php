@@ -2,7 +2,7 @@
 
 namespace Core\Models;
 
-//include_once('../App/config.php');
+include_once('../App/config.php');
 include_once('MysqlDriver.php');
 
 abstract class Table
@@ -10,6 +10,7 @@ abstract class Table
 	
 	protected $database;
 	protected $table;
+	protected $modelObj;
 	public static $asc = 'ASC';
 	public static $desc = 'DESC';
 	
@@ -21,6 +22,11 @@ abstract class Table
 	
 	abstract protected function selectValidation($data);
 
+	function __construct()
+	{
+		$this->database = new MysqlDriver(DB_HOST, DB_USER,	DB_PASSWORD, DB_NAME);
+	}
+/*
 	function __construct($database, $table)
 	{
 		if (isset($database) && isset($table)){
@@ -34,7 +40,7 @@ abstract class Table
 			printf("Please enter all parameters!(database and table)...");	//temporary line...
 		};
 	}
-	
+	*/
 	public function delete($where)
 	{
 		if (!$where){

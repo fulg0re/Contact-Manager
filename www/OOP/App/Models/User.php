@@ -2,12 +2,8 @@
 
 namespace App\Models;
 
-//use Core\Core;
-
 class User  extends Model
 {
-
-	protected $table = "users";
 
 	protected function allFields()
     {
@@ -45,9 +41,8 @@ class User  extends Model
 		return sha1($pass);
 	}
 
-	public function login($params)
+	public function loginAction($params)
 	{
-		//$sha1Password = User::$userObj->generatePassword($params['password']);
 		
 		$sha1Password = $this->generatePassword($params['password']);
 
@@ -59,7 +54,7 @@ class User  extends Model
 			]
 		];
 
-		if ($this->select($queryParams)){
+		if ($this->modelPointObj->select($queryParams)){
 			return ['result' => true];
 		}else{
 			return [
@@ -68,6 +63,7 @@ class User  extends Model
 					'username' => $params['username']
 				];
 		};
+		
 	}
     
 

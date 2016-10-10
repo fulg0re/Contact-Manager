@@ -12,20 +12,6 @@ use \App\Models\Contact;
 class Contacts extends Controller
 {
 
-	private $contactModelObj = [];
-	private $renderParams = [];
-
-	public function __construct()
-	{
-		$this->contactModelObj = new Contact(
-			[
-				'host' => DB_HOST, 
-				'user'=>DB_USER, 
-				'password'=>DB_PASSWORD, 
-				'dbName'=>DB_NAME
-			], CONTACTS_DB);
-	}
-
 	public function postsAction()
 	{
 		$temp = [
@@ -35,7 +21,7 @@ class Contacts extends Controller
 			'limit' => MAX_ON_PAGE
 		];
 
-		$result = $this->contactModelObj->getContacts($temp);
+		$result = $this->modelObj->getContacts($this->modelObj, $temp);
 
 		foreach ($result as $key => $val){
 			$this->renderParams[$key] = $val;
@@ -60,7 +46,7 @@ class Contacts extends Controller
 			'id' => $id
 		];
 
-		$result = $this->contactModelObj->getContacts($temp);
+		$result = $this->modelObj->getContacts($this->modelObj, $temp);
 
 		foreach ($result as $key => $val){
 			$this->renderParams[$key] = $val;
@@ -73,16 +59,14 @@ class Contacts extends Controller
 
 	public function newAction($id)
 	{
-		$temp = $this->contactModelObj->newRecord($_POST);
+		$temp = $this->modelObj->newRecord($this->modelObj, $_POST);
 
 		if ($temp['status'] == false){
 			unset($temp['status']);
 			$_SESSION['params'] = $temp;
-			//$this->renderParams = $temp;
 
 			if (isset($temp['ADDButton'])){
 				$_SESSION['params']['button'] = "ADD";
-				//$this->renderParams['button'] = "ADD";
 				$this->redirect("/contacts/add");
 			}else{
 				$this->redirect("/contacts/" . $id . "/edit");
@@ -91,7 +75,6 @@ class Contacts extends Controller
 		}else{
 			unset($temp['status']);
 			$_SESSION['params'] = $temp;
-			//$this->renderParams = $temp;
 
 			$this->redirect("/contacts/posts");
 		};
@@ -101,7 +84,7 @@ class Contacts extends Controller
 
 	public function deleteAction($id)
 	{
-		$this->renderParams = $this->contactModelObj->deleteRecord($id);
+		$this->renderParams = $this->modelObj->deleteRecord($this->modelObj, $id);
 
 		$_SESSION['params']['message'] = $this->renderParams['message'];
 

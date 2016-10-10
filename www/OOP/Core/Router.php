@@ -60,6 +60,14 @@ class Router
 		return false;
 	}
 
+	private function newModelObj($modelName)
+	{
+		$modelClass = "\\App\\Models\\";
+		$modelClass .= substr(ucfirst($modelName), 0, -1);
+		$model = new $modelClass($modelName);
+		return $model;
+	}
+
 	public function dispatch($url)
 	{
 		$url = $this->removeQueryStringVariables($url);
@@ -77,13 +85,13 @@ class Router
 
 				if (is_callable([$controller_object, $action])){
 
-					//echo "<pre>", var_dump($this->routes), "</pre>";	//temporary line...
-					//echo "<pre>", var_dump($this->params), "</pre>";	//temporary line...
+					// creating new object of model...
+					$model = $this->newModelObj($this->params['controller']);
 
 					if (isset($this->params['id'])){
-						$controller_object->$action($this->params['id']);
+						$controller_object->$action($model, $this->params['id']);
 					}else{
-						$controller_object->$action();
+						$controller_object->$action($model);
 					}
 				}else{
 					echo "Method $action (in controller $controller) not found";

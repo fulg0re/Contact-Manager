@@ -10,22 +10,6 @@ use \App\Models\User;
 class Users extends Controller
 {
 
-	private $userModelObj = [];
-	private $renderParams = [];
-
-	public function __construct()
-	{
-		
-		$this->userModelObj = new User(
-			[
-				'host' => DB_HOST, 
-				'user'=>DB_USER, 
-				'password'=>DB_PASSWORD, 
-				'dbName'=>DB_NAME
-			], USERS_DB);
-		
-	}
-
 	public function indexAction()
 	{
 		$this->homePage($this->renderParams);
@@ -33,6 +17,7 @@ class Users extends Controller
 
 	public function loginAction()
 	{
+		
 		$regExp = "/^http:.+test\/$/i";
 		if (preg_match($regExp, $this->getLastUrl(), $matches)){
 			$loginMethodParams = [
@@ -40,7 +25,7 @@ class Users extends Controller
 				'password' =>$_POST['password']
 			];
 
-			$temp = $this->userModelObj->login($loginMethodParams);
+			$temp = $this->modelObj->login($this->modelObj, $loginMethodParams);
 		}
 
 		if ($temp['result'] == true){
@@ -51,6 +36,7 @@ class Users extends Controller
 			$_SESSION['params'] = $temp;
 			$this->redirect("/");
 		};
+		
 	}
 
 }

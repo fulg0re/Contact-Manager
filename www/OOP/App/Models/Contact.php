@@ -43,16 +43,12 @@ class Contact  extends Model
 			return 0;
 		};
 		$offset = ($data['page']*$data['limit'])-$data['limit'];
-/*
-		$contacts = new \App\Models\Contact(['host' => DB_HOST, 'user'=>DB_USER, 
-            				'password'=>DB_PASSWORD, 'dbName'=>DB_NAME], 
-							CONTACTS_DB);
-*/
+
 		$params = [
 			'fields' => 'COUNT(*) AS countedFields'
 		];
 
-		$allContacts = $this->select($params)[0]['countedFields'];
+		$allContacts = $this->modelPointObj->select($params)[0]['countedFields'];
 		
 		// check URL variable "activePage" if correct...getOffset
 		if ($offset > $allContacts){
@@ -89,7 +85,7 @@ class Contact  extends Model
 		return $data;
     }
 
-	public function getContacts($params)
+	public function getContactsAction($params)
 	{
 		// START - if new to get one contact only...
 		if (isset($params['id'])){
@@ -100,7 +96,7 @@ class Contact  extends Model
 				]
 			];
 
-			if ($temp = $this->select($queryParams)){
+			if ($temp = $this->modelPointObj->select($queryParams)){
 				foreach ($temp[0] as $key => $val){
 					$result[$key] = $val;
 				};
@@ -116,7 +112,7 @@ class Contact  extends Model
 			'fields' => 'COUNT(*) AS countedFields'
 		];
 
-		$numberOfAllFields = $this->select($queryParams)[0]['countedFields'];
+		$numberOfAllFields = $this->modelPointObj->select($queryParams)[0]['countedFields'];
 			
 		$queryParams = [
 			'fields' => '*'
@@ -125,7 +121,7 @@ class Contact  extends Model
 		$queryParams += $params;
 
 		$result = [
-			'contacts' => $this->select($queryParams),
+			'contacts' => $this->modelPointObj->select($queryParams),
 			'numberOfAllFields' => $numberOfAllFields,
 			'activePage' => $params['page'],
 			'sortBy' => $params['sortCol'],
@@ -136,7 +132,7 @@ class Contact  extends Model
 		return $result;		
 	}
 
-	public function newRecord($params)
+	public function newRecordAction($params)
 	{
 		foreach ($params as $key => $val){
 			$result[$key] = $val;
@@ -151,7 +147,7 @@ class Contact  extends Model
 				};
 			};
 
-			$res = $this->update($queryParams, "id=".$params['id']);
+			$res = $this->modelPointObj->update($queryParams, "id=".$params['id']);
 			if (is_numeric($res)){
 				$result['message'] = "Updated ".$res." record(s).";	// all good...
 			}else{
@@ -165,7 +161,7 @@ class Contact  extends Model
 				};
 			};
 
-			$res = $this->insert($queryParams);
+			$res = $this->modelPointObj->insert($queryParams);
 			if (is_numeric($res)){
 				$result['message'] = "Inserted ".$res." record(s).";	// all good...
 			}else{
@@ -178,13 +174,15 @@ class Contact  extends Model
 		return $result;
 	}
 
-	public function deleteRecord($id)
+	public function deleteRecordAction($id)
 	{
 		$queryParams = [
 			'id' => $id
 		];
 
-		$result['message'] = $this->delete($queryParams);
+		//echo "<pre>", var_dump($queryParams), "</pre>";	//temporary line...
+
+		$result['message'] = $this->modelPointObj->delete($queryParams);
 
 		return $result;
 	}
