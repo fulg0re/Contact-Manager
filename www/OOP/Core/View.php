@@ -27,8 +27,9 @@ class View
 		ob_clean();
 */
 
-
-		extract($args, EXTR_SKIP);
+		if (!empty($args)){
+			extract($args, EXTR_SKIP);
+		};		
 
 		$file = "../App/Views/$view";
 

@@ -7,16 +7,27 @@ use \Core\View;
 class Controller extends \Core\Controller
 {
 
-    protected $component = [
-        'allow' => [
-            'route1' => 'indexAction',
-            'route2' => 'loginAction'
-        ],
-        'deny' => [
-            'route1' => 'Contacts/index.php',
-            'route2' => 'Contacts/edit.php',
+    protected $components = [
+        'Auth' => [
+            'allow' => [
+                'indexAction',
+                'loginAction'
+            ],
+            'deny' => [
+                'Contacts/index.php',
+                'Contacts/edit.php',
+            ]
         ]
+        
     ];
+
+    protected function getViewParams()
+    {
+        if (isset($_SESSION['params'])){
+            $this->renderParams += $_SESSION['params'];
+            unset($_SESSION['params']);
+        };
+    }
 
     protected function homePage($params = [])
     {

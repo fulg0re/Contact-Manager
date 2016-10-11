@@ -1,10 +1,5 @@
 <?php
 
-	if (isset($_SESSION['params'])){
-		extract($_SESSION['params'], EXTR_SKIP);
-		unset($_SESSION['params']);
-	};
-	
 	function turnSide($turn){
 		return ($turn == "ASC") ? "DESC" : "ASC";
 	};

@@ -12,6 +12,8 @@ class Users extends Controller
 
 	public function indexAction()
 	{
+		$this->getViewParams();
+
 		$this->homePage($this->renderParams);
 	}
 

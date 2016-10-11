@@ -36,7 +36,7 @@ abstract class Controller
 	protected function before($method)
 	{
 		if ($_SESSION['logined'] != true){
-			$allowRoute = $this->component['allow'];
+			$allowRoute = $this->components['Auth']['allow'];
 			foreach($allowRoute as $key => $val){
 				if ($val == $method){
 					return true;

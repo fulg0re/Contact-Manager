@@ -1,12 +1,3 @@
-<?php
-
-	if (isset($_SESSION['params'])){
-		extract($_SESSION['params'], EXTR_SKIP);
-		unset($_SESSION['params']);
-	};
-
-?>
-
 <!DOCTYPE html>
 <html>
 	<head>

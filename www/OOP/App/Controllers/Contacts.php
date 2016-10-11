@@ -27,6 +27,8 @@ class Contacts extends Controller
 			$this->renderParams[$key] = $val;
 		};
 
+		$this->getViewParams();
+
 		$this->mainPage($this->renderParams);
 
 		//echo "<pre>", var_dump($_GET), "</pre>";	//temporary line...
@@ -36,7 +38,12 @@ class Contacts extends Controller
 	{
 		if (isset($_POST['button'])){
 			$this->renderParams['button'] = $_POST['button'];
-		}
+		}else{
+			$this->renderParams['button'] = 'ADD';
+		};
+
+		$this->getViewParams();
+
 		$this->editPage($this->renderParams);
 	}
 
@@ -51,6 +58,8 @@ class Contacts extends Controller
 		foreach ($result as $key => $val){
 			$this->renderParams[$key] = $val;
 		};
+
+		$this->getViewParams();
 
 		$this->editPage($this->renderParams);
 
