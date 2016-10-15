@@ -14,16 +14,16 @@ class Users extends Controller
 	{
 		$this->getViewParams();
 
-		$this->homePage($this->renderParams);
+		View::render('Users/index.php', $this->renderParams);
 	}
 
 	public function loginAction()
 	{
 		
-		$regExp = "/^http:.+test\/$/i";
+		$regExp = "/^http:.+test\/$/i";			//!!!
 		if (preg_match($regExp, $this->getLastUrl(), $matches)){
 			$loginMethodParams = [
-				'username' => $_POST['username'], 
+				'username' => $_POST['username'], 	//@todo add to $_SESIONS...
 				'password' =>$_POST['password']
 			];
 

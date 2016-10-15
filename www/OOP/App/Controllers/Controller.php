@@ -28,19 +28,4 @@ class Controller extends \Core\Controller
             unset($_SESSION['params']);
         };
     }
-
-    protected function homePage($params = [])
-    {
-        View::render('Users/index.php', $params);
-    }
-
-    protected function mainPage($params = [])
-    {
-        View::render('Contacts/index.php', $params);
-    }
-
-    protected function editPage($params = [])
-    {
-        View::render('Contacts/edit.php', $params);
-    }
 }

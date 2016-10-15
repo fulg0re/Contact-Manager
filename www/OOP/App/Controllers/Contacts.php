@@ -28,8 +28,7 @@ class Contacts extends Controller
 		};
 
 		$this->getViewParams();
-
-		$this->mainPage($this->renderParams);
+		View::render('Contacts/index.php', $this->renderParams);	//!!!
 
 		//echo "<pre>", var_dump($_GET), "</pre>";	//temporary line...
 	}
@@ -44,7 +43,7 @@ class Contacts extends Controller
 
 		$this->getViewParams();
 
-		$this->editPage($this->renderParams);
+		View::render('Contacts/edit.php', $this->renderParams);
 	}
 
 	public function editAction($id)
@@ -61,7 +60,7 @@ class Contacts extends Controller
 
 		$this->getViewParams();
 
-		$this->editPage($this->renderParams);
+		View::render('Contacts/edit.php', $this->renderParams);
 
 		//echo "<pre>", var_dump($this->renderParams), "</pre>";	//temporary line...
 	}
