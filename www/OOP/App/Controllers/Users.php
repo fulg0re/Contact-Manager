@@ -20,7 +20,7 @@ class Users extends Controller
 	public function loginAction()
 	{
 		
-		$regExp = "/^http:.+test\/$/i";			//!!!
+		$regExp = "/^http:.+\/$/i";
 		if (preg_match($regExp, $this->getLastUrl(), $matches)){
 			$loginMethodParams = [
 				'username' => $_POST['username'], 	//@todo add to $_SESIONS...
