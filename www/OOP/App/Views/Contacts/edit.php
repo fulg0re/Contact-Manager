@@ -3,7 +3,7 @@
 	if (!isset($id)){
 		$formPath = "/contacts/new";
 	}else{
-		$formPath = "/contacts/" . $id . "/new";
+		$formPath = "/contacts/new/" . $id;
 	};
 
 ?>

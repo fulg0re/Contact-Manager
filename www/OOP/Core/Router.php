@@ -15,7 +15,7 @@ class Router
 	{
 		$this->add('', ['controller' => 'Users', 'action' => 'index']);
 		$this->add('{controller}/{action}');
-		$this->add('{controller}/{id:\d+}/{action}');
+		$this->add('{controller}/{action}/{id:\d+}');
 		$this->add('admin/{controller}/{action}', ['namespace' => 'Admin']);
 	}
 
