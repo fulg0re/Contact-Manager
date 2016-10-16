@@ -16,12 +16,16 @@
 		<link rel="stylesheet" href="/css/main.css">
 	</head>
 	<body>
-        <!-- error part -->
-		<div class='err'><h3><?php echo (isset($message)) ? $message : null;?></h3></div>
-		<a href='/contacts/logout'>logout</a>
+		<!-- message part -->
+		<?php require_once '../App/Views/Elements/message.php' ?>
+
+		<!-- logout part -->
+		<?php require_once '../App/Views/Elements/logoutButton.php' ?>
+
+		<a href='/selection/index'>selectionPage</a><br><br>
+	
 		<h3>MANAGEMENT MAIN PAGE</h3>
 		<form action="/contacts/add" method="post">
-			<a href='/selection/index'>selectionPage</a><br><br>
 			<input type="submit" name="button" value="ADD"></br>
 			<?php if (!isset($noContacts)): ?>
 				<table style="border: 1px solid">

@@ -15,9 +15,12 @@
 		<link rel="stylesheet" href="/css/main.css">
 	</head>
 	<body>
-		<!-- error part -->
-		<div class='err'><h3><?php echo (isset($message)) ? $message : "";?></h3></div>
-		<a href='/contacts/logout'>logout</a><br><br>
+		<!-- message part (Elements/message.php) -->
+		<?php require_once '../App/Views/Elements/message.php' ?>
+
+		<!-- logout part -->
+		<?php require_once '../App/Views/Elements/logoutButton.php' ?>
+		
 		<a href='/contacts/posts'>back</a>
 		<h3>Contact Details</h3>
 		<form action=<?php echo $formPath ?> method="post">

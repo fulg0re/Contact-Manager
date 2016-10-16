@@ -10,12 +10,17 @@ include_once('parts/contactsAndSelectionTopCode.php');
 		<link rel="stylesheet" href="css/main.css">
 	</head>
 	<body>
-		<!-	- error part -->
-		<div class='err'><h3><?php echo (isset($_POST['msg'])) ? $_POST['msg'] : null;?></h3></div>
-		<a href='logout.php'>logout</a>
+		<!-- message part (Elements/message.php) -->
+		<?php require_once '../App/Views/Elements/message.php' ?>
+
+		<!-- logout part -->
+		<?php require_once '../App/Views/Elements/logoutButton.php' ?>
+
+		<a href='contacts.php'>contactsPage</a><br><br>
+		
 		<h3>SELECTION MAIN PAGE</h3>
 		<form action="controller.php" method="post">
-			<a href='contacts.php'>contactsPage</a><br><br>
+			
 			<input type="submit" name="acceptButton" value="ACCEPT">
 			<input type="submit" name="cancelButton" value="CANCEL"></br>
 			<?php if (!isset($_POST['noContacts'])): ?>
@@ -41,7 +46,7 @@ include_once('parts/contactsAndSelectionTopCode.php');
 						    <td><?php echo $v['lastname']?></td>
 						    <td><?php echo $v['firstname']?></td>
 						    <td><?php echo $v['email']?></td>
-						    <td><?php switch ($v['best_phone']) {
+						    <td><?php switch ($v['best_phone']):
 						            case "home_phone":
 						                echo $v['home_phone'];
 						                break;
@@ -51,7 +56,7 @@ include_once('parts/contactsAndSelectionTopCode.php');
 						            case "cell_phone":
 						                echo $v['cell_phone'];
 						                break;
-						        };?></td>
+						        endswitch; ?></td>
 						</tr>
 					<?php endforeach; ?>
 				</table>

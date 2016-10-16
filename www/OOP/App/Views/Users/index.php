@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>ContactManager/LoginForm</title>
+		<title>ContactManager/Login</title>
 		<link rel="stylesheet" href="/css/main.css">
 	</head>
 	<body>
-        <!-- error part -->
-		<div class='err'><h3>
-                <?php echo (isset($message)) ? $message : null;?></h3>
-        </div>
+		<!-- message part (Elements/message.php) -->
+		<?php require_once '../App/Views/Elements/message.php' ?>
+
 		<h3>Login</h3>
 		<form action="/users/login" method="post">
 			<div class="field">

@@ -4,17 +4,33 @@
 }
 */
 
-form {
-	float:left;
+body {
+	background-color: black;
 }
 
-.field {
-	clear:both; 
-	text-align:right; 
-	/*line-height:25px;*/
+table {
+	color: white;
+  	width: 50%;
+    top:50%;
+    left: 25%;
+    right: 25%;
 }
+/*
+th, td {
+    border-bottom: 1px solid #ddd;
+}
+*/
+.field {
+	clear:both;	
+	text-align:right;
+	}
 
 label {
 	float:left; 
 	padding-right:10px;
+	color: white;
+}
+
+h3 {
+	color: white;
 }
