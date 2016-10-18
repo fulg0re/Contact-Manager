@@ -5,21 +5,28 @@
 		<link rel="stylesheet" href="/css/main.css">
 	</head>
 	<body>
-		<!-- message part (Elements/message.php) -->
-		<?php require_once '../App/Views/Elements/message.php' ?>
+		<div class="wrapper">
+			<?php require_once '../App/Views/Elements/header.php' ?>
 
-		<h3>Login</h3>
-		<form action="/users/login" method="post">
-			<div class="field">
-				<label for="username">UserName</label>
-					<input type="text" name="username" id="username" class="rightInput"
-                           value="<?php echo (isset($username)) ? $username : "";?>" /></br>
-				<label for="password">Password</label>
-					<input type="password" name="password" id="password" class="rightInput"
-                           value="<?php echo (isset($password)) ? $password : "";?>" /></br>
+			<!-- message part (Elements/message.php) -->
+			<?php require_once '../App/Views/Elements/message.php' ?>
+
+			<div id="login-form">
+				<p id="auth-label">Authorisation</p>
+				<form action="/users/login" method="post">
+					<div class="field">
+						<label for="username" class="login-form-label">Login</label>
+							<input type="text" name="username" id="username" class="login-form-input"
+								value="<?php echo (isset($username)) ? $username : "";?>" /></br>
+						<label for="password" class="login-form-label">Password</label>
+							<input type="password" name="password" id="password" class="login-form-input"
+								value="<?php echo (isset($password)) ? $password : "";?>" /></br>
+					</div>					
+					<input type="submit" id="login-button" name="tryToLogin" value="Login" /></br>
+				</form>
 			</div>
-			
-			<input type="submit" name="tryToLogin" value="Login" /></br>
-		</form>
+
+			<?php require_once '../App/Views/Elements/footer.php' ?>
+		</div>
 	</body>
 </html>

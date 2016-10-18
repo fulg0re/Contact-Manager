@@ -4,33 +4,190 @@
 }
 */
 
+/*
+-webkit-
+-o-
+-moz-
+*/
+
 body {
 	background-color: black;
-}
-
-table {
+	font-family: sans-serif;
+	margin: 1px;
 	color: white;
-  	width: 50%;
-    top:50%;
-    left: 25%;
-    right: 25%;
 }
-/*
-th, td {
-    border-bottom: 1px solid #ddd;
-}
-*/
-.field {
-	clear:both;	
-	text-align:right;
-	}
 
-label {
-	float:left; 
+#login-form {
+	background: linear-gradient(to bottom, #030303, #171717 ,#050505);
+	border: 1px solid black;
+	border-radius: 25px;
+	display: block;
+	width: 430px;
+	height: 260px;
+	margin: 50px auto;
+	clear:both;
+}
+
+#header {
+	color: white;
+	display: block;
+	border: 1px solid gray;
+	height: 85px;
+	margin-left: 0px;
+}
+
+.wrapper {
+	position: relative;
+	min-height: 100%;
+}
+
+#login-button {
+	background: linear-gradient(to top, #0f0f0f, #525252);
+	border: none;
+	color: white;
+	border-radius: 25px;
+	width: 100px;
+	height: 23px;
+	display: block;
+	margin: 30px auto;
+}
+
+#login-button:hover {
+	cursor: pointer;
+}
+
+.login-form-input {
+	display: inline-block;
+	width: 240px;
+	margin-bottom: 15px;
+}
+
+.login-form-label {
+	font-size: 12px;
+	display: inline-block;
+	margin-top: 4px;
+	margin-left: 65px;
+	width: 75px;
 	padding-right:10px;
 	color: white;
 }
 
-h3 {
+#auth-label {
+	font-size: 14px;
+	display: block;
+	width: 50px;
+	margin-left: 65px;
+	margin-top: 15px;
+	margin-bottom: 30px;
 	color: white;
+}
+
+.footer {
+	color: white;
+	display: block;
+
+	/*** temporary line ***/
+	/*border: 1px solid gray;*/
+
+	height: 50px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+#footer-label {
+	font-size: 12px;
+	display: block;
+	margin: 25px auto;
+	color: white;
+	width: 135px;
+}
+
+/*** temporary line ***/
+pre {
+	color: white;
+}
+/**********************/
+
+table {
+	background: linear-gradient(to top, #171717, #2e2e2e, #2e2e2e, #2e2e2e, #2e2e2e);
+	border-radius: 25px;
+    border-collapse: collapse;
+	font-family: Arial, sans-serif;
+	color: white;
+}
+
+a {
+	color: white;
+	text-decoration: none;
+}
+
+th, td {
+	padding: 12px;
+	padding-left: 45px;
+    text-align: left;
+}
+
+th {
+	background-color: #404040;
+	color: #bdbdbd;
+	font-size: 10px;
+	font-weight: normal;
+}
+
+tr {
+	border-bottom: 1px solid #666;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#table-div {
+	display: block;
+	width: 715px;
+	height: 300px;
+	margin: 50px auto;
+}
+
+th:first-child {
+	border-top-left-radius: 25px;
+}
+
+th:last-child {
+	border-top-right-radius: 25px;
+}
+
+tr:last-child, tr:first-child {
+	border-bottom: none;
+}
+
+td:last-child {
+	width: 110px;
+}
+
+.edit-button {
+	display: inline-block;
+	background: linear-gradient(to top, #9e4700, #c77100);
+	border-radius: 10px;
+	width: 60px;
+	height: 18px;
+}
+
+.edit-button > a {
+	display: block;
+	padding-left: 5px;
+	padding-top: 1px;
+}
+
+.delete-button {
+	display: inline-block;
+	background: linear-gradient(to top, #911800, #b02f00);
+	border-radius: 10px;
+	width: 45px;
+	height: 18px;
+}
+
+.delete-button > a {
+	display: block;
+	padding-left: 5px;
+	padding-top: 1px;
 }
