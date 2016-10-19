@@ -1,1 +1,1 @@
-<a href='/contacts/logout'>logout</a><br><br>
+<a href='/contacts/logout'>logout</a><br>

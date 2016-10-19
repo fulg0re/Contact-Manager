@@ -26,6 +26,7 @@ body {
 }
 
 .footer {
+	background-color: black;
 	color: white;
 	display: block;
 
@@ -225,3 +226,52 @@ td:last-child {
 	border-left: 1px solid black;
 }
 /****** END Views/Contacts/index.php part ******/
+
+/****** START Views/Contacts/edit.php part ******/
+#edit-form {
+	font-family: Arial, sans-serif;
+	border-radius: 25px 25px 0 0;
+	background: linear-gradient(to top, #000000, #171717, #000000);
+	width: 430px;
+	height: 600px;
+	margin: 5px auto;
+}
+
+#edit-title {
+	display: block;
+	margin: 35px 0 30px 70px;
+	font-size: 14px;
+}
+
+#field > * {
+	display: inline-block;
+}
+
+#field > label {
+	color: #b5b5b5;
+	font-size: 8px;
+	width: 50px;
+	margin: 13px 20px 13px 70px;
+}
+
+#field > .input {
+	width: 245px;
+}
+
+.input-radio {
+	width: 12px;
+	margin-left: -20px;
+}
+
+#button-submit {
+	background: linear-gradient(to top, #0d0d0d, #171717, #4d4d4d);
+	border-radius: 25px;
+	color: white;
+	border: none;
+	display: block;
+	margin: 0 auto;
+	width: 95px;
+	height: 25px;
+	cursor: pointer;
+}
+/****** END Views/Contacts/edit.php part ******/
