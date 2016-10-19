@@ -13,9 +13,6 @@ include_once('parts/contactsAndSelectionTopCode.php');
 		<!-- message part (Elements/message.php) -->
 		<?php require_once '../App/Views/Elements/message.php' ?>
 
-		<!-- logout part -->
-		<?php require_once '../App/Views/Elements/logoutButton.php' ?>
-
 		<a href='contacts.php'>contactsPage</a><br><br>
 		
 		<h3>SELECTION MAIN PAGE</h3>

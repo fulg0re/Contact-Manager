@@ -12,6 +12,11 @@ use \App\Models\Contact;
 class Contacts extends Controller
 {
 
+	public function selectionPage()
+	{
+		View::render('Contacts/selection.php', $this->renderParams);
+	}
+
 	public function postsAction()
 	{
 		$temp = [

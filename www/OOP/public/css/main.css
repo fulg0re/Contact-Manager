@@ -17,23 +17,146 @@ body {
 	color: white;
 }
 
+.err {
+	background: linear-gradient(to top, #9e4700, #c77100);
+	display: block;
+	border-radius: 25px;
+	font-size: 20px;
+	text-align: center;
+	width: 80%;
+	margin: 0 auto 0 auto;
+}
+
+/****** START header ******/
 #header {
 	color: white;
-	display: block;
-	border: 1px solid gray;
 	height: 85px;
-	margin-left: 0px;
+	margin: 0;
 }
+
+#img-logo {
+	position: absolute;
+	width: 30px;
+	margin: 20px 0 0 15px;
+}
+
+#company-name, #mirror {
+	position: absolute;
+	display: block;
+	margin: 30px 0 0 50px;
+	font-weight: bold;
+}
+
+#mirror {
+	-webkit-transform: scaleY(-1);
+	-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
+		from(rgba(0,0,0,0)), to(rgba(0,0,0,0.4)));
+	margin: 41px 0 0 50px;
+}
+
+#program-name {
+	font-size: 12px;
+	letter-spacing: 6px;
+	color: #c7a299;
+	position: absolute;
+	display: block;
+	margin: 60px 0 0 5px;
+	font-weight: bold;
+}
+
+#logo {
+	display: inline-block;
+	background: linear-gradient(to bottom, #4d1100 ,#7a1600);
+	border-radius: 0 0 25px 25px;
+	width: 195px;
+	height: 85px;
+	margin: 0 0 0 55px;
+	float: left;
+}
+
+#control-panel {
+	display: inline-block;
+	margin: 55px 0 0 300px;
+}
+
+.control-buttons {
+	background: linear-gradient(to bottom, #474747 ,#0d0d0d);
+	display: inline-block;
+	border-radius: 10px;
+	font-size: 9px;
+	height: 23px;
+	cursor: pointer;
+	margin: 0 40px 0 0;
+}
+
+.control-buttons > p {
+	display: block;
+	margin-top: 5px;
+}
+
+#home-img {
+	display: inline-block;
+	margin: 3px 0 0 25px;
+	width: 15px;
+	height: 15px;
+}
+
+#home-button {
+	width: 95px;
+	right: 50px;
+}
+
+#selection-img {
+	display: inline-block;
+	margin: 3px 0 0 5px;
+	width: 15px;
+	height: 15px;
+}
+
+#selection-button {
+	width: 95px;
+}
+
+#auth-img {
+	display: inline-block;
+	margin: 3px 0 0 25px;
+	width: 15px;
+	height: 15px;
+}
+
+#auth-button {
+	width: 130px;
+	right: 200px;	
+}
+
+#logout-img {
+	display: inline-block;
+	margin: 3px 0 0 20px;
+	width: 15px;
+	height: 15px;
+}
+
+#logout-button {
+	width: 95px;
+	right: 50px;
+}
+
+.control-buttons > a {
+	display: block;
+	margin-top: -3px;
+}
+
+#control-panel > div > img {
+	float: left;
+	margin-right: 5px;
+}
+/****** END header ******/
 
 .footer {
 	background-color: black;
 	color: white;
 	display: block;
-
-	/*** temporary line ***/
-	/*border: 1px solid gray;*/
-
-	height: 50px;
+	height: 20px;
 	position: fixed;
 	bottom: 0;
 	width: 100%;
@@ -42,7 +165,7 @@ body {
 #footer-label {
 	font-size: 12px;
 	display: block;
-	margin: 25px auto;
+	margin: 5px auto;
 	color: white;
 	text-align: center;
 }
@@ -114,6 +237,18 @@ table {
     border-collapse: collapse;
 	font-family: Arial, sans-serif;
 	color: white;
+}
+
+#add-button {
+	margin-left: 20px;
+	border-radius: 25px 5px 0 0;
+	width: 80px;
+	height: 25px;
+	cursor: pointer;
+	background: linear-gradient(to top, #7a1600, #661400);
+	border: none;
+	color: white;
+	font-size: 10px;
 }
 
 a {

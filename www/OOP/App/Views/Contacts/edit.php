@@ -1,6 +1,5 @@
 <?php
 
-echo $id;
 	if (!isset($id)){
 		$formPath = "/contacts/new";
 	}else{
@@ -20,11 +19,7 @@ echo $id;
 
 		<!-- message part (Elements/message.php) -->
 		<?php require_once '../App/Views/Elements/message.php' ?>
-
-		<!-- logout part -->
-		<?php require_once '../App/Views/Elements/logoutButton.php' ?>
 		
-		<a href='/contacts/posts'>back</a>
 		<div id="edit-form">
 			<p id="edit-title">Information</p>
 			<form action=<?php echo $formPath ?> method="post">

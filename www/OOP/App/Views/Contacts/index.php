@@ -29,16 +29,12 @@
 
 		<!-- message part -->
 		<?php require_once '../App/Views/Elements/message.php' ?>
-
-		<!-- logout part -->
-		<?php require_once '../App/Views/Elements/logoutButton.php' ?>
-
-		<a href='/selection/index'>selectionPage</a><br><br>
 	
 		<form action="/contacts/add" method="post">
-			<input type="submit" name="button" value="ADD"></br>
 			<?php if (!isset($noContacts)): ?>
 				<div id="table-div">
+					<input id="add-button" type="submit" name="button" value="ADD"></br>
+
 					<table>
 						<tr>
 							<th><a href=<?php echo getHref("lastname",$activePage, $sortTurn); ?>>Last
@@ -129,7 +125,6 @@
 						</div>
 					</div>
 				</div>
-			<input type="submit" name="button" value="ADD">
 		</form>
 
 		<?php require_once '../App/Views/Elements/footer.php' ?>
