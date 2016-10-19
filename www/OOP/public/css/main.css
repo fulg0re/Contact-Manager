@@ -1,19 +1,14 @@
 /*
-.perfectForm > #uname {
-	background-color: red;
-}
-*/
-
-/*
 -webkit-
 -o-
 -moz-
 */
 
+/****** START main ******/
 body {
 	background-color: black;
-	font-family: sans-serif;
-	margin: 1px;
+	font-family: sans-serif, Areal;
+	margin: 0;
 	color: white;
 }
 
@@ -24,8 +19,9 @@ body {
 	font-size: 20px;
 	text-align: center;
 	width: 80%;
-	margin: 0 auto 0 auto;
+	margin: 0 auto;
 }
+/****** ENS main ******/
 
 /****** START header ******/
 #header {
@@ -40,7 +36,9 @@ body {
 	margin: 20px 0 0 15px;
 }
 
-#company-name, #mirror {
+#company-name,
+#mirror,
+#program-name {
 	position: absolute;
 	display: block;
 	margin: 30px 0 0 50px;
@@ -51,17 +49,14 @@ body {
 	-webkit-transform: scaleY(-1);
 	-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
 		from(rgba(0,0,0,0)), to(rgba(0,0,0,0.4)));
-	margin: 41px 0 0 50px;
+	margin-top: 41px;
 }
 
 #program-name {
 	font-size: 12px;
 	letter-spacing: 6px;
 	color: #c7a299;
-	position: absolute;
-	display: block;
 	margin: 60px 0 0 5px;
-	font-weight: bold;
 }
 
 #logo {
@@ -74,14 +69,20 @@ body {
 	float: left;
 }
 
-#control-panel {
+#control-panel,
+.control-buttons > p,
+.control-buttons,
+#home-img,
+#selection-img,
+#auth-img,
+#logout-img,
+.control-buttons > a {
 	display: inline-block;
 	margin: 55px 0 0 300px;
 }
 
 .control-buttons {
 	background: linear-gradient(to bottom, #474747 ,#0d0d0d);
-	display: inline-block;
 	border-radius: 10px;
 	font-size: 9px;
 	height: 23px;
@@ -90,12 +91,13 @@ body {
 }
 
 .control-buttons > p {
-	display: block;
-	margin-top: 5px;
+	margin: 5px 0 0 0;
 }
 
-#home-img {
-	display: inline-block;
+#home-img,
+#selection-img,
+#auth-img,
+#logout-img {
 	margin: 3px 0 0 25px;
 	width: 15px;
 	height: 15px;
@@ -103,14 +105,10 @@ body {
 
 #home-button {
 	width: 95px;
-	right: 50px;
 }
 
 #selection-img {
-	display: inline-block;
 	margin: 3px 0 0 5px;
-	width: 15px;
-	height: 15px;
 }
 
 #selection-button {
@@ -118,22 +116,15 @@ body {
 }
 
 #auth-img {
-	display: inline-block;
 	margin: 3px 0 0 25px;
-	width: 15px;
-	height: 15px;
 }
 
 #auth-button {
 	width: 130px;
-	right: 200px;	
 }
 
 #logout-img {
-	display: inline-block;
 	margin: 3px 0 0 20px;
-	width: 15px;
-	height: 15px;
 }
 
 #logout-button {
@@ -142,8 +133,7 @@ body {
 }
 
 .control-buttons > a {
-	display: block;
-	margin-top: -3px;
+	margin: -3px 0 0 0;
 }
 
 #control-panel > div > img {
@@ -152,10 +142,14 @@ body {
 }
 /****** END header ******/
 
+/****** START footer ******/
+.footer,
+#footer-label {
+	display: block;
+}
+
 .footer {
 	background-color: black;
-	color: white;
-	display: block;
 	height: 20px;
 	position: fixed;
 	bottom: 0;
@@ -164,27 +158,27 @@ body {
 
 #footer-label {
 	font-size: 12px;
-	display: block;
 	margin: 5px auto;
-	color: white;
 	text-align: center;
 }
+/****** END footer ******/
 
 /****** START Views/Users/index.php part ******/
+#login-form,
+#login-button,
+.login-form-input,
+.login-form-label,
+#auth-label {
+	display: inline-block;
+}
+
 #login-form {
 	background: linear-gradient(to bottom, #030303, #171717 ,#050505);
-	border: 1px solid black;
 	border-radius: 25px;
 	display: block;
 	width: 430px;
 	height: 260px;
 	margin: 50px auto;
-	clear:both;
-}
-
-.wrapper {
-	position: relative;
-	min-height: 100%;
 }
 
 #login-button {
@@ -196,36 +190,25 @@ body {
 	height: 23px;
 	display: block;
 	margin: 30px auto;
-}
-
-#login-button:hover {
 	cursor: pointer;
 }
 
 .login-form-input {
-	display: inline-block;
 	width: 240px;
-	margin-bottom: 15px;
+	margin: 0 0 15px 0;
 }
 
 .login-form-label {
 	font-size: 12px;
-	display: inline-block;
-	margin-top: 4px;
-	margin-left: 65px;
+	margin: 4px 0 0 65px;
 	width: 75px;
-	padding-right:10px;
-	color: white;
+	padding: 0 10px 0 0;
 }
 
 #auth-label {
 	font-size: 14px;
-	display: block;
 	width: 50px;
-	margin-left: 65px;
-	margin-top: 15px;
-	margin-bottom: 30px;
-	color: white;
+	margin: 15px 0 30px 65px;
 }
 /****** END Views/Users/index.php part ******/
 
@@ -235,17 +218,16 @@ table {
 	background: linear-gradient(to top, #171717, #2e2e2e, #2e2e2e, #2e2e2e, #2e2e2e);
 	border-radius: 25px;
     border-collapse: collapse;
-	font-family: Arial, sans-serif;
-	color: white;
+	width: 720px;
 }
 
 #add-button {
-	margin-left: 20px;
+	background: linear-gradient(to top, #7a1600, #661400);
+	margin: 0 0 0 20px;
 	border-radius: 25px 5px 0 0;
 	width: 80px;
 	height: 25px;
 	cursor: pointer;
-	background: linear-gradient(to top, #7a1600, #661400);
 	border: none;
 	color: white;
 	font-size: 10px;
@@ -257,8 +239,7 @@ a {
 }
 
 th, td {
-	padding: 12px;
-	padding-left: 45px;
+	padding: 12px 12px 12px 45px;
     text-align: left;
 }
 
@@ -299,37 +280,31 @@ td:last-child {
 }
 
 .edit-button {
-	display: inline-block;
 	background: linear-gradient(to top, #9e4700, #c77100);
+	display: inline-block;
 	border-radius: 10px;
 	width: 60px;
 	height: 18px;
 }
 
-.edit-button > a {
+.edit-button > a,
+.delete-button > a {
 	display: block;
-	padding-left: 5px;
-	padding-top: 1px;
+	padding: 1px 0 0 5px;
 }
 
 .delete-button {
-	display: inline-block;
 	background: linear-gradient(to top, #911800, #b02f00);
+	display: inline-block;
 	border-radius: 10px;
 	width: 45px;
 	height: 18px;
 }
 
-.delete-button > a {
-	display: block;
-	padding-left: 5px;
-	padding-top: 1px;
-}
-
 #pagination-block {
+	background: linear-gradient(to top, #7a1600, #661400);
 	width: 500px;
 	height: 35px;
-	background: linear-gradient(to top, #7a1600, #661400);
 	margin: 0 auto;
 	border-radius: 0 0 25px 25px;
 }
@@ -350,7 +325,7 @@ td:last-child {
 #pages-block > a,
 #next-a > a {
 	display: inline-block;
-	margin-top: 5px;
+	margin: 5px 0 0 0;
 }
 
 #previous-a {
@@ -364,9 +339,8 @@ td:last-child {
 
 /****** START Views/Contacts/edit.php part ******/
 #edit-form {
-	font-family: Arial, sans-serif;
-	border-radius: 25px 25px 0 0;
 	background: linear-gradient(to top, #000000, #171717, #000000);
+	border-radius: 25px 25px 0 0;
 	width: 430px;
 	height: 600px;
 	margin: 5px auto;
@@ -395,7 +369,7 @@ td:last-child {
 
 .input-radio {
 	width: 12px;
-	margin-left: -20px;
+	margin: 0 0 0 -18px;
 }
 
 #button-submit {
@@ -410,3 +384,28 @@ td:last-child {
 	cursor: pointer;
 }
 /****** END Views/Contacts/edit.php part ******/
+
+/****** START Views/Contacts/select.php part ******/
+#accept-button,
+#cancel-button {
+	background: linear-gradient(to top, #9e4700, #c77100);
+	margin: 0 0 0 20px;
+	border-radius: 25px 5px 0 0;
+	width: 80px;
+	height: 25px;
+	border: none;
+	color: white;
+	font-size: 10px;
+	cursor: pointer;
+}
+
+#cancel-button {
+	background: linear-gradient(to top, #7a1600, #661400);
+	margin: 0 0 0 -4px;
+}
+
+input[type="checkbox"] {
+	display: inline-block;
+	height: 11px;
+}
+/****** END Views/Contacts/select.php part ******/

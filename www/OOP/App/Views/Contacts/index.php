@@ -38,16 +38,16 @@
 					<table>
 						<tr>
 							<th><a href=<?php echo getHref("lastname",$activePage, $sortTurn); ?>>Last
-									<?php echo ($sortBy == "lastname") 
-											? getSortArrows($sortTurn) 
-											: null;
-									?>
+								<?php echo ($sortBy == "lastname") 
+										? getSortArrows($sortTurn) 
+										: null;
+								?>
 								</a></th>
 							<th><a href=<?php echo getHref("firstname",$activePage, $sortTurn); ?>>First
-									<?php echo ($sortBy == "firstname") 
-											? getSortArrows($sortTurn) 
-											: null;
-									?>
+								<?php echo ($sortBy == "firstname") 
+										? getSortArrows($sortTurn) 
+										: null;
+								?>
 								</a></th>
 							<th>Email</th>
 							<th>Best Phone</th>

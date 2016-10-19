@@ -11,18 +11,12 @@ use \App\Models\Contact;
 
 class Contacts extends Controller
 {
-
-	public function selectionPage()
-	{
-		View::render('Contacts/selection.php', $this->renderParams);
-	}
-
-	public function postsAction()
+	private function prepareTableData($sortBy, $sortTurn, $activePage)
 	{
 		$temp = [
-			'sortCol' => (isset($_GET['sortBy'])) ? $_GET['sortBy'] : 'lastname',
-			'sortOrd' => (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : 'DESC',
-			'page' => (isset($_GET['activePage'])) ? $_GET['activePage'] : 1,
+			'sortCol' => $sortBy,
+			'sortOrd' => $sortTurn,
+			'page' => $activePage,
 			'limit' => MAX_ON_PAGE
 		];
 
@@ -32,8 +26,29 @@ class Contacts extends Controller
 			$this->renderParams[$key] = $val;
 		};
 
-		$this->getViewParams();
-		View::render('Contacts/index.php', $this->renderParams);	//!!!
+		$this->getViewParams();		
+	}
+
+	public function selectionAction()
+	{
+		$sortBy = (isset($_GET['sortBy'])) ? $_GET['sortBy'] : 'lastname';
+		$sortTurn = (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : 'DESC';
+		$activePage = (isset($_GET['activePage'])) ? $_GET['activePage'] : 1;
+
+		$this->prepareTableData($sortBy, $sortTurn, $activePage);
+
+		View::render('Contacts/selection.php', $this->renderParams);
+	}
+
+	public function postsAction()
+	{
+		$sortBy = (isset($_GET['sortBy'])) ? $_GET['sortBy'] : 'lastname';
+		$sortTurn = (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : 'DESC';
+		$activePage = (isset($_GET['activePage'])) ? $_GET['activePage'] : 1;
+
+		$this->prepareTableData($sortBy, $sortTurn, $activePage);
+
+		View::render('Contacts/index.php', $this->renderParams);
 
 		//echo "<pre>", var_dump($_GET), "</pre>";	//temporary line...
 	}
@@ -75,7 +90,10 @@ class Contacts extends Controller
 		$temp = $this->modelObj->newRecord($this->modelObj, $_POST);
 
 		if ($temp['status'] == false){
+			
 			unset($temp['status']);
+			unset($temp['id']);
+
 			$_SESSION['params'] = $temp;
 
 			if (isset($temp['ADDButton'])){

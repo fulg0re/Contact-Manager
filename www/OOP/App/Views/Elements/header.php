@@ -14,7 +14,7 @@
         </div>
         <div class="control-buttons" id="selection-button">
             <img id="selection-img" src="/images/selection.png">
-            <a href='/contacts/selection-page'>
+            <a href='/contacts/selection'>
                 <p>Selection page</p>
             </a>
         </div>

@@ -1,93 +1,112 @@
 <?php
 
-include_once('parts/contactsAndSelectionTopCode.php');
+	function turnSide($turn){
+		return ($turn == "ASC") ? "DESC" : "ASC";
+	};
 
+	function getSortArrows($turn){
+		return ($turn == "ASC") ? " ⇓" : " ⇑" ;
+	};
+
+	function getHref($sortBy, $activePage, $sortTurn){
+		$str = "/contacts/selection?";
+		$str .= "sortBy=$sortBy&";
+		$str .= "activePage=$activePage&";
+		$str .= "sortTurn=" . turnSide($sortTurn);
+
+		return $str;
+	};
 ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>ContactManager/Selection</title>
-		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="/css/main.css">
 	</head>
 	<body>
-		<!-- message part (Elements/message.php) -->
+		<?php require_once '../App/Views/Elements/header.php' ?>
+
+		<!-- message part -->
 		<?php require_once '../App/Views/Elements/message.php' ?>
-
-		<a href='contacts.php'>contactsPage</a><br><br>
-		
-		<h3>SELECTION MAIN PAGE</h3>
-		<form action="controller.php" method="post">
-			
-			<input type="submit" name="acceptButton" value="ACCEPT">
-			<input type="submit" name="cancelButton" value="CANCEL"></br>
+	
+		<form action="/contacts/selection" method="post">
 			<?php if (!isset($_POST['noContacts'])): ?>
-				<table style="border: 1px solid">
-					<tr>
-						<th><input type="checkbox" name="checkbox" value="All">All</th>
-						<th><a href="selection.php?
-									sortBy=lastname&
-									activePage=<?php echo $_POST['activePage']?>&
-									sortTurn=<?php echo (turnSide($_POST['sortTurn']));?>">Last
-						        <img src='<?php echo ($_POST['sortBy'] == "lastname") ? inputImage() : null;?>' /></a></th>
-						<th><a href="selection.php?
-									sortBy=firstname&
-									activePage=<?php echo $_POST['activePage']?>&
-									sortTurn=<?php echo (turnSide($_POST['sortTurn']));?>">First
-						        <img src='<?php echo ($_POST['sortBy'] == "firstname") ? inputImage() : null;?>' /></a></th>
-						<th>Email</th>
-						<th>Best Phone</th>
-					</tr>
-					<?php foreach ($contacts as $v): ?>
+				<div id="table-div">
+					<input id="accept-button" type="submit" name="acceptButton" value="ACCEPT">
+					<input id="cancel-button" type="submit" name="cancelButton" value="CANCEL"></br>
+					
+					<table>
 						<tr>
-						    <td><input type="checkbox" name="checkbox<?php $v['id']?>" value="<?php $v['id']?>"></td>
-						    <td><?php echo $v['lastname']?></td>
-						    <td><?php echo $v['firstname']?></td>
-						    <td><?php echo $v['email']?></td>
-						    <td><?php switch ($v['best_phone']):
-						            case "home_phone":
-						                echo $v['home_phone'];
-						                break;
-						            case "work_phone":
-						                echo $v['work_phone'];
-						                break;
-						            case "cell_phone":
-						                echo $v['cell_phone'];
-						                break;
-						        endswitch; ?></td>
+							<th><input type="checkbox" name="checkbox" value="All">All</th>
+							<th><a href=<?php echo getHref("lastname",$activePage, $sortTurn); ?>>Last
+								<?php echo ($sortBy == "lastname") 
+										? getSortArrows($sortTurn) 
+										: null;
+								?>
+							<th><a href=<?php echo getHref("firstname",$activePage, $sortTurn); ?>>First
+								<?php echo ($sortBy == "firstname") 
+										? getSortArrows($sortTurn) 
+										: null;
+								?>
+							<th>Email</th>
+							<th>Best Phone</th>
 						</tr>
-					<?php endforeach; ?>
-				</table>
-			<?php else: ?>
-				<h2><?php echo $_POST['noContacts'] ?></h2>
-			<?php endif; ?>
-			<input type="submit" name="acceptButton" value="ACCEPT">
-			<input type="submit" name="cancelButton" value="CANCEL"></br><br>
+						<?php foreach ($contacts as $v): ?>
+							<tr>
+								<td><input type="checkbox" name="checkbox<?php $v['id']?>" value="<?php $v['id']?>"></td>
+								<td><?php echo $v['lastname']?></td>
+								<td><?php echo $v['firstname']?></td>
+								<td><?php echo $v['email']?></td>
+								<td><?php switch ($v['best_phone']):
+										case "home_phone":
+											echo $v['home_phone'];
+											break;
+										case "work_phone":
+											echo $v['work_phone'];
+											break;
+										case "cell_phone":
+											echo $v['cell_phone'];
+											break;
+									endswitch; ?></td>
+							</tr>
+						<?php endforeach; ?>
+					</table>
+				<?php else: ?>
+					<h2><?php echo $noContacts ?></h2>
+				<?php endif; ?>
+					<div id="pagination-block">
+						<div id="previous-a">
+							<a href='/contacts/selection?
+										sortBy=<?php echo $sortBy?>&
+										activePage=<?php $tempPage = (intval($activePage));
+												echo ($tempPage > 1) ? (intval($activePage) - 1) : 1;?>&
+										sortTurn=<?php echo $sortTurn?>'>previous</a>
+						</div>
+						<div id="pages-block">
+							<?php
+							$maxPages = ceil($numberOfAllFields/$maxOnPage);
+							$temp = 1;
+							while ($temp <= $maxPages): ?>
 
-			<a href='selection.php?
-						sortBy=<?php echo $_POST['sortBy']?>&
-						activePage=<?php $tempPage = (intval($_POST['activePage']));
-							echo ($tempPage > 1) ? (intval($_POST['activePage']) - 1) : 1;?>&
-						sortTurn=<?php echo $_POST['sortTurn']?>'>previous</a>
+								<a href='/contacts/selection?
+										sortBy=<?php echo $sortBy?>&
+										activePage=<?php echo $temp?>&
+										sortTurn=<?php echo $sortTurn?>'><?php echo $temp?></a>
 
-			<?php
-			$maxPages = ceil($_POST['numberOfContacts']/MAX_ON_PAGE);
-			$temp = 1;
-			while ($temp <= $maxPages): ?>
-
-				<a href='selection.php?
-						sortBy=<?php echo $_POST['sortBy']?>&
-						activePage=<?php echo $temp?>&
-						sortTurn=<?php echo $_POST['sortTurn']?>'><?php echo $temp?></a>
-
-				<?php
-				$temp++;
-			endwhile; ?>
-
-			<a href='selection.php?
-						sortBy=<?php echo $_POST['sortBy']?>&
-						activePage=<?php $tempPage = (intval($_POST['activePage']));
-							echo ($tempPage >= $maxPages) ? $maxPages : (intval($_POST['activePage']) + 1);?>&
-						sortTurn=<?php echo $_POST['sortTurn']?>'>next</a>
+								<?php
+								$temp++;
+							endwhile; ?>
+						</div>
+						<div id="next-a">
+							<a href='/contacts/selection?
+										sortBy=<?php echo $sortBy?>&
+										activePage=<?php $tempPage = (intval($activePage));
+											echo ($tempPage >= $maxPages) ? $maxPages : (intval($activePage) + 1);?>&
+										sortTurn=<?php echo $sortTurn?>'>next</a>
+						</div>
+					</div>
+			</div>
 		</form>
 	</body>
 </html>

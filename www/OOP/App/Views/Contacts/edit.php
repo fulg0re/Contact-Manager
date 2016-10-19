@@ -1,11 +1,9 @@
 <?php
-
 	if (!isset($id)){
 		$formPath = "/contacts/new";
 	}else{
 		$formPath = "/contacts/new/" . $id;
 	};
-
 ?>
 
 <!DOCTYPE html>
