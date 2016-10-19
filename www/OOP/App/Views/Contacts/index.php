@@ -4,8 +4,17 @@
 		return ($turn == "ASC") ? "DESC" : "ASC";
 	};
 
-	function inputImage($turn){
-		return ($turn == "ASC") ? IMG_SORT_BY_ASC : IMG_SORT_BY_DESC ;
+	function getSortArrows($turn){
+		return ($turn == "ASC") ? " ⇓" : " ⇑" ;
+	};
+
+	function getHref($sortBy, $activePage, $sortTurn){
+		$str = "/contacts/posts?";
+		$str .= "sortBy=$sortBy&";
+		$str .= "activePage=$activePage&";
+		$str .= "sortTurn=" . turnSide($sortTurn);
+
+		return $str;
 	};
 ?>
 
@@ -32,17 +41,17 @@
 				<div id="table-div">
 					<table>
 						<tr>
-							<th><a href="/contacts/posts?
-								sortBy=lastname&
-								activePage=<?php echo $activePage?>&
-								sortTurn=<?php echo turnSide($sortTurn);?>">Last
-									<img src='<?php echo ($sortBy == "lastname") ? inputImage($sortTurn) : "";?>' />
+							<th><a href=<?php echo getHref("lastname",$activePage, $sortTurn); ?>>Last
+									<?php echo ($sortBy == "lastname") 
+											? getSortArrows($sortTurn) 
+											: null;
+									?>
 								</a></th>
-							<th><a href="/contacts/posts?
-								sortBy=firstname&
-								activePage=<?php echo $activePage?>&
-								sortTurn=<?php echo turnSide($sortTurn);?>">First
-									<img src='<?php echo ($sortBy == "firstname") ? inputImage($sortTurn) : "";?>' />
+							<th><a href=<?php echo getHref("firstname",$activePage, $sortTurn); ?>>First
+									<?php echo ($sortBy == "firstname") 
+											? getSortArrows($sortTurn) 
+											: null;
+									?>
 								</a></th>
 							<th>Email</th>
 							<th>Best Phone</th>
@@ -85,35 +94,40 @@
 							</tr>
 						<?php endforeach; ?>
 					</table>
-			<?php else: ?>
-				<h2><?php echo $noContacts ?></h2>
-			<?php endif; ?>
+				<?php else: ?>
+					<h2><?php echo $noContacts ?></h2>
+				<?php endif; ?>
+					<div id="pagination-block">
+						<div id="previous-a">
+							<a href='/contacts/posts?
+										sortBy=<?php echo $sortBy?>&
+										activePage=<?php $tempPage = (intval($activePage));
+												echo ($tempPage > 1) ? (intval($activePage) - 1) : 1;?>&
+										sortTurn=<?php echo $sortTurn?>'>previous</a>
+						</div>
+						<div id="pages-block">
+							<?php
+							$maxPages = ceil($numberOfAllFields/$maxOnPage);
+							$temp = 1;
+							while ($temp <= $maxPages): ?>
 
-			<a href='/contacts/posts?
-						sortBy=<?php echo $sortBy?>&
-						activePage=<?php $tempPage = (intval($activePage));
-								echo ($tempPage > 1) ? (intval($activePage) - 1) : 1;?>&
-						sortTurn=<?php echo $sortTurn?>'>previous</a>
+								<a href='/contacts/posts?
+										sortBy=<?php echo $sortBy?>&
+										activePage=<?php echo $temp?>&
+										sortTurn=<?php echo $sortTurn?>'><?php echo $temp?></a>
 
-			<?php
-			$maxPages = ceil($numberOfAllFields/$maxOnPage);
-			$temp = 1;
-			while ($temp <= $maxPages): ?>
-
-				<a href='/contacts/posts?
-						sortBy=<?php echo $sortBy?>&
-						activePage=<?php echo $temp?>&
-						sortTurn=<?php echo $sortTurn?>'><?php echo $temp?></a>
-
-				<?php
-				$temp++;
-			endwhile; ?>
-
-			<a href='/contacts/posts?
-						sortBy=<?php echo $sortBy?>&
-						activePage=<?php $tempPage = (intval($activePage));
-							echo ($tempPage >= $maxPages) ? $maxPages : (intval($activePage) + 1);?>&
-						sortTurn=<?php echo $sortTurn?>'>next</a>
+								<?php
+								$temp++;
+							endwhile; ?>
+						</div>
+						<div id="next-a">
+							<a href='/contacts/posts?
+										sortBy=<?php echo $sortBy?>&
+										activePage=<?php $tempPage = (intval($activePage));
+											echo ($tempPage >= $maxPages) ? $maxPages : (intval($activePage) + 1);?>&
+										sortTurn=<?php echo $sortTurn?>'>next</a>
+						</div>
+					</div>
 				</div>
 			<input type="submit" name="button" value="ADD">
 		</form>

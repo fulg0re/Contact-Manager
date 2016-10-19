@@ -17,6 +17,36 @@ body {
 	color: white;
 }
 
+#header {
+	color: white;
+	display: block;
+	border: 1px solid gray;
+	height: 85px;
+	margin-left: 0px;
+}
+
+.footer {
+	color: white;
+	display: block;
+
+	/*** temporary line ***/
+	/*border: 1px solid gray;*/
+
+	height: 50px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+#footer-label {
+	font-size: 12px;
+	display: block;
+	margin: 25px auto;
+	color: white;
+	text-align: center;
+}
+
+/****** START Views/Users/index.php part ******/
 #login-form {
 	background: linear-gradient(to bottom, #030303, #171717 ,#050505);
 	border: 1px solid black;
@@ -26,14 +56,6 @@ body {
 	height: 260px;
 	margin: 50px auto;
 	clear:both;
-}
-
-#header {
-	color: white;
-	display: block;
-	border: 1px solid gray;
-	height: 85px;
-	margin-left: 0px;
 }
 
 .wrapper {
@@ -81,34 +103,10 @@ body {
 	margin-bottom: 30px;
 	color: white;
 }
+/****** END Views/Users/index.php part ******/
 
-.footer {
-	color: white;
-	display: block;
 
-	/*** temporary line ***/
-	/*border: 1px solid gray;*/
-
-	height: 50px;
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-}
-
-#footer-label {
-	font-size: 12px;
-	display: block;
-	margin: 25px auto;
-	color: white;
-	width: 135px;
-}
-
-/*** temporary line ***/
-pre {
-	color: white;
-}
-/**********************/
-
+/****** START Views/Contacts/index.php part ******/
 table {
 	background: linear-gradient(to top, #171717, #2e2e2e, #2e2e2e, #2e2e2e, #2e2e2e);
 	border-radius: 25px;
@@ -191,3 +189,39 @@ td:last-child {
 	padding-left: 5px;
 	padding-top: 1px;
 }
+
+#pagination-block {
+	width: 500px;
+	height: 35px;
+	background: linear-gradient(to top, #7a1600, #661400);
+	margin: 0 auto;
+	border-radius: 0 0 25px 25px;
+}
+
+#previous-a,
+#pages-block,
+#next-a {
+	display: inline-block;
+	font-size: 10px;
+	font-weight: bold;
+	text-align: center;
+	margin: 4px auto;
+	height: 25px;
+	width: 160px;
+}
+
+#previous-a > a,
+#pages-block > a,
+#next-a > a {
+	display: inline-block;
+	margin-top: 5px;
+}
+
+#previous-a {
+	border-right: 1px solid black;
+}
+
+#next-a {
+	border-left: 1px solid black;
+}
+/****** END Views/Contacts/index.php part ******/
