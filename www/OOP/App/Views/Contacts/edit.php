@@ -1,18 +1,25 @@
 <?php
-	if (!isset($id)){
-		$formPath = "/contacts/new";
-	}else{
-		$formPath = "/contacts/new/" . $id;
-	};
+	function getRoute(){
+		if (!isset($id)){
+			return "/contacts/new";
+		}else{
+			return "/contacts/new/" . $id;
+		};
+	}
 ?>
 
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>ContactManager/Edit</title>
-		<link rel="stylesheet" href="/css/main.css">
+
+		<?php require_once '../App/Views/Elements/head.php' ?>
+
 	</head>
 	<body>
+
+		<?php var_dump($id); ?>
+
 		<?php require_once '../App/Views/Elements/header.php' ?>
 
 		<!-- message part (Elements/message.php) -->
@@ -20,7 +27,7 @@
 		
 		<div id="edit-form">
 			<p id="edit-title">Information</p>
-			<form action=<?php echo $formPath ?> method="post">
+			<form action="<?php echo getRoute(); ?>" method="post">
 				<div id="field">
 					<label for="firstname">FirstName*</label>
 						<input class="input" type="text" name="firstname" id="firstname"

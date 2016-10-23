@@ -87,12 +87,12 @@ class Contacts extends Controller
 
 	public function newAction($id)
 	{
+
 		$temp = $this->modelObj->newRecord($this->modelObj, $_POST);
 
 		if ($temp['status'] == false){
 			
 			unset($temp['status']);
-			unset($temp['id']);
 
 			$_SESSION['params'] = $temp;
 
@@ -100,7 +100,8 @@ class Contacts extends Controller
 				$_SESSION['params']['button'] = "ADD";
 				$this->redirect("/contacts/add");
 			}else{
-				$this->redirect("/contacts/" . $id . "/edit");
+				$_SESSION['params']['button'] = "Edit";
+				$this->redirect("/contacts/edit/" . $temp['id']);
 			}
 			
 		}else{

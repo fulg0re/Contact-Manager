@@ -217,6 +217,11 @@ abstract class Table
 	
 	public function update($data, $where)
 	{
+		$validRes = $this->insertValidation($data);
+		if ($validRes['res'] == false){
+			return $validRes['message'];
+		};
+
 		$data['allFields'] = $this->allFields();
 		
 		$query = "UPDATE ".$this->table." SET ".$this->makeUpdateQuery($data)." WHERE ".$where;

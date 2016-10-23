@@ -2,7 +2,9 @@
 <html>
 	<head>
 		<title>ContactManager/Login</title>
-		<link rel="stylesheet" href="/css/main.css">
+
+		<?php require_once '../App/Views/Elements/head.php' ?>
+
 	</head>
 	<body>
 		<?php require_once '../App/Views/Elements/header.php' ?>
