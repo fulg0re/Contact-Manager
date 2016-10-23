@@ -91,7 +91,7 @@ body {
 }
 
 .control-buttons > p {
-	margin: 5px 0 0 0;
+	margin: 7px 0 0 5px;
 }
 
 #home-img,
@@ -101,6 +101,7 @@ body {
 	margin: 3px 0 0 25px;
 	width: 15px;
 	height: 15px;
+	float: left;
 }
 
 #home-button {
@@ -236,6 +237,7 @@ table {
 a {
 	color: white;
 	text-decoration: none;
+	outline: none;
 }
 
 th, td {

@@ -6,29 +6,29 @@
         <div id="program-name">Contact Manager</div>
     </div>
     <div id="control-panel">
-        <div class="control-buttons" id="home-button">
-            <img id="home-img" src="/images/home.png">
-            <a href='/contacts/posts'>
+        <a href='/contacts/posts'>
+            <div class="control-buttons" id="home-button">
+                <img id="home-img" src="/images/home.png">
                 <p>Home</p>
-            </a>
-        </div>
-        <div class="control-buttons" id="selection-button">
-            <img id="selection-img" src="/images/selection.png">
-            <a href='/contacts/selection'>
+            </div>
+        </a>
+        <a href='/contacts/selection'>
+            <div class="control-buttons" id="selection-button">
+                <img id="selection-img" src="/images/selection.png">
                 <p>Selection page</p>
-            </a>
-        </div>
-        <div class="control-buttons" id="auth-button">
-            <img id="auth-img" src="/images/authorisation.png">
-            <a href='/contacts/logout'>
+            </div>
+        </a>
+        <a href='/contacts/logout'>
+            <div class="control-buttons" id="auth-button">
+                <img id="auth-img" src="/images/authorisation.png">
                 <p>Authorisation</p>
-            </a>
-        </div>
-        <div class="control-buttons" id="logout-button">
-            <img id="logout-img" src="/images/logout.png">
-            <a href='/contacts/logout'>
+            </div>
+        </a>
+        <a href='/contacts/logout'>
+            <div class="control-buttons" id="logout-button">
+                <img id="logout-img" src="/images/logout.png">
                 <p>Logout</p>
-            </a>
-        </div>
+            </div>
+        </a>
     </div>
 </div>
