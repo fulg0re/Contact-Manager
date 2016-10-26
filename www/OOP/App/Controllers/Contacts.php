@@ -40,7 +40,7 @@ class Contacts extends Controller
 		View::render('Contacts/selection.php', $this->renderParams);
 	}
 
-	public function postsAction()
+	public function indexAction()
 	{
 		$sortBy = (isset($_GET['sortBy'])) ? $_GET['sortBy'] : 'lastname';
 		$sortTurn = (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : 'DESC';
@@ -108,7 +108,7 @@ class Contacts extends Controller
 			unset($temp['status']);
 			$_SESSION['params'] = $temp;
 
-			$this->redirect("/contacts/posts");
+			$this->redirect("/contacts");
 		};
 
 		//echo "<pre>", var_dump($params), "</pre>";	//temporary line...
@@ -120,7 +120,7 @@ class Contacts extends Controller
 
 		$_SESSION['params']['message'] = $this->renderParams['message'];
 
-		$this->redirect("/contacts/posts");
+		$this->redirect("/contacts");
 
 		//echo "<pre>", var_dump($_GET), "</pre>";	//temporary line...
 	}

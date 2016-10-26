@@ -10,7 +10,7 @@ use \App\Models\User;
 class Users extends Controller
 {
 
-	public function indexAction()
+	public function authAction()
 	{
 		$this->getViewParams();
 
@@ -32,7 +32,7 @@ class Users extends Controller
 
 		if ($temp['result'] == true){
 			$_SESSION['logined'] = true;
-			$this->redirect("/contacts/posts");
+			$this->redirect("/contacts");
 		}else{
 			unset($temp['result']);
 			$_SESSION['params'] = $temp;

@@ -13,7 +13,8 @@ class Router
 
 	function __construct()
 	{
-		$this->add('', ['controller' => 'Users', 'action' => 'index']);
+		$this->add('', ['controller' => 'Users', 'action' => 'auth']);
+		$this->add('{controller}', ['action' => 'index']);
 		$this->add('{controller}/{action}');
 		$this->add('{controller}/{action}/{id:\d+}');
 		$this->add('admin/{controller}/{action}', ['namespace' => 'Admin']);

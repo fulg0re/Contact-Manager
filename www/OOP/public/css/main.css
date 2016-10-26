@@ -5,11 +5,30 @@
 */
 
 /****** START main ******/
+/*
+@font-face {
+    font-family: ArialMT;
+    src: url(/fonts/ArialMT.ttf);
+}
+*/
+html,
+body {
+	height: 100%;
+	width: 100%;
+}
+
 body {
 	background-color: black;
 	font-family: sans-serif, Areal;
 	margin: 0;
 	color: white;
+}
+
+#body-div {
+	border: 1px solid red;
+	width: 850px;
+	height: 99%;
+	margin: 0 auto 0 auto;
 }
 
 .err {
@@ -18,128 +37,88 @@ body {
 	border-radius: 25px;
 	font-size: 20px;
 	text-align: center;
-	width: 80%;
-	margin: 0 auto;
+	width: 700px;
+	margin: 5px 0 0 50px;
+}
+
+.err > p {
+	margin: 0;
 }
 /****** ENS main ******/
 
 /****** START header ******/
 #header {
+	background-color: black;
 	color: white;
+	position: fixed;
+	top: 0px;
 	height: 85px;
-	margin: 0;
+	width: 850px;
+}
+
+#header-back {
+	height: 85px;
 }
 
 #img-logo {
-	position: absolute;
-	width: 30px;
-	margin: 20px 0 0 15px;
-}
-
-#company-name,
-#mirror,
-#program-name {
-	position: absolute;
-	display: block;
-	margin: 30px 0 0 50px;
-	font-weight: bold;
-}
-
-#mirror {
-	-webkit-transform: scaleY(-1);
-	-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
-		from(rgba(0,0,0,0)), to(rgba(0,0,0,0.4)));
-	margin-top: 41px;
-}
-
-#program-name {
-	font-size: 12px;
-	letter-spacing: 6px;
-	color: #c7a299;
-	margin: 60px 0 0 5px;
-}
-
-#logo {
-	display: inline-block;
-	background: linear-gradient(to bottom, #4d1100 ,#7a1600);
-	border-radius: 0 0 25px 25px;
-	width: 195px;
-	height: 85px;
 	margin: 0 0 0 55px;
+	width: 195px;
+	height: 100%;
 	float: left;
-}
-
-#control-panel,
-.control-buttons > p,
-.control-buttons,
-#home-img,
-#selection-img,
-#auth-img,
-#logout-img,
-.control-buttons > a {
-	display: inline-block;
-	margin: 55px 0 0 300px;
 }
 
 .control-buttons {
-	background: linear-gradient(to bottom, #474747 ,#0d0d0d);
+	background: linear-gradient(to top, #0d0d0d, #474747);
 	border-radius: 10px;
-	font-size: 9px;
+	display: inline-block;
 	height: 23px;
-	cursor: pointer;
-	margin: 0 40px 0 0;
-}
-
-.control-buttons > p {
-	margin: 7px 0 0 5px;
-}
-
-#home-img,
-#selection-img,
-#auth-img,
-#logout-img {
-	margin: 3px 0 0 25px;
-	width: 15px;
-	height: 15px;
-	float: left;
+	margin: 55px 0 0 15px;
 }
 
 #home-button {
+	margin-left: 95px;
 	width: 95px;
-}
-
-#selection-img {
-	margin: 3px 0 0 5px;
 }
 
 #selection-button {
-	width: 95px;
-}
-
-#auth-img {
-	margin: 3px 0 0 25px;
+	width: 110px;
 }
 
 #auth-button {
 	width: 130px;
 }
 
-#logout-img {
-	margin: 3px 0 0 20px;
-}
-
 #logout-button {
-	width: 95px;
-	right: 50px;
+	width: 90px;
 }
 
-.control-buttons > a {
-	margin: -3px 0 0 0;
-}
-
-#control-panel > div > img {
+.control-buttons-content > img {
+	width: 15px;
+	height: 15px;
 	float: left;
-	margin-right: 5px;
+	margin: 4px 0 0 0;
+}
+
+#home-img {
+	margin-left: 13px;
+}
+
+#selection-img {
+	margin-left: 5px;
+}
+
+#auth-img {
+	margin-left: 13px;
+}
+
+#logout-img {
+	margin-left: 10px;
+}
+
+.control-buttons-content > p {
+	display: inline-block;
+	font-size: 10px;
+	margin: 6px 0 0 10px;
 }
 /****** END header ******/
 
@@ -151,16 +130,16 @@ body {
 
 .footer {
 	background-color: black;
+	margin: 0 auto;
+	/*position: fixed;*/
 	height: 20px;
-	position: fixed;
 	bottom: 0;
-	width: 100%;
+	width: 175px;
 }
 
 #footer-label {
-	font-size: 12px;
-	margin: 5px auto;
-	text-align: center;
+	font-size: 10px;
+	margin: 0;
 }
 /****** END footer ******/
 
@@ -179,12 +158,13 @@ body {
 	display: block;
 	width: 430px;
 	height: 260px;
-	margin: 50px auto;
+	margin: 50px 0 70px 160px;
 }
 
 #login-button {
-	background: linear-gradient(to top, #0f0f0f, #525252);
+	background: linear-gradient(to top, #0f0f0f, #1c1c1c, #4d4d4d);
 	border: none;
+	font-size: 10px;
 	color: white;
 	border-radius: 25px;
 	width: 100px;
@@ -194,37 +174,48 @@ body {
 	cursor: pointer;
 }
 
+#login-button-p {
+	display: inline-block;
+	margin: 5px 0 0 12px;
+}
+
+#login-button-img {
+	height: 10px;
+	width: 10px;
+	margin: 6px 0 0 17px;
+	float: left;
+}
+
 .login-form-input {
 	width: 240px;
-	margin: 0 0 15px 0;
+	margin: 0 0 15px 20px;
 }
 
 .login-form-label {
 	font-size: 12px;
-	margin: 4px 0 0 65px;
-	width: 75px;
+	margin: 4px 0 0 70px;
+	width: 45px;
 	padding: 0 10px 0 0;
 }
 
 #auth-label {
 	font-size: 14px;
 	width: 50px;
-	margin: 15px 0 30px 65px;
+	margin: 15px 0 30px 70px;
 }
 /****** END Views/Users/index.php part ******/
 
 
 /****** START Views/Contacts/index.php part ******/
 table {
-	background: linear-gradient(to top, #171717, #2e2e2e, #2e2e2e, #2e2e2e, #2e2e2e);
-	border-radius: 25px;
-    border-collapse: collapse;
-	width: 720px;
+	display: block;
+	border-collapse: collapse;
+	width: 780px;
 }
 
 #add-button {
 	background: linear-gradient(to top, #7a1600, #661400);
-	margin: 0 0 0 20px;
+	margin: 0 0 0 25px;
 	border-radius: 25px 5px 0 0;
 	width: 80px;
 	height: 25px;
@@ -241,7 +232,7 @@ a {
 }
 
 th, td {
-	padding: 12px 12px 12px 45px;
+	padding: 9px 12px 9px 0;
     text-align: left;
 }
 
@@ -258,11 +249,67 @@ tr {
 	font-weight: bold;
 }
 
+#th-id {
+	width: 50px;
+}
+
+#th-firstname {
+	width: 130px;
+}
+
+#th-lastname {
+	width: 140px;
+}
+
+#th-firstname > a,
+#th-lastname > a {
+	color: rgb(191,191,191);
+}
+
+#th-email {
+	width: 175px;
+}
+
+#th-best-phone {
+	width: 125px;
+}
+
+td {
+	background-color: rgb(48,48,48);
+}
+
+tr:last-child > td {
+	background: linear-gradient(to top, rgb(25,25,25), rgb(48, 48, 48));
+	padding: 9px 12px 80px 0;
+}
+
+tr:last-child > td:first-child {
+	border-bottom-left-radius: 25px;
+}
+
+tr > td:last-child {
+	background: black;
+	padding-left: 19px;
+	border-bottom: 1px solid black;
+	padding-left: 1px;
+	width: 50px;
+}
+
+
+
+/*p:nth-last-child(2) {
+    background: red;
+}*/
+
+tr > td:first-child {
+	padding-left: 19px;
+}
+
 #table-div {
 	display: block;
-	width: 715px;
-	height: 300px;
-	margin: 50px auto;
+	width: 820px;
+	height: 350px;
+	margin: 17px 0 40px 40px;
 }
 
 th:first-child {
@@ -273,8 +320,16 @@ th:last-child {
 	border-top-right-radius: 25px;
 }
 
+tr:last-child > td:nth-last-child(2) {
+	border-bottom-right-radius: 25px;
+}
+
 tr:last-child, tr:first-child {
 	border-bottom: none;
+}
+
+tr:first-child > th {
+	margin-bottom: 20px;
 }
 
 td:last-child {
@@ -284,30 +339,51 @@ td:last-child {
 .edit-button {
 	background: linear-gradient(to top, #9e4700, #c77100);
 	display: inline-block;
+	font-weight: normal;
 	border-radius: 10px;
 	width: 60px;
 	height: 18px;
+	margin: 0 0 0 -10px;
 }
 
-.edit-button > a,
-.delete-button > a {
+.edit-button > a {
+	display: inline-block;
+	margin: 2px 0 0 1px;
+}
+
+.edit-button > p,
+.delete-button > p {
 	display: block;
 	padding: 1px 0 0 5px;
+	margin: 2px 0 0 0;
+}
+
+.delete-button > p {
+	display: inline-block;
+	margin: 2px 0 0 4px;
 }
 
 .delete-button {
 	background: linear-gradient(to top, #911800, #b02f00);
 	display: inline-block;
-	border-radius: 10px;
-	width: 45px;
+	font-weight: normal;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	width: 29px;
 	height: 18px;
+	display: none;
+}
+
+tr:hover > td > a > div {
+	display: inline-block;
 }
 
 #pagination-block {
 	background: linear-gradient(to top, #7a1600, #661400);
+	display: inline-block;
 	width: 500px;
 	height: 35px;
-	margin: 0 auto;
+	margin: -1px 0 0 102px;
 	border-radius: 0 0 25px 25px;
 }
 

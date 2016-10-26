@@ -10,7 +10,7 @@ class Controller extends \Core\Controller
     protected $components = [
         'Auth' => [
             'allow' => [
-                'indexAction',
+                'authAction',
                 'loginAction'
             ],
             'deny' => [
