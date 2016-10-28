@@ -1,33 +1,33 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 4.5.4.1deb2ubuntu2
 -- http://www.phpmyadmin.net
 --
--- Хост: 127.0.0.1
--- Время создания: Мар 31 2016 г., 22:54
--- Версия сервера: 5.5.25
--- Версия PHP: 5.3.13
+-- Host: localhost
+-- Generation Time: Oct 28, 2016 at 07:29 PM
+-- Server version: 5.7.13-0ubuntu0.16.04.2
+-- PHP Version: 7.0.8-0ubuntu0.16.04.3
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `contact_manager`
+-- Database: `contact_manager`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `contacts`
+-- Table structure for table `contacts`
 --
 
-CREATE TABLE IF NOT EXISTS `contacts` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE `contacts` (
+  `id` int(11) UNSIGNED NOT NULL,
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -41,47 +41,71 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `state` varchar(255) NOT NULL,
   `zip` varchar(255) NOT NULL,
   `country` varchar(255) NOT NULL,
-  `birthday` date NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+  `birthday` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `contacts`
+-- Dumping data for table `contacts`
 --
 
 INSERT INTO `contacts` (`id`, `firstname`, `lastname`, `email`, `home_phone`, `work_phone`, `cell_phone`, `best_phone`, `adress1`, `adress2`, `city`, `state`, `zip`, `country`, `birthday`) VALUES
-(1, 'Pavlo', 'Denys', 'fulg0re.den@gmail.com', '(0352) 28-90-83', '(067) 35-150-77', '(067) 35-150-35', 'cell_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '46016', 'Ukraine', '1989-07-11'),
-(2, 'Ivan', 'Ivanov', 'Ivan@gmail.com', '(0352) 11-22-33', '(067) 11-222-33', '(095) 33-111-22', 'work_phone', 'Kiev1', 'Kiev2', 'Kiev3', 'Kiev4', '489562', 'Ukraine', '1987-01-24'),
-(5, 'Mykola', 'Kushnir', 'kushnir@gmail.com', '26-55-44', '(095) 156-44-66', '(067) 123-55-77', 'cell_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '45612', 'Ukraine', '1986-06-29'),
-(6, 'Mykola', 'Borysiyk', 'bor.myk@gmail.com', '45-88-99', '(095) 154-55-88', '(066) 154-88-99', 'home_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '45622', 'Ukraine', '1987-05-11'),
-(7, 'Oksana', 'Pip', 'pip.o@gmail.com', '45-77-55', '(095) 47-85-444', '(067) 125-45-66', 'home_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '44478', 'Ukraine', '1985-04-25'),
-(8, 'Rita', 'Rimata', 'rita.r@gmail.com', '47-88-99', '(095) 001-55-88', '(067) 54-88-99', 'home_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '78942', 'Ukraine', '1999-11-11'),
-(9, 'Andriy', 'Sudoma', 'sudoma@gmail.com', '22-55-66', '(095) 54-89-251', '(097) 485-75-94', 'home_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '45678', 'Ukraine', '1988-04-27'),
-(10, 'Oleksandr', 'Morkva', 'morkva@gmail.com', '45-66-88', '(095) 55-44-852', '(097) 456-88-99', 'home_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '45677', 'Ukraine', '1989-01-01'),
-(11, 'Muhailo', 'Protsyk', 'protsyk@gmail.com', '44-56-88', '(095) 456-85-99', '(067) 11-22-458', 'home_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '11154', 'Ukraine', '1984-05-14'),
-(14, 'Sergiy', 'Besh', 'besh@gmail.com', '45-87-26', '(095) 456-85-11', '(099) 54-78-22', 'cell_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '78945', 'Ukraine', '1989-11-25'),
-(16, 'Iryna', 'Kolona', 'kol.ir@gmail.com', '65-88-11', '(095) 458-55-11', '(067) 458-55-77', 'home_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '15874', 'Ukraine', '1990-02-12');
+(54, 'Pavlo', 'Denys', 'fulg0re.den@gmail.com', '289083', '288411', '+380673515035', 'cell_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '46016', 'Ukraine', '11-07-1989'),
+(55, 'Mykola', 'Miha', 'myk.m@gmail.com', '283083', '281411', '+380674515035', 'cell_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '46014', 'Ukraine', '17-07-1989'),
+(56, 'Oleh', 'Kolos', 'oleh.k@gmail.com', '383083', '581411', '+380974515035', 'cell_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '45014', 'Ukraine', '17-05-1989'),
+(59, 'Oleh', 'Kolos', 'oleh.k@gmail.com', '383083', '581411', '+380974515035', 'cell_phone', 'Ternopil1', 'Ternopil2', 'Ternopil3', 'Ternopil4', '45014', 'Ukraine', '17-05-1989'),
+(65, 'Den', 'Sorton', 'Daniel.Smith@gmail.com', '267586', '145689', '+380976584521', 'cell_phone', '', '', '', '', '', '', '1988-08-11'),
+(66, 'Kurt', 'Richard', 'k.rich@gmail.com', '458692', '478521', '+380992458611', 'cell_phone', '', '', '', '', '', '', '1977-03-22'),
+(67, 'Marchal', 'Leo', 'march.leo@gmail.com', '458125', '354689', '+380675896420', 'cell_phone', '', '', '', '', '', '', '1984-02-01');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `users`
+-- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` int(11) UNSIGNED NOT NULL,
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`) VALUES
 (1, 'qwe', '056eafe7cf52220de2df36845b8ed170c67e23e3');
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
