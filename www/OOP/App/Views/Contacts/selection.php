@@ -27,56 +27,65 @@
 
 	</head>
 	<body>
-		<?php require_once '../App/Views/Elements/header.php' ?>
+		<div id='body-div'>
+			<?php require_once '../App/Views/Elements/header.php' ?>
 
-		<!-- message part -->
-		<?php require_once '../App/Views/Elements/message.php' ?>
-	
-		<form action="/contacts/selection" method="post">
-			<?php if (!isset($_POST['noContacts'])): ?>
-				<div id="table-div">
-					<input id="accept-button" type="submit" name="acceptButton" value="ACCEPT">
-					<input id="cancel-button" type="submit" name="cancelButton" value="CANCEL"></br>
-					
-					<table>
-						<tr>
-							<th><input type="checkbox" name="checkbox" value="All">All</th>
-							<th><a href=<?php echo getHref("lastname",$activePage, $sortTurn); ?>>Last
-								<?php echo ($sortBy == "lastname") 
-										? getSortArrows($sortTurn) 
-										: null;
-								?>
-							<th><a href=<?php echo getHref("firstname",$activePage, $sortTurn); ?>>First
-								<?php echo ($sortBy == "firstname") 
-										? getSortArrows($sortTurn) 
-										: null;
-								?>
-							<th>Email</th>
-							<th>Best Phone</th>
-						</tr>
-						<?php foreach ($contacts as $v): ?>
+			<!-- message part -->
+			<?php require_once '../App/Views/Elements/message.php' ?>
+		
+			<form action="/contacts/selection" method="post">
+				<?php if (!isset($noContacts)): ?>
+					<div id="table-div">
+						<input id="accept-button" type="submit" name="acceptButton" value="ACCEPT">
+						<input id="cancel-button" type="submit" name="cancelButton" value="CANCEL"></br>
+						
+						<table>
 							<tr>
-								<td><input type="checkbox" name="checkbox<?php $v['id']?>" value="<?php $v['id']?>"></td>
-								<td><?php echo $v['lastname']?></td>
-								<td><?php echo $v['firstname']?></td>
-								<td><?php echo $v['email']?></td>
-								<td><?php switch ($v['best_phone']):
-										case "home_phone":
-											echo $v['home_phone'];
-											break;
-										case "work_phone":
-											echo $v['work_phone'];
-											break;
-										case "cell_phone":
-											echo $v['cell_phone'];
-											break;
-									endswitch; ?></td>
+								<th id="checkbox-all">
+									<input type="checkbox" name="checkbox" value="All">
+									<p>All</p>
+								</th>
+								<th id="th-id"></th>
+								<th id="th-firstname"><a href=<?php echo getHref("firstname",$activePage, $sortTurn); ?>>First
+									<?php echo ($sortBy == "firstname") 
+											? getSortArrows($sortTurn) 
+											: null;
+									?>
+									</a></th>
+								<th id="th-lastname"><a href=<?php echo getHref("lastname",$activePage, $sortTurn); ?>>Last
+									<?php echo ($sortBy == "lastname") 
+											? getSortArrows($sortTurn) 
+											: null;
+									?>
+									</a></th>
+								<th id="th-email">Email</th>
+								<th id="th-best-phone">Best Phone</th>
 							</tr>
-						<?php endforeach; ?>
-					</table>
-				<?php else: ?>
-					<h2><?php echo $noContacts ?></h2>
-				<?php endif; ?>
+							<?php foreach ($contacts as $v): ?>
+								<tr>
+									<td><input type="checkbox" name="checkbox<?php $v['id']?>" value="<?php $v['id']?>"></td>
+									<td><?php echo $v['id']?></td>
+									<td><?php echo $v['firstname']?></td>
+									<td><?php echo $v['lastname']?></td>
+									<td><?php echo $v['email']?></td>
+									<td><?php switch ($v['best_phone']):
+											case "home_phone":
+												echo $v['home_phone'];
+												break;
+											case "work_phone":
+												echo $v['work_phone'];
+												break;
+											case "cell_phone":
+												echo $v['cell_phone'];
+												break;
+										endswitch; ?></td>
+									<td></td>
+								</tr>
+							<?php endforeach; ?>
+						</table>
+					<?php else: ?>
+						<h2><?php echo $noContacts ?></h2>
+					<?php endif; ?>
 					<div id="pagination-block">
 						<div id="previous-a">
 							<a href='/contacts/selection?
@@ -108,7 +117,8 @@
 										sortTurn=<?php echo $sortTurn?>'>next</a>
 						</div>
 					</div>
-			</div>
-		</form>
+				</div>
+			</form>
+		</div>
 	</body>
 </html>

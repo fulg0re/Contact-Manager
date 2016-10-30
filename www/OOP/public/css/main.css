@@ -484,6 +484,20 @@ tr:hover > td > a > div {
 
 input[type="checkbox"] {
 	display: inline-block;
-	height: 11px;
+	height: 14px;
+}
+
+#checkbox-all {
+	width: 60px;
+}
+
+#checkbox-all > input {
+	float: left;
+	margin: 0 0 0 20px;
+}
+
+#checkbox-all > p {
+	display: inline-block;
+	margin: 0 0 0 5px;
 }
 /****** END Views/Contacts/select.php part ******/
