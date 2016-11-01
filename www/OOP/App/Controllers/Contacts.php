@@ -55,63 +55,78 @@ class Contacts extends Controller
 
 	public function addAction()
 	{
-		if (isset($_POST['button'])){
-			$this->renderParams['button'] = $_POST['button'];
+		if (isset($_POST['ADDButton'])){
+			$temp = $this->modelObj->newRecord($this->modelObj, $_POST);
+
+			if ($temp['status'] == false){			
+				unset($temp['status']);
+
+				$_SESSION['params'] = $temp;
+				$_SESSION['params']['button'] = "ADD";
+				if ($_SESSION['params']['id'] == ""){
+					unset($_SESSION['params']['id']);
+				};
+
+				$this->redirect("/contacts/add");
+				
+			}else{
+				unset($temp['status']);
+				$_SESSION['params'] = $temp;
+
+				$this->redirect("/contacts");
+			};
 		}else{
-			$this->renderParams['button'] = 'ADD';
-		};
+			if (isset($_POST['button'])){
+				$this->renderParams['button'] = $_POST['button'];
+			}else{
+				$this->renderParams['button'] = 'ADD';
+			};
 
-		$this->getViewParams();
+			$this->getViewParams();
 
-		View::render('Contacts/edit.php', $this->renderParams);
+			View::render('Contacts/edit.php', $this->renderParams);
+		}
 	}
 
 	public function editAction($id)
 	{
-		$temp = [
-			'id' => $id
-		];
 
-		$result = $this->modelObj->getContacts($this->modelObj, $temp);
-
-		foreach ($result as $key => $val){
-			$this->renderParams[$key] = $val;
-		};
-
-		$this->getViewParams();
-
-		View::render('Contacts/edit.php', $this->renderParams);
-
-		//echo "<pre>", var_dump($this->renderParams), "</pre>";	//temporary line...
-	}
-
-	public function newAction($id)
-	{
-
-		$temp = $this->modelObj->newRecord($this->modelObj, $_POST);
-
-		if ($temp['status'] == false){
+		if (isset($_POST['EditButton'])){
 			
-			unset($temp['status']);
+			$temp = $this->modelObj->newRecord($this->modelObj, $_POST);
 
-			$_SESSION['params'] = $temp;
+			if ($temp['status'] == false){
+				unset($temp['status']);
 
-			if (isset($temp['ADDButton'])){
-				$_SESSION['params']['button'] = "ADD";
-				$this->redirect("/contacts/add");
-			}else{
+				$_SESSION['params'] = $temp;
 				$_SESSION['params']['button'] = "Edit";
 				$this->redirect("/contacts/edit/" . $temp['id']);
-			}
+			}else{
+				unset($temp['status']);
+				$_SESSION['params'] = $temp;
+
+				$this->redirect("/contacts");
+			};
 			
 		}else{
-			unset($temp['status']);
-			$_SESSION['params'] = $temp;
+			$temp = [
+				'id' => $id
+			];
 
-			$this->redirect("/contacts");
-		};
+			$result = $this->modelObj->getContacts($this->modelObj, $temp);
 
-		//echo "<pre>", var_dump($params), "</pre>";	//temporary line...
+			foreach ($result as $key => $val){
+				$this->renderParams[$key] = $val;
+			};
+
+			$this->getViewParams();
+
+			View::render('Contacts/edit.php', $this->renderParams);
+
+			//echo "<pre>", var_dump($this->renderParams), "</pre>";	//temporary line...
+		}
+
+		
 	}
 
 	public function deleteAction($id)

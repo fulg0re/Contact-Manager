@@ -460,16 +460,17 @@ tr:hover > td > a > div {
 
 /****** START Views/Contacts/edit.php part ******/
 #edit-form {
-	background: linear-gradient(to top, #000000, #171717, #000000);
+	background: linear-gradient(to top, #000000, #171717, #171717, #171717, #000000);
 	border-radius: 25px 25px 0 0;
 	width: 430px;
-	height: 600px;
-	margin: 5px auto 95px auto;
+	height: 630px;
+	margin: 5px auto 55px auto;
 }
 
 #edit-title {
 	display: block;
-	margin: 35px 0 30px 70px;
+	width: 300px;
+	margin: 25px 0 30px 70px;
 	font-size: 16px;
 }
 

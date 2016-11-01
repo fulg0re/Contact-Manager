@@ -1,9 +1,9 @@
 <?php
-	function getRoute(){
+	function getRoute($id = null){
 		if (!isset($id)){
-			return "/contacts/new";
+			return "/contacts/add";
 		}else{
-			return "/contacts/new/" . $id;
+			return "/contacts/edit/" . $id;
 		};
 	}
 ?>
@@ -27,9 +27,10 @@
 			<?php require_once '../App/Views/Elements/message.php' ?>
 			
 			<div id="edit-form">
-				<p id="edit-title">Information</p>
-				<form action="<?php echo getRoute(); ?>" method="post">
+				<form id="form2" 
+					action="<?php echo getRoute($id); ?>" method="post">
 					<div id="field">
+						<p id="edit-title">Information</p>
 						<label for="firstname">FirstName*</label>
 							<input class="input" type="text" name="firstname" id="firstname"
 								value="<?php	echo (isset($firstname)) ? $firstname : null;?>" /></br>
@@ -76,9 +77,17 @@
 								value="<?php echo (isset($birthday)) ? $birthday : null;?>" /></br>
 						<input type="hidden" name="id" value="<?php echo (isset($id)) ? $id : null;?>"></br>
 					</div>
-					<input id="button-submit" type="submit"
-						name="<?php echo (isset($button)) ? $button : null;?>Button"
-						value="<?php echo (isset($button)) ? $button : null;?>" /></br>
+
+					<div onClick="document.forms['form2'].submit();" 
+						name="<?php echo (isset($button)) ? $button : null;?>Button" 
+						id="button-submit">
+
+						<img src="/images/login.png" id="login-button-img"/>
+						<p id="login-button-p"><?php echo (isset($button)) ? $button : null;?></p>
+					</div> 
+					<input type="hidden" 
+							name="<?php echo (isset($button)) ? $button : null;?>Button"
+							value="<?php echo (isset($button)) ? $button : null;?>"></br>
 				</form>
 			</div>
 
