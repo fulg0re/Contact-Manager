@@ -11,6 +11,11 @@
     src: url(/fonts/ArialMT.woff);
 }
 
+@font-face {
+    font-family: ArialBoldMT;
+    src: url(/fonts/ArialMT-bold.woff);
+}
+
 html,
 body {
 	height: 100%;
@@ -25,7 +30,6 @@ body {
 }
 
 #body-div {
-	border: 1px solid red;
 	width: 850px;
 	height: 99%;
 	margin: 0 auto 0 auto;
@@ -88,9 +92,11 @@ body {
 	width: 130px;
 }
 
+/*
 #logout-button {
 	width: 90px;
 }
+*/
 
 .control-buttons-content > img {
 	width: 15px;
@@ -111,9 +117,11 @@ body {
 	margin-left: 13px;
 }
 
+/*
 #logout-img {
 	margin-left: 10px;
 }
+*/
 
 .control-buttons-content > p {
 	display: inline-block;
@@ -138,7 +146,7 @@ body {
 }
 
 #footer-label {
-	font-size: 10px;
+	font-size: 11px;
 	margin: 0;
 }
 /****** END footer ******/
@@ -215,7 +223,7 @@ table {
 
 #add-button {
 	background: linear-gradient(to top, #7a1600, #661400);
-	margin: 0 0 0 25px;
+	margin: 0 0 0 20px;
 	border-radius: 25px 5px 0 0;
 	width: 80px;
 	height: 25px;
@@ -246,7 +254,6 @@ th {
 tr {
 	border-bottom: 1px solid #666;
 	font-size: 12px;
-	font-weight: bold;
 }
 
 #th-id {
@@ -295,13 +302,16 @@ tr > td:last-child {
 	width: 50px;
 }
 
-
+tr > td {
+	font-family: ArialBoldMT;
+}
 
 /*p:nth-last-child(2) {
     background: red;
 }*/
 
 tr > td:first-child {
+	font-family: ArialMT;
 	padding-left: 19px;
 }
 
@@ -317,6 +327,7 @@ th:first-child {
 }
 
 th:last-child {
+	width: 40px;
 	border-top-right-radius: 25px;
 }
 
@@ -339,16 +350,10 @@ td:last-child {
 .edit-button {
 	background: linear-gradient(to top, #9e4700, #c77100);
 	display: inline-block;
-	font-weight: normal;
 	border-radius: 10px;
-	width: 60px;
+	width: 35px;
 	height: 18px;
-	margin: 0 0 0 -10px;
-}
-
-.edit-button > a {
-	display: inline-block;
-	margin: 2px 0 0 1px;
+	margin: 0 0 0 0;
 }
 
 .edit-button > p,
@@ -358,7 +363,15 @@ td:last-child {
 	margin: 2px 0 0 0;
 }
 
+.edit-button > p {
+	font-family: ArialMT;
+	display: inline-block;
+	margin: 2px 0 0 1px;
+	padding: 1px 0 0 7px;
+}
+
 .delete-button > p {
+	font-family: ArialMT;
 	display: inline-block;
 	margin: 2px 0 0 4px;
 }
@@ -392,7 +405,6 @@ tr:hover > td > a > div {
 #next-a {
 	display: inline-block;
 	font-size: 10px;
-	font-weight: bold;
 	text-align: center;
 	margin: 4px auto;
 	height: 25px;
@@ -407,7 +419,13 @@ tr:hover > td > a > div {
 }
 
 #pages-block > p {
+	color: #bdbdbd;
 	display: inline-block;
+}
+
+#pages-block > a {
+	color: #bdbdbd;
+	font-family: ArialBoldMT;
 }
 
 #previous-img {
@@ -415,6 +433,7 @@ tr:hover > td > a > div {
 }
 
 #previous-a > a > p {
+	font-family: ArialBoldMT;
 	display: inline-block;
 	margin: 2px 0 0 5px;
 }
@@ -428,6 +447,7 @@ tr:hover > td > a > div {
 }
 
 #next-a > a > p {
+	font-family: ArialBoldMT;
 	float: left;
 	margin: 2px 0 0 0;
 }
@@ -444,13 +464,13 @@ tr:hover > td > a > div {
 	border-radius: 25px 25px 0 0;
 	width: 430px;
 	height: 600px;
-	margin: 5px auto;
+	margin: 5px auto 95px auto;
 }
 
 #edit-title {
 	display: block;
 	margin: 35px 0 30px 70px;
-	font-size: 14px;
+	font-size: 16px;
 }
 
 #field > * {
@@ -459,13 +479,13 @@ tr:hover > td > a > div {
 
 #field > label {
 	color: #b5b5b5;
-	font-size: 8px;
-	width: 50px;
+	font-size: 11px;
+	width: 65px;
 	margin: 13px 20px 13px 70px;
 }
 
 #field > .input {
-	width: 245px;
+	width: 240px;
 }
 
 .input-radio {
@@ -475,6 +495,7 @@ tr:hover > td > a > div {
 
 #button-submit {
 	background: linear-gradient(to top, #0d0d0d, #171717, #4d4d4d);
+	font-size: 11px;
 	border-radius: 25px;
 	color: white;
 	border: none;

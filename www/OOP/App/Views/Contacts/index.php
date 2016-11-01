@@ -59,7 +59,7 @@
 							</tr>
 							<?php foreach ($contacts as $v): ?>
 								<tr>
-									<td><?php echo $v['id']?></td>
+									<td><?php echo $v['id']?>.</td>
 									<td><?php echo $v['firstname']?></td>
 									<td><?php echo $v['lastname']?></td>
 									<td><?php echo $v['email']?></td>
@@ -78,7 +78,7 @@
 									<td>
 										<a href='/contacts/edit/<?php echo $contactId ?>'>
 											<div class="edit-button">
-												<p>edit/view</p>
+												<p>edit</p>
 											</div>
 										</a>
 									</td>
@@ -121,7 +121,10 @@
 								$temp = 1;
 								while ($temp <= $maxPages): ?>
 
-									<a href='/contacts?
+									<a <?php echo ($temp == $activePage)
+												? "style='color:white'"
+												: null; ?>
+										href='/contacts?
 											sortBy=<?php echo $sortBy?>&
 											activePage=<?php echo $temp?>&
 											sortTurn=<?php echo $sortTurn?>'><?php echo $temp?></a>
