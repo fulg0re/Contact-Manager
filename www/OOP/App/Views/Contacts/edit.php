@@ -33,9 +33,11 @@
 						<p id="edit-title">Information</p>
 						<label for="firstname">FirstName*</label>
 							<input class="input" type="text" name="firstname" id="firstname"
+								maxlength="15"
 								value="<?php	echo (isset($firstname)) ? $firstname : null;?>" /></br>
 						<label for="lastname">LastName*</label>
 							<input class="input" type="text" name="lastname" id="lastname"
+								maxlength="15"
 								value="<?php echo (isset($lastname)) ? $lastname : null;?>" /></br>
 						<label for="email">Email*</label>
 							<input class="input" type="text" name="email" id="email"

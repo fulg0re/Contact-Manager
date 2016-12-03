@@ -44,4 +44,3 @@
         </div>
     <?php endif; ?>
 </div>
-<div id="header-back"></div>
