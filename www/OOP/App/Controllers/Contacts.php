@@ -100,7 +100,8 @@ class Contacts extends Controller
 
 				$_SESSION['params'] = $temp;
 				$_SESSION['params']['button'] = "Edit";
-				$this->redirect("/contacts/edit/" . $temp['id']);
+				//$this->redirect("/contacts/edit/" . $temp['id']);
+				$this->redirect("/contacts");
 			}else{
 				unset($temp['status']);
 				$_SESSION['params'] = $temp;

@@ -228,7 +228,8 @@ abstract class Table
 		if ($res = $this->query($query)){
 			return $res;
 		}else{
-			return "ERROR updating record(s).";
+			//return "ERROR updating record(s).";
+			return "Record(s) has not been changed!";
 		};
 	}
 	
