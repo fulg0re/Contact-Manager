@@ -94,7 +94,7 @@
 										echo ($tempPage > 1) ? (intval($activePage) - 1) : 1;?>&
 								sortTurn=<?php echo $sortTurn?>'>
 								
-								<img src="/images/previous.png" id="previous-img"/>
+								<img id="previous-img"/>
 								<p>previous</p>
 							</a>
 						</div>
@@ -123,7 +123,7 @@
 								sortTurn=<?php echo $sortTurn?>'>
 								
 								<p>next</p>
-								<img src="/images/next.png" id="next-img"/>
+								<img id="next-img"/>
 							</a>
 						</div>
 					</div>

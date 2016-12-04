@@ -26,7 +26,7 @@
 					</div>
 
 					<div onClick="document.forms['form'].submit();" name="tryToLogin" id="login-button">  
-						<img src="/images/login.png" id="login-button-img"/>
+						<img id="login-button-img"/>
 						<p id="login-button-p">Login</p>
 					</div> 				
 				</form>

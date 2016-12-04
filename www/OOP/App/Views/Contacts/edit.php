@@ -82,7 +82,7 @@
 						name="<?php echo (isset($button)) ? $button : null;?>Button" 
 						id="button-submit">
 
-						<img src="/images/login.png" id="login-button-img"/>
+						<img id="login-button-img"/>
 						<p id="login-button-p"><?php echo (isset($button)) ? $button : null;?></p>
 					</div> 
 					<input type="hidden" 
