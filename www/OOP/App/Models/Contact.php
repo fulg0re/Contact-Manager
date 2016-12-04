@@ -74,7 +74,7 @@ class Contact  extends Model
 		
 		// check URL variable "sortBy" if correct...
 		if (!in_array($data['sortCol'], $this->getSortColArray())) {
-			$data['sortCol'] = "lastname";
+			$data['sortCol'] = "id";
 		};
 	
 		// check URL variable "sortTurn" if correct...

@@ -103,46 +103,54 @@
 					<?php endif; ?>
 						<div id="pagination-block">
 							<div id="previous-a">
-								<a href='/contacts?
-									sortBy=<?php echo $sortBy?>&
-									activePage=<?php $tempPage = (intval($activePage));
-											echo ($tempPage > 1) ? (intval($activePage) - 1) : 1;?>&
-									sortTurn=<?php echo $sortTurn?>'>
-									
-									<img src="/images/previous.png" id="previous-img"/>
-									<p>previous</p>
-								</a>
+								<?php 
+									$maxPages = ceil($numberOfAllFields/$maxOnPage);
+									if ($maxPages > 1): 
+								?>
+									<a href='/contacts?
+										sortBy=<?php echo $sortBy?>&
+										activePage=<?php $tempPage = (intval($activePage));
+												echo ($tempPage > 1) ? (intval($activePage) - 1) : 1;?>&
+										sortTurn=<?php echo $sortTurn?>'>
+										
+										<img src="/images/previous.png" id="previous-img"/>
+										<p>previous</p>
+									</a>
+								<?php endif; ?>
 							</div>
 							<div id="pages-block">
-								<p>page: </p>
-
-								<?php
-								$maxPages = ceil($numberOfAllFields/$maxOnPage);
-								$temp = 1;
-								while ($temp <= $maxPages): ?>
-
-									<a <?php echo ($temp == $activePage)
-												? "style='color:white'"
-												: null; ?>
-										href='/contacts?
-											sortBy=<?php echo $sortBy?>&
-											activePage=<?php echo $temp?>&
-											sortTurn=<?php echo $sortTurn?>'><?php echo $temp?></a>
+								<div>
+									<p>page: </p>
 
 									<?php
-									$temp++;
-								endwhile; ?>
+									$temp = 1;
+									while ($temp <= $maxPages): ?>
+
+										<a <?php echo ($temp == $activePage)
+													? "style='color:white'"
+													: null; ?>
+											href='/contacts?
+												sortBy=<?php echo $sortBy?>&
+												activePage=<?php echo $temp?>&
+												sortTurn=<?php echo $sortTurn?>'><?php echo $temp?></a>
+
+										<?php
+										$temp++;
+									endwhile; ?>
+								</div>
 							</div>
 							<div id="next-a">
-								<a href='/contacts?
-									sortBy=<?php echo $sortBy?>&
-									activePage=<?php $tempPage = (intval($activePage));
+								<?php if ($maxPages > 1): ?>
+									<a href='/contacts?
+										sortBy=<?php echo $sortBy?>&
+										activePage=<?php $tempPage = (intval($activePage));
 										echo ($tempPage >= $maxPages) ? $maxPages : (intval($activePage) + 1);?>&
-									sortTurn=<?php echo $sortTurn?>'>
-									
-									<p>next</p>
-									<img src="/images/next.png" id="next-img"/>
-								</a>
+										sortTurn=<?php echo $sortTurn?>'>
+										
+										<p>next</p>
+										<img src="/images/next.png" id="next-img"/>
+									</a>
+								<?php endif; ?>
 							</div>
 						</div>
 					</div>

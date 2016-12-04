@@ -1,5 +1,7 @@
 <div id="header">
-    <img id="img-logo" src="/images/logo.png">
+    <a href='/contacts'>
+        <img id="img-logo" src="/images/logo.png">
+    </a>
 
     <?php if ($_SESSION['logined'] == true): ?>
         <div id="control-panel">

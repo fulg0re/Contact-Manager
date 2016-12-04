@@ -19,8 +19,6 @@
 	<body>
 		<div id='body-div'>
 
-			<?php var_dump($id); ?>
-
 			<?php require_once '../App/Views/Elements/header.php' ?>
 
 			<!-- message part (Elements/message.php) -->

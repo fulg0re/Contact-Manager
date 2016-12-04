@@ -31,8 +31,8 @@ class Contacts extends Controller
 
 	public function selectionAction()
 	{
-		$sortBy = (isset($_GET['sortBy'])) ? $_GET['sortBy'] : 'lastname';
-		$sortTurn = (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : 'DESC';
+		$sortBy = (isset($_GET['sortBy'])) ? $_GET['sortBy'] : 'id';
+		$sortTurn = (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : 'ASC';
 		$activePage = (isset($_GET['activePage'])) ? $_GET['activePage'] : 1;
 
 		$this->prepareTableData($sortBy, $sortTurn, $activePage);
@@ -42,8 +42,8 @@ class Contacts extends Controller
 
 	public function indexAction()
 	{
-		$sortBy = (isset($_GET['sortBy'])) ? $_GET['sortBy'] : 'lastname';
-		$sortTurn = (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : 'DESC';
+		$sortBy = (isset($_GET['sortBy'])) ? $_GET['sortBy'] : 'id';
+		$sortTurn = (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : 'ASC';
 		$activePage = (isset($_GET['activePage'])) ? $_GET['activePage'] : 1;
 
 		$this->prepareTableData($sortBy, $sortTurn, $activePage);
