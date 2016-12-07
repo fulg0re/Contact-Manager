@@ -87,13 +87,7 @@
 									</a>
 								</td>
 								<td>
-									<a href='/contacts/delete/<?php echo $contactId ?>?
-										activePage=<?php 
-										echo (count($contacts) > 1) ? $activePage : $activePage - 1 
-										?>&
-										sortTurn=<?php echo $sortTurn;?>&
-										sortBy=<?php echo $sortBy?>'>
-										
+									<a href='javascript:AlertIt(<?php echo $contactId ?>);'>
 										<div class="delete-button">
 											<p>X</p>
 										</div>
@@ -163,3 +157,14 @@
 		</div>
 	</body>
 </html>
+
+<script type="text/javascript">
+	function AlertIt(id) {
+		var answer = confirm ("Do you realy want to delete record with id: " + id)
+		if (answer){
+			if (typeof (id) == "number"){
+				window.location="/contacts/delete/" + id;
+			}
+		}
+	}
+</script>
