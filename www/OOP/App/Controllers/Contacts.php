@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 include_once('../App/config.php');
 
-session_start();
+//session_start();
 
 use \Core\View;
 use \App\Models\Contact;

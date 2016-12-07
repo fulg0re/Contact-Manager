@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-session_start();
+//session_start();
 
 use \Core\View;
 use \App\Models\User;
