@@ -5,7 +5,7 @@
 	};
 
 	function getSortArrows($turn){
-		return ($turn == "ASC") ? " ⇓" : " ⇑" ;
+		return ($turn == "ASC") ? "down-arrow" : "up-arrow" ;
 	};
 
 	function getHref($sortBy, $activePage, $sortTurn){
@@ -45,18 +45,26 @@
 					<table>
 						<tr>
 							<th id="th-id"></th>
-							<th id="th-firstname"><a href=<?php echo getHref("firstname",$activePage, $sortTurn); ?>>First
-								<?php echo ($sortBy == "firstname") 
-										? getSortArrows($sortTurn) 
-										: null;
-								?>
-								</a></th>
-							<th id="th-lastname"><a href=<?php echo getHref("lastname",$activePage, $sortTurn); ?>>Last
-								<?php echo ($sortBy == "lastname") 
-										? getSortArrows($sortTurn) 
-										: null;
-								?>
-								</a></th>
+							<th id="th-firstname">
+								<a href=<?php echo getHref("firstname", $activePage, $sortTurn); ?>>First
+								<img id=
+									<?php echo ($sortBy == "firstname")
+										? getSortArrows($sortTurn)
+										: "no-img";
+									?>
+								>
+								</a>
+							</th>
+							<th id="th-lastname">
+								<a href=<?php echo getHref("lastname", $activePage, $sortTurn); ?>>Last
+								<img id=
+									<?php echo ($sortBy == "lastname")
+										? getSortArrows($sortTurn)
+										: "no-img";
+									?>
+								>
+								</a>
+							</th>
 							<th id="th-email">Email</th>
 							<th id="th-best-phone">Best Phone</th>
 							<th id="th-action">Actions</th>
