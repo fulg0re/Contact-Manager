@@ -94,6 +94,13 @@ abstract class Table
 			$validRes['message'] = "Please enter etleast one phone number!!!";
 			return $validRes;
 		};
+
+		// radiobutton-phone validation...
+		if (empty($data[$data['best_phone']])){
+			$validRes['res'] = false;
+			$validRes['message'] = "Selected phone number is empty!!!";
+			return $validRes;
+		}
 	
 		// radioButton validation...
 		if (empty($data['best_phone'])){

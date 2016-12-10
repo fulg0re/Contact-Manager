@@ -71,6 +71,10 @@ body {
 	float: left;
 }
 
+#control-panel {
+	margin: 0;
+}
+
 .control-buttons {
 	background: linear-gradient(to top, #0d0d0d, #474747);
 	border-radius: 10px;
@@ -91,12 +95,6 @@ body {
 #logout-button {
 	width: 90px;
 }
-
-/*
-#logout-button {
-	width: 90px;
-}
-*/
 
 .control-buttons-content > img {
 	width: 15px;
