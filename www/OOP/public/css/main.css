@@ -88,8 +88,8 @@ body {
 	width: 110px;
 }
 
-#auth-button {
-	width: 130px;
+#logout-button {
+	width: 90px;
 }
 
 /*
@@ -115,8 +115,8 @@ body {
 	margin-left: 5px;
 }
 
-#auth-img {
-	content: url(/images/authorisation.png);
+#logout-img {
+	content: url(/images/logout.png);
 	margin-left: 13px;
 }
 

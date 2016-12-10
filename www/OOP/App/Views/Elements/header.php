@@ -23,11 +23,11 @@
                 </a>
             </div>
 
-            <div class="control-buttons" id="auth-button">
+            <div class="control-buttons" id="logout-button">
                 <a href='/contacts/logout'>
                     <div class="control-buttons-content">
-                        <img id="auth-img">
-                        <p id="auth-p">Authorisation</p>
+                        <img id="logout-img">
+                        <p id="auth-p">Logout</p>
                     </div>
                 </a>
             </div>
