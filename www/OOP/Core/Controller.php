@@ -33,30 +33,6 @@ abstract class Controller
 		
 	}
 
-	protected function before($method)
-	{
-		if ($_SESSION['logined'] != true){
-			$allowRoute = $this->components['Auth']['allow'];
-			foreach($allowRoute as $key => $val){
-				if ($val == $method){
-					return true;
-				};
-			};
-
-            $_SESSION['params'] = [
-                'message' => 'You must login first!'
-            ];
-
-			$this->redirect("/");
-		}else{
-            return true;
-        }
-	}
-
-	protected function after()
-	{
-	}
-
 	protected function redirect($path)
 	{
 		header("location: " . SITE . $path);
