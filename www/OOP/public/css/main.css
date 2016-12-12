@@ -215,10 +215,15 @@ table {
 	width: 780px;
 }
 
+#add-button-a {
+	margin: 0 0 0 20px;
+}
+
 #add-button {
 	background: linear-gradient(to top, #7a1600, #661400);
-	margin: 5px 0 0 20px;
+	margin: 0 0 0 0;
 	border-radius: 25px 5px 0 0;
+	display: inline-block;
 	width: 80px;
 	height: 25px;
 	cursor: pointer;

@@ -141,19 +141,42 @@ class Contact  extends Model
 		$result['status'] = false;
 
 		if (isset($params['EditButton'])){
-			foreach ($params as $key => $val){
-				if ($key != "EditButton" && $key != "id"){
-					$queryParams[$key] = $val;
-				};
-			};
+			$queryParams = [
+				'fields' => '*',
+				'where' => [
+					'id' => $params['id']
+				]
+			];
 
-			$res = $this->modelPointObj->update($queryParams, "id=".$params['id']);
-			if (is_numeric($res)){
-				$result['message'] = "Updated ".$res." record(s).";	// all good...
-			}else{
-				$result['message'] = $res;	// error updateing contact...
-				return $result;
-			};			
+			if ($temp = $this->modelPointObj->select($queryParams)){
+				$noMatch = 0;
+				foreach ($temp[0] as $key => $val){
+					if ($val != $params[$key]){
+						$noMatch++;
+					}
+				};
+
+				if ($noMatch == 0){
+					$result['matched'] = true;
+					$result['message'] = "Record(s) has not been changed!";
+				}else{
+					$result['matched'] = false;
+
+					foreach ($params as $key => $val){
+						if ($key != "EditButton" && $key != "id"){
+							$queryParams[$key] = $val;
+						};
+					};
+
+					$res = $this->modelPointObj->update($queryParams, "id=".$params['id']);
+					if (is_numeric($res)){
+						$result['message'] = "Updated ".$res." record(s).";	// all good...
+					}else{
+						$result['message'] = $res;	// error updateing contact...
+						return $result;
+					};
+				}
+			};
 		}elseif (isset($params['ADDButton'])){
 			foreach ($params as $key => $val){
 				if ($key != "ADDButton" && $key != "id"){
@@ -172,6 +195,7 @@ class Contact  extends Model
 
 		$result['status'] = true;
 		return $result;
+		
 	}
 
 	public function deleteRecordAction($id)

@@ -16,7 +16,7 @@
 			
 			<div id="edit-form">
 				<form id="form2" 
-					action="<?php echo "/contacts/newChanges/" . $id; ?>" method="post">
+					action="/contacts/newChanges" method="post">
 					<div id="field">
 						<p id="edit-title">Information</p>
 						<label for="firstname">FirstName*</label>
@@ -69,12 +69,12 @@
 					</div>
 
 					<div onClick="document.forms['form2'].submit();" 
-						name="EditButton" id="button-submit">
+						name="ADDButton" id="button-submit">
 
 						<img id="login-button-img"/>
-						<p id="login-button-p">Edit</p>
+						<p id="login-button-p">ADD</p>
 					</div> 
-					<input type="hidden" name="EditButton" value="Edit"></br>
+					<input type="hidden" name="ADDButton" value="ADD"></br>
 				</form>
 			</div>
 

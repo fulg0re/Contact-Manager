@@ -235,8 +235,7 @@ abstract class Table
 		if ($res = $this->query($query)){
 			return $res;
 		}else{
-			//return "ERROR updating record(s).";
-			return "Record(s) has not been changed!";
+			return "Error updating record(s)!";
 		};
 	}
 	

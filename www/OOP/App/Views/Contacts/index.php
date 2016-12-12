@@ -36,7 +36,7 @@
 			<?php if (!isset($noContacts)): ?>
 				<div id="table-div">
 				
-					<a href='/contacts/add'>
+					<a id="add-button-a" href='/contacts/add'>
 						<div id="add-button">
 							<p>ADD</p>
 						</div>
