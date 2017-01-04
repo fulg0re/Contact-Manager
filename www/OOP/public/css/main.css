@@ -85,15 +85,15 @@ body {
 
 #home-button {
 	margin-left: 95px;
-	width: 95px;
+	padding: 0 13px 0 0;
 }
 
 #selection-button {
-	width: 110px;
+	padding: 0 13px 0 0;
 }
 
 #logout-button {
-	width: 90px;
+	padding: 0 13px 0 0;
 }
 
 #home-img,
@@ -226,7 +226,7 @@ table {
 	margin: 0 0 0 0;
 	border-radius: 25px 5px 0 0;
 	display: inline-block;
-	width: 80px;
+	padding: 0 30px 0 0;
 	height: 25px;
 	cursor: pointer;
 	border: none;
@@ -236,7 +236,6 @@ table {
 
 #add-button > p {
 	display: inline-block;
-	width: 25px;
 	margin: 7px 0 0 30px;
 }
 
@@ -374,7 +373,7 @@ td:last-child {
 	background: linear-gradient(to top, #9e4700, #c77100);
 	display: inline-block;
 	border-radius: 10px;
-	width: 35px;
+	padding: 0 8px 0 0;
 	height: 18px;
 	margin: 0 0 0 0;
 }
@@ -405,7 +404,7 @@ td:last-child {
 	font-weight: normal;
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
-	width: 29px;
+	padding: 0 13px 0 0;
 	height: 18px;
 	display: none;
 }
