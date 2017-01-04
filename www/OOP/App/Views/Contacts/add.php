@@ -7,14 +7,14 @@
 
 	</head>
 	<body>
-		<div id='body-div'>
+		<div class='body-div'>
 
 			<?php require_once '../App/Views/Elements/header.php' ?>
 
 			<!-- message part (Elements/message.php) -->
 			<?php require_once '../App/Views/Elements/message.php' ?>
 			
-			<div id="edit-form">
+			<div class="edit-form">
 				<form id="form2" 
 					action="/contacts/newChanges" method="post">
 					<div id="field">
@@ -71,8 +71,8 @@
 					<div onClick="document.forms['form2'].submit();" 
 						name="ADDButton" id="button-submit">
 
-						<div id="login-button-img"></div>
-						<p id="login-button-p">ADD</p>
+						<div id="add-button-img"></div>
+						<p id="add-button-p">ADD</p>
 					</div> 
 					<input type="hidden" name="ADDButton" value="ADD"></br>
 				</form>

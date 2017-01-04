@@ -7,13 +7,13 @@
 
 	</head>
 	<body>
-		<div id='body-div'>
+		<div class='body-div'>
 			<?php require_once '../App/Views/Elements/header.php' ?>
 
 			<!-- message part (Elements/message.php) -->
 			<?php require_once '../App/Views/Elements/message.php' ?>
 
-			<div id="login-form">
+			<div class="login-form">
 				<p id="auth-label">Authorisation</p>
 				<form id="form" action="/users/login" method="post">
 					<div class="field">

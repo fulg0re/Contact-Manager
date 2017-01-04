@@ -27,25 +27,25 @@
 
 	</head>
 	<body>
-		<div id='body-div'>
+		<div class='body-div'>
 			<?php require_once '../App/Views/Elements/header.php' ?>
 
 			<!-- message part -->
 			<?php require_once '../App/Views/Elements/message.php' ?>
 		
 			<?php if (!isset($noContacts)): ?>
-				<div id="table-div">
+				<div class="table-div">
 				
-					<a id="add-button-a" href='/contacts/add'>
-						<div id="add-button">
+					<a class="add-button-a" href='/contacts/add'>
+						<div class="add-button">
 							<p>ADD</p>
 						</div>
 					</a>
 
 					<table>
 						<tr>
-							<th id="th-id"></th>
-							<th id="th-firstname">
+							<th class="th-id"></th>
+							<th class="th-firstname">
 								<a href=<?php echo getHref("firstname", $activePage, $sortTurn); ?>>First
 								<div id=
 									<?php echo ($sortBy == "firstname")
@@ -55,7 +55,7 @@
 								</div>
 								</a>
 							</th>
-							<th id="th-lastname">
+							<th class="th-lastname">
 								<a href=<?php echo getHref("lastname", $activePage, $sortTurn); ?>>Last
 								<div id=
 									<?php echo ($sortBy == "lastname")
@@ -65,9 +65,9 @@
 								</div>
 								</a>
 							</th>
-							<th id="th-email">Email</th>
-							<th id="th-best-phone">Best Phone</th>
-							<th id="th-action">Actions</th>
+							<th class="th-email">Email</th>
+							<th class="th-best-phone">Best Phone</th>
+							<th class="th-action">Actions</th>
 						</tr>
 						<?php foreach ($contacts as $v): ?>
 							<tr>
@@ -107,8 +107,8 @@
 				<?php else: ?>
 					<h2><?php echo $noContacts ?></h2>
 				<?php endif; ?>
-					<div id="pagination-block">
-						<div id="previous-a">
+					<div class="pagination-block">
+						<div class="previous-a">
 							<?php 
 								if ($activePage != 1): 
 							?>
@@ -118,13 +118,13 @@
 											echo ($tempPage > 1) ? (intval($activePage) - 1) : 1;?>&
 									sortTurn=<?php echo $sortTurn?>'>
 									
-									<div id="previous-img"></div>
+									<div class="previous-img"></div>
 									
 									<p>previous</p>
 								</a>
 							<?php endif; ?>
 						</div>
-						<div id="pages-block">
+						<div class="pages-block">
 							<div>
 								<p>page: </p>
 
@@ -146,7 +146,7 @@
 								endwhile; ?>
 							</div>
 						</div>
-						<div id="next-a">
+						<div class="next-a">
 							<?php
 								if ($maxPages != $activePage): ?>
 									<a href='/contacts?
@@ -156,7 +156,7 @@
 										sortTurn=<?php echo $sortTurn?>'>
 										
 										<p>next</p>
-										<div id="next-img"></div>
+										<div class="next-img"></div>
 									</a>
 							<?php endif; ?>
 						</div>
