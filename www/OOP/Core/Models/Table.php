@@ -51,7 +51,7 @@ abstract class Table
 			if ($res = $this->query($query)){
 				return "Deleted ".$res." record(s).";
 			}else{
-				return "ERROR deleting record(s).";
+				return "Errormessage: %s\n".$this->error;
 			};
 		};
 	}
@@ -144,7 +144,7 @@ abstract class Table
 		if ($res = $this->query($query)){
 			return $res;
 		}else{
-			return "ERROR inserting record(s).";
+			return "Errormessage: %s\n".$this->error;
 		};
 		
 	}
@@ -204,9 +204,11 @@ abstract class Table
 		
 		//echo "<pre>", var_dump($query), "</pre>";	//temporary line...
 		
-		$res = $this->query($query);
-		//echo "<pre>", var_dump($res), "</pre>";	//temporary line...
-		return $res;
+		if ($res = $this->query($query)){
+			return $res;
+		}else{
+			return "Errormessage: %s\n".$this->error;
+		};
 	}
 	
 	private function makeUpdateQuery($data)	// used by method `update`...
@@ -235,7 +237,7 @@ abstract class Table
 		if ($res = $this->query($query)){
 			return $res;
 		}else{
-			return "Error updating record(s)!";
+			return "Errormessage: %s\n".$this->error;
 		};
 	}
 	
