@@ -4,12 +4,16 @@
 		return ($turn == "ASC") ? "DESC" : "ASC";
 	};
 
+	function getRout(){
+		return "/contacts";
+	};
+
 	function getSortArrows($turn){
 		return ($turn == "ASC") ? "down-arrow" : "up-arrow" ;
 	};
 
 	function getHref($sortBy, $activePage, $sortTurn){
-		$str = "/contacts?";
+		$str = getRout()."?";
 		$str .= "sortBy=$sortBy&";
 		$str .= "activePage=$activePage&";
 		$str .= "sortTurn=" . turnSide($sortTurn);
@@ -107,60 +111,9 @@
 				<?php else: ?>
 					<h2><?php echo $noContacts ?></h2>
 				<?php endif; ?>
-					<div class="pagination-block">
-						<div class="previous-a">
-							<?php 
-								if ($activePage != 1): 
-							?>
-								<a href='/contacts?
-									sortBy=<?php echo $sortBy?>&
-									activePage=<?php $tempPage = (intval($activePage));
-											echo ($tempPage > 1) ? (intval($activePage) - 1) : 1;?>&
-									sortTurn=<?php echo $sortTurn?>'>
-									
-									<div class="previous-img"></div>
-									
-									<p>previous</p>
-								</a>
-							<?php endif; ?>
-						</div>
-						<div class="pages-block">
-							<div>
-								<p>page: </p>
 
-								<?php
-								$temp = 1;
-								$maxPages = ceil($numberOfAllFields/$maxOnPage);
-								while ($temp <= $maxPages): ?>
+				<?php require_once '../App/Views/Elements/pagination.php' ?>
 
-									<a <?php echo ($temp == $activePage)
-												? "style='color:white'"
-												: null; ?>
-										href='/contacts?
-											sortBy=<?php echo $sortBy?>&
-											activePage=<?php echo $temp?>&
-											sortTurn=<?php echo $sortTurn?>'><?php echo $temp?></a>
-
-									<?php
-									$temp++;
-								endwhile; ?>
-							</div>
-						</div>
-						<div class="next-a">
-							<?php
-								if ($maxPages != $activePage): ?>
-									<a href='/contacts?
-										sortBy=<?php echo $sortBy?>&
-										activePage=<?php $tempPage = (intval($activePage));
-										echo ($tempPage >= $maxPages) ? $maxPages : (intval($activePage) + 1);?>&
-										sortTurn=<?php echo $sortTurn?>'>
-										
-										<p>next</p>
-										<div class="next-img"></div>
-									</a>
-							<?php endif; ?>
-						</div>
-					</div>
 				</div>
 
 			<?php require_once '../App/Views/Elements/footer.php' ?>
