@@ -36,6 +36,7 @@ class Users extends Controller
 		}else{
 			unset($temp['result']);
 			$_SESSION['params'] = $temp;
+
 			$this->redirect("/");
 		};
 		

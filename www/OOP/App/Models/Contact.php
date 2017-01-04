@@ -14,6 +14,7 @@ class Contact  extends Model
 					'message' => 'Lastname field is required!'
 				],
 				'email' => [
+					//'rule' => 'emiel',
 					'required' => true,
 					'message' => 'Email field is required!'
 				],

@@ -1,6 +1,6 @@
 <div id="header">
     <a href='/contacts'>
-        <img id="img-logo">
+        <div id="img-logo"></div>
     </a>
 
     <?php if ($_SESSION['logined'] == true): ?>
@@ -8,7 +8,7 @@
             <li class="control-buttons" id="home-button">
                 <a href='/contacts'>
                     <div class="control-buttons-content">
-                        <img id="home-img">
+                        <div id="home-img"></div>
                         <p id="home-p">Home</p>
                     </div>
                 </a>
@@ -16,7 +16,7 @@
             <li class="control-buttons" id="selection-button">
                 <a href='/contacts/selection'>
                     <div class="control-buttons-content">
-                        <img id="selection-img">
+                        <div id="selection-img"></div>
                         <p id="selection-p">Selection page</p>
                     </div>
                 </a>
@@ -24,7 +24,7 @@
             <li class="control-buttons" id="logout-button">
                 <a href='/contacts/logout'>
                     <div class="control-buttons-content">
-                        <img id="logout-img">
+                        <div id="logout-img"></div>
                         <p id="auth-p">Logout</p>
                     </div>
                 </a>

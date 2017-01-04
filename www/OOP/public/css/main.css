@@ -96,7 +96,9 @@ body {
 	width: 90px;
 }
 
-.control-buttons-content > img {
+#home-img,
+#selection-img,
+#logout-img {
 	width: 15px;
 	height: 15px;
 	float: left;
@@ -246,6 +248,7 @@ a {
 
 #up-arrow {
 	content: url(/images/up.png);
+	display: inline-block;
 	margin-left: 5px;
 	height: 8px;
 	width: 8px;
@@ -253,6 +256,7 @@ a {
 
 #down-arrow {
 	content: url(/images/down.png);
+	display: inline-block;
 	margin-left: 5px;
 	height: 8px;
 	width: 8px;
@@ -290,6 +294,7 @@ tr {
 #th-firstname > a,
 #th-lastname > a {
 	color: rgb(191,191,191);
+	display: inline-block;
 }
 
 #th-email {
@@ -440,7 +445,7 @@ tr:hover > td > a > div {
 	margin: 8px auto;
 }
 
-#previous-a > a > img {
+#previous-img {
 	content: url(/images/previous.png);
 	display: block;
 	float: left;
@@ -481,7 +486,7 @@ tr:hover > td > a > div {
 	margin: 0;
 }
 
-#next-a > a > img {
+#next-img {
 	content: url(/images/next.png);
 	display: inline-block;
 	margin: 1px 0 0 0;

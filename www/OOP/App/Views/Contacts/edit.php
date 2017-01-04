@@ -71,7 +71,7 @@
 					<div onClick="document.forms['form2'].submit();" 
 						name="EditButton" id="button-submit">
 
-						<img id="login-button-img"/>
+						<div id="login-button-img"></div>
 						<p id="login-button-p">Edit</p>
 					</div> 
 					<input type="hidden" name="EditButton" value="Edit"></br>
