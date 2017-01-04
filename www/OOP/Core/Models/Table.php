@@ -59,55 +59,78 @@ abstract class Table
 	private function insertValidation($data)
 	{
 		$validRes = [
-			'res' => true,
+			'res' => false,
 			'message'=>''
 		];
 
 		//fields validation(check for requird fields)...
 		foreach($this->fields as $key => $val){
 			foreach($this->fields[$key] as $key2 => $val2){
-				if (($key2 == "required") 
+
+				// required fields validation...
+				if ($key == 'phone'){
+
+					// phone validation is lower...
+
+				}elseif (($key2 == "required") 
 						&& ($val2 == true) 
 						&& (!isset($data[$key]))
 						|| (empty($data[$key]))){
 
-					$validRes['res'] = false;
 					$validRes['message'] = $this->fields[$key]['message'];
 					return $validRes;
+				};
+
+				// email validation...
+				if ($key == 'email'){
+					if (!filter_var($data[$key], $this->fields[$key]['rule'])) {
+						$validRes['message'] = $this->fields[$key]['ruleMessage'];
+						return $validRes;
+					};
+				};
+
+				// phone validation...
+				if ($key == 'phone'){
+					foreach($this->fields[$key] as $phoneKey => $phoneVal){
+
+						// phone validation for empty...
+						if ($phoneKey == 'isNotEmpty'){
+							$notEmpty = 0;
+
+							foreach($phoneVal['phoneNames'] as $phoneNameKey => $phoneNameVal){
+								if (!empty($data[$phoneNameKey])){
+									$notEmpty++;
+								};
+							};
+
+							if ($phoneVal['rule'] == 'one'){
+								if ($notEmpty == 0){
+									$validRes['message'] = $phoneVal['message'];
+									return $validRes;
+								}
+							}else{	//if ($phoneVal['rule'] == 'all')
+								if ($notEmpty < count($phoneVal['phoneNames'])){
+									$validRes['message'] = $phoneVal['message'];
+									return $validRes;
+								}
+							};
+						};
+
+						// radiobutton-phone validation...
+						if ($phoneKey == 'best_phone'){
+							if ($phoneVal['rule'] == 'compare'
+								&& empty($data[$data[$phoneKey]])){
+
+								$validRes['message'] = $phoneVal['message'];
+								return $validRes;
+							};
+						};
+					};
 				};
 			};
 		};
 
-		// email validation...
-		if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-			$validRes['res'] = false;
-			$validRes['message'] = "Wrong \"email\" format!!!";
-			return $validRes;
-		};
-
-		// phone validation for empty...
-		if (empty($data['home_phone']) 
-			&& empty($data['work_phone']) 
-			&& empty($data['cell_phone'])){
-			
-			$validRes['res'] = false;
-			$validRes['message'] = "Please enter etleast one phone number!!!";
-			return $validRes;
-		};
-
-		// radiobutton-phone validation...
-		if (empty($data[$data['best_phone']])){
-			$validRes['res'] = false;
-			$validRes['message'] = "Selected phone number is empty!!!";
-			return $validRes;
-		}
-	
-		// radioButton validation...
-		if (empty($data['best_phone'])){
-			$validRes['res'] = false;
-			$validRes['message'] = "Please choose 'best phone number'!!!";
-			return $validRes;
-		};
+		$validRes['res'] = true;
 		
 		return $validRes;
 		

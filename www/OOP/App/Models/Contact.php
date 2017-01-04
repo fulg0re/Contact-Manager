@@ -14,13 +14,29 @@ class Contact  extends Model
 					'message' => 'Lastname field is required!'
 				],
 				'email' => [
-					//'rule' => 'emiel',
 					'required' => true,
-					'message' => 'Email field is required!'
+					'message' => 'Email field is required!',
+					'rule' => FILTER_VALIDATE_EMAIL,
+					'ruleMessage' => 'Wrong \"email\" format!!!'
 				],
-				'birthday' => [
+				'phone' => [
+					'isNotEmpty' => [
+						'rule' => 'one',	// 'one', 'all'
+						'phoneNames' => [
+							'home_phone' => '',
+							'work_phone' => '',
+							'cell_phone' => ''
+						],
+						'message' => 'Please enter etleast one phone number!!!'
+					],
+					'best_phone' => [
+						'rule' => 'compare',
+						'message' => 'Selected phone number is empty!!!',
+					]
+				],
+				'best_phone' => [
 					'required' => true,
-					'message' => 'Birthday field is required!'
+					'message' => 'Please choose "best phone number"!!!'
 				]
 			];
 	
