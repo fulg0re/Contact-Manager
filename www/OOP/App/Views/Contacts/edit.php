@@ -1,6 +1,6 @@
 <?php
 	function getFormAction($id){
-		return "/contacts/newChanges/" . $id;
+		return "/contacts/edit/" . $id;
 	};
 
 	function getButtonName(){
