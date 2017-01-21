@@ -16,6 +16,7 @@ abstract class Controller
 	{
 		$this->modelObj = $args['0'];
 		$route = $args['1'];
+		unset($args['1']);
 
         array_shift($args);
 
