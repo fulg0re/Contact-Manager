@@ -37,6 +37,10 @@ class Contact  extends Model
 				'best_phone' => [
 					'required' => true,
 					'message' => 'Please choose "best phone number"!!!'
+				],
+				'birthday' => [
+					'required' => true,
+					'message' => 'Birthday field is required!'
 				]
 			];
 	

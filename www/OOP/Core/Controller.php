@@ -14,16 +14,15 @@ abstract class Controller
 
 	public function __call($name, $args)
 	{
-
-		//echo "<pre>", var_dump($args), "</pre>";	//temporary line...
 		$this->modelObj = $args['0'];
+		$route = $args['1'];
 
         array_shift($args);
 
 		$method = $name . 'Action';
 
 		if (method_exists($this, $method)){
-			if ($this->before($method) !== false){
+			if ($this->before($route) !== false){
 				call_user_func_array([$this, $method], $args);
 				$this->after();
 			}

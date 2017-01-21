@@ -15,7 +15,7 @@
 
 			<div class="login-form">
 				<p id="auth-label">Authorisation</p>
-				<form id="form" action="/users/login" method="post">
+				<form id="form" action="" method="post">
 					<div class="field">
 						<label for="username" class="login-form-label">Login:</label>
 							<input type="text" name="username" id="username" class="login-form-input"

@@ -2,44 +2,46 @@
 
 namespace App\Controllers;
 
-//session_start();
-
 use \Core\View;
 use \App\Models\User;
 
 class Users extends Controller
 {
 
-	public function authAction()
+	public function indexAction()
 	{
-		$this->getViewParams();
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+			
+			$result = $this->authAction();
 
-		View::render('Users/index.php', $this->renderParams);
+			if ($result['result'] == true){
+				$_SESSION['logined'] = true;
+				$_SESSION['login'] = $_POST['username'];
+				$this->redirect("/contacts");
+			}else{
+				unset($result['result']);
+				$this->renderParams = $result;
+
+				View::render('Users/index.php', $this->renderParams);
+			};
+			
+		}else{
+			$this->getViewParams();
+			
+			View::render('Users/index.php', $this->renderParams);
+		}
+		
 	}
 
-	public function loginAction()
+	private function authAction()
 	{
-		
-		$regExp = "/^http:.+\/$/i";
-		if (preg_match($regExp, $this->getLastUrl(), $matches)){
-			$loginMethodParams = [
-				'username' => $_POST['username'], 	//@todo add to $_SESIONS...
-				'password' =>$_POST['password']
-			];
+		$loginMethodParams = [
+			'username' => $_POST['username'],
+			'password' =>$_POST['password']
+		];
 
-			$temp = $this->modelObj->login($this->modelObj, $loginMethodParams);
-		}
-
-		if ($temp['result'] == true){
-			$_SESSION['logined'] = true;
-			$this->redirect("/contacts");
-		}else{
-			unset($temp['result']);
-			$_SESSION['params'] = $temp;
-
-			$this->redirect("/");
-		};
-		
+		return $this->modelObj->login($this->modelObj, $loginMethodParams);
 	}
 
 }

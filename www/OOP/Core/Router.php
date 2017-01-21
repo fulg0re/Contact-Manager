@@ -13,7 +13,7 @@ class Router
 
 	function __construct()
 	{
-		$this->add('', ['controller' => 'Users', 'action' => 'auth']);
+		$this->add('', ['controller' => 'Users', 'action' => 'index']);
 		$this->add('{controller}', ['action' => 'index']);
 		$this->add('{controller}/{action}');
 		$this->add('{controller}/{action}/{id:\d+}');
@@ -89,10 +89,12 @@ class Router
 					// creating new object of model...
 					$model = $this->newModelObj($this->params['controller']);
 
+					$route = $this->params['controller'] . '/' . $action;
+
 					if (isset($this->params['id'])){
-						$controller_object->$action($model, $this->params['id']);
+						$controller_object->$action($model, $route, $this->params['id']);
 					}else{
-						$controller_object->$action($model);
+						$controller_object->$action($model, $route);
 					}
 				}else{
 					echo "Method $action (in controller $controller) not found";

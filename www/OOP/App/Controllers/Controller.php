@@ -7,19 +7,17 @@ use \Core\View;
 class Controller extends \Core\Controller
 {
 
-	protected function before($method)
+	protected function before($route)
 	{
 		if ($_SESSION['logined'] != true){
-			$allowRoute = $this->components['Auth']['allow'];
-			foreach($allowRoute as $key => $val){
-				if ($val == $method){
+			$allowRoutes = $this->components['Auth']['allow'];
+			foreach($allowRoutes as $allowRoute){
+				if ($route == $allowRoute){
 					return true;
 				};
 			};
-
-            $_SESSION['params'] = [
-                'message' => 'You must login first!'
-            ];
+            
+            $_SESSION['message'] = 'You must login first!';
 
 			$this->redirect("/");
 		}else{
@@ -34,12 +32,13 @@ class Controller extends \Core\Controller
     protected $components = [
         'Auth' => [
             'allow' => [
-                'authAction',
-                'loginAction'
+                'Users/index'
             ],
             'deny' => [
-                'Contacts/index.php',
-                'Contacts/edit.php',
+                'Contacts/index',
+                'Contacts/edit',
+                'Contacts/add',
+                'Contacts/selection'
             ]
         ]
         
@@ -47,9 +46,16 @@ class Controller extends \Core\Controller
 
     protected function getViewParams()
     {
-        if (isset($_SESSION['params'])){
-            $this->renderParams += $_SESSION['params'];
-            unset($_SESSION['params']);
+        if (isset($_SESSION['message'])){
+            $this->renderParams['message'] = $_SESSION['message'];
+            unset($_SESSION['message']);
         };
+        
+    }
+
+    protected function db($variable)
+    {
+        echo "<pre>", var_dump($variable), "</pre>";
+        die;
     }
 }

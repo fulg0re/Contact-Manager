@@ -26,13 +26,13 @@ class Contacts extends Controller
 			$this->renderParams[$key] = $val;
 		};
 
-		$this->getViewParams();		
+		$this->getViewParams();
 	}
 
 	public function selectionAction()
 	{
-		$sortBy = (isset($_GET['sortBy'])) ? $_GET['sortBy'] : 'id';
-		$sortTurn = (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : 'ASC';
+		$sortBy = (isset($_GET['sortBy'])) ? $_GET['sortBy'] : '';
+		$sortTurn = (isset($_GET['sortTurn'])) ? $_GET['sortTurn'] : '';
 		$activePage = (isset($_GET['activePage'])) ? $_GET['activePage'] : 1;
 
 		$this->prepareTableData($sortBy, $sortTurn, $activePage);
@@ -49,8 +49,6 @@ class Contacts extends Controller
 		$this->prepareTableData($sortBy, $sortTurn, $activePage);
 
 		View::render('Contacts/index.php', $this->renderParams);
-
-		//echo "<pre>", var_dump($_GET), "</pre>";	//temporary line...
 	}
 
 	public function addAction()
@@ -62,17 +60,17 @@ class Contacts extends Controller
 
 			if ($temp['status'] == false){
 				unset($temp['status']);
-				$_SESSION['params'] = $temp;
 
-				if ($_SESSION['params']['id'] == ""){
-					unset($_SESSION['params']['id']);
+				if ($temp['params']['id'] == ""){
+					unset($temp['params']['id']);
 				};
 
-				$this->redirect("/contacts/add");
+				$this->renderParams = $temp;
+
+				View::render('Contacts/add.php', $this->renderParams);
 
 			}else{
-				unset($temp['status']);
-				$_SESSION['params'] = $temp;
+				$_SESSION['message'] = $temp['message'];
 
 				$this->redirect("/contacts");
 			};
@@ -94,17 +92,13 @@ class Contacts extends Controller
 
 			if ($temp['status'] == false){
 				unset($temp['status']);
-				$_SESSION['params'] = $temp;
 
-				if ($temp['matched'] == true){
-					$this->redirect("/contacts");
-				}else{
-					$this->redirect("/contacts/edit/" . $id);
-				};
+				$this->renderParams = $temp;
+				
+				View::render('Contacts/edit.php', $this->renderParams);
 					
 			}else{
-				unset($temp['status']);
-				$_SESSION['params'] = $temp;
+				$_SESSION['message'] = $temp['message'];
 
 				$this->redirect("/contacts");
 			};
@@ -126,24 +120,26 @@ class Contacts extends Controller
 			View::render('Contacts/edit.php', $this->renderParams);
 
 		};
-
-		//echo "<pre>", var_dump($this->renderParams), "</pre>";	//temporary line...
 	}
 
 	public function deleteAction($id)
 	{
 		$this->renderParams = $this->modelObj->deleteRecord($this->modelObj, $id);
 
-		$_SESSION['params']['message'] = $this->renderParams['message'];
+		$params = [
+			'message' => $this->renderParams['message']
+		];
+		
+		$_SESSION['message'] = $this->renderParams['message'];
 
 		$this->redirect("/contacts");
-
-		//echo "<pre>", var_dump($_GET), "</pre>";	//temporary line...
 	}
 
 	public function logoutAction()
 	{
 		$_SESSION['logined'] = false;
+		unset($_SESSION['login']);
+		
 		$this->redirect("/");
 	}
 

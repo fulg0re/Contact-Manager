@@ -54,14 +54,21 @@ class User  extends Model
 			]
 		];
 
-		if ($this->modelPointObj->select($queryParams)){
-			return ['result' => true];
-		}else{
-			return [
+		if ($selectResult = $this->modelPointObj->select($queryParams)['0']){
+			//echo "<pre>", var_dump($selectResult), "</pre>";	//temporary line...
+			if (isset($selectResult['id']) 
+				&& $sha1Password == $selectResult['password']){
+
+				return ['result' => true];
+			}else{
+				return [
 					'result' => false,
 					'message' => 'Wrong username or password!!!',
 					'username' => $params['username']
 				];
+			}
+		}else{
+			return $selectResult;
 		};
 		
 	}
