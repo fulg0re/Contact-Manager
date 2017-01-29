@@ -50,21 +50,21 @@
 						<tr>
 							<th class="th-id"></th>
 							<th class="th-firstname">
-								<a href=<?php echo getHref("firstname", $activePage, $sortTurn); ?>>First
+								<a href="<?php echo getHref("firstname", $activePage, $sortTurn); ?>">First
 								<div id=
 									<?php echo ($sortBy == "firstname")
 										? getSortArrows($sortTurn)
-										: "no-img";
+										: "firstnameNoImg";
 									?>>
 								</div>
 								</a>
 							</th>
 							<th class="th-lastname">
-								<a href=<?php echo getHref("lastname", $activePage, $sortTurn); ?>>Last
+								<a href="<?php echo getHref("lastname", $activePage, $sortTurn); ?>">Last
 								<div id=
 									<?php echo ($sortBy == "lastname")
 										? getSortArrows($sortTurn)
-										: "no-img";
+										: "lastnameNoImg";
 									?>>
 								</div>
 								</a>
@@ -120,14 +120,3 @@
 		</div>
 	</body>
 </html>
-
-<script type="text/javascript">
-	function AlertIt(id) {
-		var answer = confirm ("Do you realy want to delete record with id: " + id)
-		if (answer){
-			if (typeof (id) == "number"){
-				window.location="/contacts/delete/" + id;
-			}
-		}
-	}
-</script>

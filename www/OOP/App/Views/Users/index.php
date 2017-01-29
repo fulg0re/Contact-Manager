@@ -15,20 +15,20 @@
 
 			<div class="login-form">
 				<p id="auth-label">Authorisation</p>
-				<form id="form" action="" method="post">
+				<form id="form" action="/" method="post">
 					<div class="field">
 						<label for="username" class="login-form-label">Login:</label>
 							<input type="text" name="username" id="username" class="login-form-input"
-								value="<?php echo (isset($username)) ? $username : "";?>" /></br>
+								value="<?php echo (isset($username)) ? $username : "";?>" /><br>
 						<label for="password" class="login-form-label">Password:</label>
 							<input type="password" name="password" id="password" class="login-form-input"
-								value="<?php echo (isset($password)) ? $password : "";?>" /></br>
+								value="<?php echo (isset($password)) ? $password : "";?>" /><br>
 					</div>
 
-					<div onClick="document.forms['form'].submit();" name="tryToLogin" id="login-button">  
-						<img id="login-button-img"/>
+					<div onClick="document.forms['form'].submit();" id="login-button">
+						<div id="login-button-img"></div>
 						<p id="login-button-p">Login</p>
-					</div> 				
+					</div>
 				</form>
 			</div>
 

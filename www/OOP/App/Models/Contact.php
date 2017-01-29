@@ -153,7 +153,33 @@ class Contact  extends Model
 		return $result;		
 	}
 
-	public function newRecordAction($params)
+	public function addAction($params)
+	{
+		foreach ($params as $key => $val){
+			$result[$key] = $val;
+		};
+
+		$result['status'] = false;
+		
+		foreach ($params as $key => $val){
+			if ($key != "id"){
+				$queryParams[$key] = $val;
+			};
+		};
+
+		$res = $this->modelPointObj->insert($queryParams);
+		if (is_numeric($res)){
+			$result['message'] = "Inserted ".$res." record(s).";	// all good...
+		}else{
+			$result['message'] = $res; // error inserting contact...
+			return $result;
+		};
+
+		$result['status'] = true;
+		return $result;
+	}
+
+	public function editAction($params)
 	{
 		foreach ($params as $key => $val){
 			$result[$key] = $val;
@@ -161,8 +187,7 @@ class Contact  extends Model
 
 		$result['status'] = false;
 
-		if (isset($params['EditButton'])){
-			$queryParams = [
+		$queryParams = [
 				'fields' => '*',
 				'where' => [
 					'id' => $params['id']
@@ -184,7 +209,7 @@ class Contact  extends Model
 					$result['matched'] = false;
 
 					foreach ($params as $key => $val){
-						if ($key != "EditButton" && $key != "id"){
+						if ($key != "id"){
 							$queryParams[$key] = $val;
 						};
 					};
@@ -198,25 +223,9 @@ class Contact  extends Model
 					};
 				}
 			};
-		}elseif (isset($params['ADDButton'])){
-			foreach ($params as $key => $val){
-				if ($key != "ADDButton" && $key != "id"){
-					$queryParams[$key] = $val;
-				};
-			};
-
-			$res = $this->modelPointObj->insert($queryParams);
-			if (is_numeric($res)){
-				$result['message'] = "Inserted ".$res." record(s).";	// all good...
-			}else{
-				$result['message'] = $res; // error inserting contact...
-				return $result;
-			};
-		};
 
 		$result['status'] = true;
 		return $result;
-		
 	}
 
 	public function deleteRecordAction($id)

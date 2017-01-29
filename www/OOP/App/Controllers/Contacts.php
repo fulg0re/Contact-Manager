@@ -56,12 +56,12 @@ class Contacts extends Controller
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-			$temp = $this->modelObj->newRecord($this->modelObj, $_POST);
+			$temp = $this->modelObj->add($this->modelObj, $_POST);
 
 			if ($temp['status'] == false){
 				unset($temp['status']);
 
-				if ($temp['params']['id'] == ""){
+				if (isset($temp['params']) && $temp['params']['id'] == ""){
 					unset($temp['params']['id']);
 				};
 
@@ -88,7 +88,7 @@ class Contacts extends Controller
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-			$temp = $this->modelObj->newRecord($this->modelObj, $_POST);
+			$temp = $this->modelObj->edit($this->modelObj, $_POST);
 
 			if ($temp['status'] == false){
 				unset($temp['status']);

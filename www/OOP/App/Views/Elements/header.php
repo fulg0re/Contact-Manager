@@ -3,7 +3,7 @@
         <div class="img-logo"></div>
     </a>
 
-    <?php if ($_SESSION['logined'] == true): ?>
+    <?php if (isset($_SESSION['logined']) && $_SESSION['logined'] == true): ?>
         <ul class="control-panel">
             <li class="control-buttons" id="home-button">
                 <a href='/contacts'>

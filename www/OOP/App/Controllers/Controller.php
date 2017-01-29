@@ -9,7 +9,7 @@ class Controller extends \Core\Controller
 
 	protected function before($route)
 	{
-		if ($_SESSION['logined'] != true){
+		if (isset($_SESSION['logined']) && $_SESSION['logined'] != true){
 			$allowRoutes = $this->components['Auth']['allow'];
 			foreach($allowRoutes as $allowRoute){
 				if ($route == $allowRoute){
