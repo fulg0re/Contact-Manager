@@ -197,7 +197,7 @@ body {
 
 
 /****** START Views/Contacts/index.php part ******/
-table {
+.main-table {
 	display: block;
 	border-collapse: collapse;
 	width: 780px;
@@ -247,19 +247,19 @@ a {
 	content: url(/images/down.png);
 }
 
-th, td {
+.main-th, .main-td {
 	padding: 9px 12px 9px 0;
     text-align: left;
 }
 
-th {
+.main-th {
 	background-color: #404040;
 	color: #bdbdbd;
 	font-size: 10px;
 	font-weight: normal;
 }
 
-tr {
+.table-tr {
 	border-bottom: 1px solid #666;
 	font-size: 12px;
 }
@@ -290,20 +290,20 @@ tr {
 	width: 125px;
 }
 
-td {
+.main-td {
 	background-color: rgb(48,48,48);
 }
 
-tr:last-child > td {
+.table-tr:last-child > td {
 	background: linear-gradient(to top, rgb(25,25,25), rgb(48, 48, 48));
 	padding: 9px 12px 80px 0;
 }
 
-tr:last-child > td:first-child {
+.table-tr:last-child > td:first-child {
 	border-bottom-left-radius: 25px;
 }
 
-tr > td:last-child {
+.table-tr > td:last-child {
 	background: black;
 	padding-left: 19px;
 	border-bottom: 1px solid black;
@@ -311,11 +311,11 @@ tr > td:last-child {
 	width: 40px;
 }
 
-tr > td {
+.table-tr > td {
 	font-family: ArialBoldMT;
 }
 
-tr > td:first-child {
+.table-tr > td:first-child {
 	font-family: ArialMT;
 	padding-left: 19px;
 }
@@ -326,28 +326,28 @@ tr > td:first-child {
 	margin: 17px 0 40px 40px;
 }
 
-th:first-child {
+.main-th:first-child {
 	border-top-left-radius: 25px;
 }
 
-th:last-child {
+.main-th:last-child {
 	width: 40px;
 	border-top-right-radius: 25px;
 }
 
-tr:last-child > td:nth-last-child(2) {
+.table-tr:last-child > td:nth-last-child(2) {
 	border-bottom-right-radius: 25px;
 }
 
-tr:last-child, tr:first-child {
+.table-tr:last-child, .table-tr:first-child {
 	border-bottom: none;
 }
 
-tr:first-child > th {
+.table-tr:first-child > th {
 	margin-bottom: 20px;
 }
 
-td:last-child {
+.main-td:last-child {
 	width: 110px;
 }
 
@@ -391,7 +391,7 @@ td:last-child {
 	display: none;
 }
 
-tr:hover > td > a > div {
+.table-tr:hover > td > a > div {							
 	display: inline-block;
 }
 
@@ -553,7 +553,7 @@ tr:hover > td > a > div {
 	margin: 0 0 0 -4px;
 }
 
-input[type="checkbox"] {
+.table-checkbox {
 	display: inline-block;
 	height: 14px;
 }

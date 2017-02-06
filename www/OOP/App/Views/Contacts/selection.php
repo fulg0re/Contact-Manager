@@ -52,14 +52,17 @@
 						</div>
 					</a>
 
-					<table>
-						<tr>
-							<th id="checkbox-all">
-								<input type="checkbox" name="checkbox" value="All">
+					<table class="main-table">
+						<tr class="table-tr">
+							<th class="main-th " id="checkbox-all">
+								<input class="table-checkbox"
+									type="checkbox" 
+									name="checkbox" 
+									value="All">
 								<p>All</p>
 							</th>
-							<th class="th-id"></th>
-							<th class="th-firstname">
+							<th class="main-th th-id"></th>
+							<th class="main-th th-firstname">
 								<a href="<?php echo getHref("firstname", $activePage, $sortTurn); ?>">First
 								<div id=
 									<?php echo ($sortBy == "firstname")
@@ -69,7 +72,7 @@
 								</div>
 								</a>
 							</th>
-							<th class="th-lastname">
+							<th class="main-th th-lastname">
 								<a href="<?php echo getHref("lastname", $activePage, $sortTurn); ?>">Last
 								<div id=
 									<?php echo ($sortBy == "lastname")
@@ -79,20 +82,21 @@
 								</div>
 								</a>
 							</th>
-							<th class="th-email">Email</th>
-							<th class="th-best-phone">Best Phone</th>
+							<th class="main-th th-email">Email</th>
+							<th class="main-th th-best-phone">Best Phone</th>
 						</tr>
 						<?php foreach ($contacts as $v): ?>
-							<tr>
-								<td><input type="checkbox" 
+							<tr class="table-tr">
+								<td class="main-td"><input class="table-checkbox"
+									type="checkbox" 
 									name="checkbox<?php $v['id']?>" 
 									value="<?php $v['id']?>">
 								</td>
-								<td><?php echo $v['id']?></td>
-								<td><?php echo $v['firstname']?></td>
-								<td><?php echo $v['lastname']?></td>
-								<td><?php echo $v['email']?></td>
-								<td><?php switch ($v['best_phone']):
+								<td class="main-td"><?php echo $v['id']?></td>
+								<td class="main-td"><?php echo $v['firstname']?></td>
+								<td class="main-td"><?php echo $v['lastname']?></td>
+								<td class="main-td"><?php echo $v['email']?></td>
+								<td class="main-td"><?php switch ($v['best_phone']):
 										case "home_phone":
 											echo $v['home_phone'];
 											break;
@@ -103,7 +107,7 @@
 											echo $v['cell_phone'];
 											break;
 									endswitch; ?></td>
-								<td></td>
+								<td class="main-td"></td>
 							</tr>
 						<?php endforeach; ?>
 					</table>

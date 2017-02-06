@@ -46,10 +46,10 @@
 						</div>
 					</a>
 
-					<table>
-						<tr>
-							<th class="th-id"></th>
-							<th class="th-firstname">
+					<table class="main-table">
+						<tr class="table-tr">
+							<th class="main-th th-id"></th>
+							<th class="main-th th-firstname">
 								<a href="<?php echo getHref("firstname", $activePage, $sortTurn); ?>">First
 								<div id=
 									<?php echo ($sortBy == "firstname")
@@ -59,7 +59,7 @@
 								</div>
 								</a>
 							</th>
-							<th class="th-lastname">
+							<th class="main-th th-lastname">
 								<a href="<?php echo getHref("lastname", $activePage, $sortTurn); ?>">Last
 								<div id=
 									<?php echo ($sortBy == "lastname")
@@ -69,17 +69,17 @@
 								</div>
 								</a>
 							</th>
-							<th class="th-email">Email</th>
-							<th class="th-best-phone">Best Phone</th>
-							<th>Actions</th>
+							<th class="main-th th-email">Email</th>
+							<th class="main-th th-best-phone">Best Phone</th>
+							<th class="main-th">Actions</th>
 						</tr>
 						<?php foreach ($contacts as $v): ?>
-							<tr>
-								<td><?php echo $v['id']?>.</td>
-								<td><?php echo $v['firstname']?></td>
-								<td><?php echo $v['lastname']?></td>
-								<td><?php echo $v['email']?></td>
-								<td><?php switch ($v['best_phone']):
+							<tr class="table-tr">
+								<td class="main-td"><?php echo $v['id']?>.</td>
+								<td class="main-td"><?php echo $v['firstname']?></td>
+								<td class="main-td"><?php echo $v['lastname']?></td>
+								<td class="main-td"><?php echo $v['email']?></td>
+								<td class="main-td"><?php switch ($v['best_phone']):
 										case "home_phone":
 											echo $v['home_phone'];
 											break;
@@ -91,14 +91,14 @@
 											break;
 									endswitch; ?></td>
 								<?php $contactId = $v['id'];?>
-								<td>
+								<td class="main-td">
 									<a href='/contacts/edit/<?php echo $contactId ?>'>
 										<div class="edit-button">
 											<p>edit</p>
 										</div>
 									</a>
 								</td>
-								<td>
+								<td class="main-td">
 									<a href='javascript:AlertIt(<?php echo $contactId ?>);'>
 										<div class="delete-button">
 											<p>X</p>
