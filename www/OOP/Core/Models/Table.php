@@ -26,21 +26,7 @@ abstract class Table
 	{
 		$this->database = new MysqlDriver(DB_HOST, DB_USER,	DB_PASSWORD, DB_NAME);
 	}
-/*
-	function __construct($database, $table)
-	{
-		if (isset($database) && isset($table)){
-			$this->database = new MysqlDriver(
-				$database['host'], 
-				$database['user'], 
-				$database['password'], 
-				$database['dbName']);
-			$this->table = $table;
-		}else{
-			printf("Please enter all parameters!(database and table)...");	//temporary line...
-		};
-	}
-	*/
+
 	public function delete($where)
 	{
 		if (!$where){
@@ -52,6 +38,53 @@ abstract class Table
 				return "Deleted ".$res." record(s).";
 			}else{
 				return "Errormessage: %s\n".$this->error;
+			};
+		};
+	}
+
+	private function isEmail($data, $key)
+	{
+		if (!filter_var($data[$key], $this->fields[$key]['rule'])) {
+			$res['message'] = $this->fields[$key]['ruleMessage'];
+			return $res;
+		};
+	}
+
+	private function isPhone($data, $key)
+	{
+		foreach($this->fields[$key] as $phoneKey => $phoneVal){
+
+			// phone validation for empty...
+			if ($phoneKey == 'isNotEmpty'){
+				$notEmpty = 0;
+
+				foreach($phoneVal['phoneNames'] as $phoneNameKey => $phoneNameVal){
+					if (!empty($data[$phoneNameKey])){
+						$notEmpty++;
+					};
+				};
+
+				if ($phoneVal['rule'] == 'one'){
+					if ($notEmpty == 0){
+						$res['message'] = $phoneVal['message'];
+						return $res;
+					}
+				}else{	//if ($phoneVal['rule'] == 'all')
+					if ($notEmpty < count($phoneVal['phoneNames'])){
+						$res['message'] = $phoneVal['message'];
+						return $res;
+					}
+				};
+			};
+
+			// radiobutton-phone validation...
+			if ($phoneKey == 'best_phone'){
+				if ($phoneVal['rule'] == 'compare'
+					&& empty($data[$data[$phoneKey]])){
+
+					$res['message'] = $phoneVal['message'];
+					return $res;
+				};
 			};
 		};
 	}
@@ -83,57 +116,27 @@ abstract class Table
 
 				// email validation...
 				if ($key == 'email'){
-					if (!filter_var($data[$key], $this->fields[$key]['rule'])) {
-						$validRes['message'] = $this->fields[$key]['ruleMessage'];
+					$res = $this->isEmail($data, $key);
+					if (isset($res['message'])){
+						$validRes['message'] = $res['message'];
 						return $validRes;
 					};
 				};
 
 				// phone validation...
 				if ($key == 'phone'){
-					foreach($this->fields[$key] as $phoneKey => $phoneVal){
 
-						// phone validation for empty...
-						if ($phoneKey == 'isNotEmpty'){
-							$notEmpty = 0;
-
-							foreach($phoneVal['phoneNames'] as $phoneNameKey => $phoneNameVal){
-								if (!empty($data[$phoneNameKey])){
-									$notEmpty++;
-								};
-							};
-
-							if ($phoneVal['rule'] == 'one'){
-								if ($notEmpty == 0){
-									$validRes['message'] = $phoneVal['message'];
-									return $validRes;
-								}
-							}else{	//if ($phoneVal['rule'] == 'all')
-								if ($notEmpty < count($phoneVal['phoneNames'])){
-									$validRes['message'] = $phoneVal['message'];
-									return $validRes;
-								}
-							};
-						};
-
-						// radiobutton-phone validation...
-						if ($phoneKey == 'best_phone'){
-							if ($phoneVal['rule'] == 'compare'
-								&& empty($data[$data[$phoneKey]])){
-
-								$validRes['message'] = $phoneVal['message'];
-								return $validRes;
-							};
-						};
+					$res = $this->isPhone($data, $key);
+					if (isset($res['message'])){
+						$validRes['message'] = $res['message'];
+						return $validRes;
 					};
 				};
 			};
 		};
 
-		$validRes['res'] = true;
-		
-		return $validRes;
-		
+		$validRes['res'] = true;		
+		return $validRes;		
 		//echo "<pre>", var_dump($this->fields), "</pre>";	//temporary line...
 	}
 	
