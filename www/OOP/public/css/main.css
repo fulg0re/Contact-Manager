@@ -87,6 +87,7 @@ body {
 	height: 15px;
 	float: left;
 	margin: 4px 0 0 0;
+	white-space: nowrap;
 }
 
 .home-img {
@@ -358,6 +359,7 @@ a {
 	padding: 0 8px 0 0;
 	height: 18px;
 	margin: 0 0 0 0;
+	white-space: nowrap;
 }
 
 .edit-button > p,
