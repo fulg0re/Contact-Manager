@@ -90,8 +90,8 @@
 
         <div onClick="document.forms['form2'].submit();" id="button-submit">
 
-            <div id="add-button-img"></div>
-            <p id="add-button-p"><?php echo getButtonName() ?></p>
+            <div id="submit-button-img"></div>
+            <p id="submit-button-p"><?php echo getButtonName() ?></p>
         </div> 
         <input type="hidden" 
             name="<?php echo getButtonName() ?>Button" 

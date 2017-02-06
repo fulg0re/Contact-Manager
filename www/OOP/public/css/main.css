@@ -162,13 +162,13 @@ body {
 }
 
 #login-button-p,
-#add-button-p {
+#submit-button-p {
 	display: inline-block;
 	margin: 5px 0 0 12px;
 }
 
 #login-button-img,
-#add-button-img {
+#submit-button-img {
 	content: url(/images/login.png);
 	height: 10px;
 	width: 10px;
