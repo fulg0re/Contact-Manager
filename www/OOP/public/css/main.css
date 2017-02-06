@@ -61,7 +61,7 @@ body {
 
 .img-logo {
 	content: url(/images/logo.png);
-	margin: 0 0 0 55px;
+	margin: 0 83px 0 55px;
 	width: 195px;
 	height: 100%;
 	float: left;
@@ -77,18 +77,6 @@ body {
 	display: inline-block;
 	height: 23px;
 	margin: 55px 0 0 15px;
-}
-
-#home-button {
-	margin-left: 95px;
-	padding: 0 13px 0 0;
-}
-
-#selection-button {
-	padding: 0 13px 0 0;
-}
-
-#logout-button {
 	padding: 0 13px 0 0;
 }
 
@@ -243,20 +231,20 @@ a {
 	outline: none;
 }
 
-#up-arrow {
-	content: url(/images/up.png);
+#up-arrow,
+#down-arrow {
 	display: inline-block;
 	margin-left: 5px;
 	height: 8px;
 	width: 8px;
 }
 
+#up-arrow {
+	content: url(/images/up.png);
+}
+
 #down-arrow {
 	content: url(/images/down.png);
-	display: inline-block;
-	margin-left: 5px;
-	height: 8px;
-	width: 8px;
 }
 
 th, td {
@@ -326,10 +314,6 @@ tr > td:last-child {
 tr > td {
 	font-family: ArialBoldMT;
 }
-
-/*p:nth-last-child(2) {
-    background: red;
-}*/
 
 tr > td:first-child {
 	font-family: ArialMT;
