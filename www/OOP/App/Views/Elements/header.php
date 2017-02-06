@@ -9,7 +9,7 @@
                 <a href='/contacts'>
                     <div class="control-buttons-content">
                         <div class="home-img"></div>
-                        <p id="home-p">Home</p>
+                        <p>Home</p>
                     </div>
                 </a>
             </li>
@@ -17,7 +17,7 @@
                 <a href='/contacts/selection'>
                     <div class="control-buttons-content">
                         <div class="selection-img"></div>
-                        <p id="selection-p">Selection page</p>
+                        <p>Selection page</p>
                     </div>
                 </a>
             </li>
@@ -25,7 +25,7 @@
                 <a href='/contacts/logout'>
                     <div class="control-buttons-content">
                         <div class="logout-img"></div>
-                        <p id="auth-p">Logout</p>
+                        <p>Logout</p>
                     </div>
                 </a>
             </li>

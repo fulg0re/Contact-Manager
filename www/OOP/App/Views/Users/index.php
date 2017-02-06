@@ -18,10 +18,10 @@
 				<form id="form" action="/" method="post">
 					<div class="field">
 						<label for="username" class="login-form-label">Login:</label>
-							<input type="text" name="username" id="username" class="login-form-input"
+							<input type="text" name="username" class="login-form-input"
 								value="<?php echo (isset($username)) ? $username : "";?>" /><br>
 						<label for="password" class="login-form-label">Password:</label>
-							<input type="password" name="password" id="password" class="login-form-input"
+							<input type="password" name="password" class="login-form-input"
 								value="<?php echo (isset($password)) ? $password : "";?>" /><br>
 					</div>
 

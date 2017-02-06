@@ -71,7 +71,7 @@
 							</th>
 							<th class="th-email">Email</th>
 							<th class="th-best-phone">Best Phone</th>
-							<th class="th-action">Actions</th>
+							<th>Actions</th>
 						</tr>
 						<?php foreach ($contacts as $v): ?>
 							<tr>
