@@ -9,7 +9,8 @@ class Controller extends \Core\Controller
 
 	protected function before($route)
 	{
-		if (isset($_SESSION['logined']) && $_SESSION['logined'] != true){
+		if (isset($_SESSION['logined']) && $_SESSION['logined'] == false
+            || !isset($_SESSION['logined'])){
 			$allowRoutes = $this->components['Auth']['allow'];
 			foreach($allowRoutes as $allowRoute){
 				if ($route == $allowRoute){
@@ -20,7 +21,9 @@ class Controller extends \Core\Controller
             $_SESSION['message'] = 'You must login first!';
 
 			$this->redirect("/");
-		}else{
+            
+            return false;
+        }else{
             return true;
         }
 	}

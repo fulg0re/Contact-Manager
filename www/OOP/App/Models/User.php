@@ -43,7 +43,7 @@ class User  extends Model
 
 	public function loginAction($params)
 	{
-		
+
 		$sha1Password = $this->generatePassword($params['password']);
 
 		$queryParams = [

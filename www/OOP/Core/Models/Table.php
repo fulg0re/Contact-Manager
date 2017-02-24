@@ -37,7 +37,7 @@ abstract class Table
 			if ($res = $this->query($query)){
 				return "Deleted ".$res." record(s).";
 			}else{
-				return "Errormessage: %s\n".$this->error;
+				return "Errormessage: %s\n"/*.$this->error*/;
 			};
 		};
 	}
@@ -98,6 +98,7 @@ abstract class Table
 
 		//fields validation(check for requird fields)...
 		foreach($this->fields as $key => $val){
+			
 			foreach($this->fields[$key] as $key2 => $val2){
 
 				// required fields validation...
@@ -170,7 +171,7 @@ abstract class Table
 		if ($res = $this->query($query)){
 			return $res;
 		}else{
-			return "Errormessage: %s\n".$this->error;
+			return "Errormessage: %s\n"/*.$this->error*/;
 		};
 		
 	}
@@ -233,7 +234,7 @@ abstract class Table
 		if ($res = $this->query($query)){
 			return $res;
 		}else{
-			return "Errormessage: %s\n".$this->error;
+			return "Errormessage: %s\n"/*.$this->error*/;
 		};
 	}
 	
@@ -263,7 +264,7 @@ abstract class Table
 		if ($res = $this->query($query)){
 			return $res;
 		}else{
-			return "Errormessage: %s\n".$this->error;
+			return "Errormessage: %s\n"/*.$this->error*/;
 		};
 	}
 	

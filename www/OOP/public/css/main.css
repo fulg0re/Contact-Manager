@@ -266,15 +266,15 @@ a {
 }
 
 .th-id {
-	width: 50px;
+	min-width: 50px;
 }
 
 .th-firstname {
-	width: 130px;
+	min-width: 130px;
 }
 
 .th-lastname {
-	width: 140px;
+	min-width: 140px;
 }
 
 .th-firstname > a,
@@ -284,11 +284,14 @@ a {
 }
 
 .th-email {
-	width: 175px;
+	min-width: 175px;
 }
 
 .th-best-phone {
-	width: 125px;
+	min-width: 125px;
+}
+
+.th-action {
 }
 
 .main-td {
@@ -332,7 +335,7 @@ a {
 }
 
 .main-th:last-child {
-	width: 40px;
+	min-width: 40px;
 	border-top-right-radius: 25px;
 }
 
@@ -340,7 +343,8 @@ a {
 	border-bottom-right-radius: 25px;
 }
 
-.table-tr:last-child, .table-tr:first-child {
+.table-tr:last-child, 
+.table-tr:first-child {
 	border-bottom: none;
 }
 
