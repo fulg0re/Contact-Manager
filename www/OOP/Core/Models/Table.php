@@ -115,24 +115,24 @@ abstract class Table
 					return $validRes;
 				};
 
-				// email validation...
-				if ($key == 'email'){
-					$res = $this->isEmail($data, $key);
-					if (isset($res['message'])){
-						$validRes['message'] = $res['message'];
-						return $validRes;
+				switch ($key) {
+					// email validation...
+					case 'email':{
+						$res = $this->isEmail($data, $key);
+						if (isset($res['message'])){
+							$validRes['message'] = $res['message'];
+							return $validRes;
+						};
 					};
-				};
-
-				// phone validation...
-				if ($key == 'phone'){
-
-					$res = $this->isPhone($data, $key);
-					if (isset($res['message'])){
-						$validRes['message'] = $res['message'];
-						return $validRes;
+					// phone validation...
+					case 'phone':{
+						$res = $this->isPhone($data, $key);
+						if (isset($res['message'])){
+							$validRes['message'] = $res['message'];
+							return $validRes;
+						};
 					};
-				};
+				}
 			};
 		};
 
