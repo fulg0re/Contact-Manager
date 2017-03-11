@@ -60,7 +60,7 @@ body {
 }
 
 .img-logo {
-	content: url(/images/logo.png);
+	background-image: url(/images/logo.png);
 	margin: 0 83px 0 55px;
 	width: 195px;
 	height: 100%;
@@ -86,23 +86,20 @@ body {
 	width: 15px;
 	height: 15px;
 	float: left;
-	margin: 4px 0 0 0;
+	margin: 4px 0 0 13px;
 	white-space: nowrap;
 }
 
 .home-img {
-	content: url(/images/home.png);
-	margin-left: 13px;
+	background: url(/images/home.png) no-repeat;
 }
 
 .selection-img {
-	content: url(/images/selection.png);
-	margin-left: 5px;
+	background: url(/images/selection.png) no-repeat;
 }
 
 .logout-img {
-	content: url(/images/logout.png);
-	margin-left: 13px;
+	background: url(/images/logout.png) no-repeat;
 }
 
 .control-buttons-content > p {
@@ -170,7 +167,7 @@ body {
 
 #login-button-img,
 #submit-button-img {
-	content: url(/images/login.png);
+	background: url(/images/login.png) no-repeat;
 	height: 10px;
 	width: 10px;
 	margin: 6px 0 0 17px;
@@ -241,11 +238,11 @@ a {
 }
 
 #up-arrow {
-	content: url(/images/up.png);
+	background: url(/images/up.png) no-repeat;
 }
 
 #down-arrow {
-	content: url(/images/down.png);
+	background: url(/images/down.png) no-repeat;
 }
 
 .main-th, .main-td {
@@ -291,16 +288,15 @@ a {
 	min-width: 125px;
 }
 
-.th-action {
-}
-
 .main-td {
 	background-color: rgb(48,48,48);
 }
 
 .table-tr:last-child > td {
 	background: linear-gradient(to top, rgb(25,25,25), rgb(48, 48, 48));
-	padding: 9px 12px 80px 0;
+	padding: 9px 12px 0 0;
+	vertical-align: top;
+	height: 100px;
 }
 
 .table-tr:last-child > td:first-child {
@@ -433,9 +429,11 @@ a {
 }
 
 .previous-img {
-	content: url(/images/previous.png);
+	background: url(/images/previous.png) no-repeat;
 	display: block;
 	float: left;
+	height: 15px;
+	width: 10px;
 }
 
 .previous-a > a > p {
@@ -474,9 +472,11 @@ a {
 }
 
 .next-img {
-	content: url(/images/next.png);
+	background: url(/images/next.png) no-repeat;
 	display: inline-block;
 	margin: 1px 0 0 0;
+	height: 10px;
+	width: 10px;
 }
 
 /****** END Views/Contacts/index.php part ******/
